@@ -1,3 +1,4 @@
+
 //Отношения между фракциями
 east setFriend [west, 1];
 east setFriend [resistance, 1];
