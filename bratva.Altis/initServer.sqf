@@ -170,7 +170,7 @@ diag_log "Инициализация скриптов выполнена";
 	
 
 	_void = "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SCORE=""%1"" WHERE UID=""%2""", _result , getPlayerUID _player];
-	[_result] remoteExec ["PENA_LOAD_RatingClient", _player, false];
+	[_player] remoteExec ["PENA_PROFILE_LOAD", 2, false];
 };
 
 	PENA_DB_SAVEMONEY = {
