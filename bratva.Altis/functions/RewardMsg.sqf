@@ -28,17 +28,18 @@ FREDDY_FNC_GETRANDOM_MNYINCAP = {
   _randomRating = [random[15, 15, 15], 0] call BIS_fnc_cutDecimals;
 
 HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ПРОТИВНИК ВЫВЕДЕН ИЗ СТРОЯ</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
-[_randomMoney, _UID, _player, _randomRating]remoteExec["PENA_DB_SAVEMONEY", 2, false];
+[_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
+[_player, _randomMoney]remoteExec["PEDA_DB_SAVERATING" , 2 , false];
 };
 
 FREDDY_FNC_GETRANDOM_MNY = {
   _UID = getPlayerUID player;
   _player = player;
   _randomMoney = [random[500, 1000, 2000], 0] call BIS_fnc_cutDecimals;
-  _randomRating = [random[10, 10, 10], 0] call BIS_fnc_cutDecimals;
 
-  HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ПРОТИВНИК УБИТ</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
-  [_randomMoney, _UID, _player, _randomRating]remoteExec["PENA_DB_SAVEMONEY", 2, false];
+
+  HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ПРОТИВНИК УБИТ</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t>", _randomMoney]];
+  [_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
 };
 
 FREDDY_FNC_GETRANDOM_MNYCAPTUREZONE = {
@@ -58,5 +59,6 @@ FREDDY_FNC_GETRANDOM_MNY_VEH = {
   _randomRating = [random[50, 50, 50], 0] call BIS_fnc_cutDecimals;
   
 HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ТЕХНИКА УНИЧТОЖЕНА</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
-[_randomMoney, _UID, _player, _randomRating]remoteExec["PENA_DB_SAVEMONEY", 2, false];
+[_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
+[_player, _randomMoney]remoteExec["PEDA_DB_SAVERATING" , 2 , false];
 };
