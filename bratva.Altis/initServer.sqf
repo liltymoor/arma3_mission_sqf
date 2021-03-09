@@ -166,12 +166,10 @@ diag_log "Инициализация скриптов выполнена";
 	_result = (_result splitString ",][");
 	_result deleteAt 0;
 	_result = parseNumber(_result # 0);
-	diag_log _result;
 	_result = _result + _rating;
 	
 
-	_void = "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SCORE=""%1"" WHERE UID=""%2""", _result , _UID];
-	diag_log _void;
+	_void = "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SCORE=""%1"" WHERE UID=""%2""", _result , getPlayerUID _player];
 	[_result] remoteExec ["PENA_LOAD_RatingClient", _player, false];
 };
 
