@@ -70,7 +70,7 @@ addMissionEventHandler ["Draw3D",
 
 addMissionEventHandler ["Draw3D", 
 {       
-  _units = (allPlayers select {_x distance player < 10 && _x getVariable ["Clown", false] && isNull objectParent player;}) - [player];
+  _units = (allPlayers select {_x distance player < 10 && _x getVariable ["Clown", false] && !(isNull objectParent player);}) - [player];
   _minSize = 1.5;
   _furthestDistance = 1;
   _iconSize = {linearConversion[ 0, _furthestDistance, player distance2D _x, 1, _minSize, true ]} forEach _units;             
