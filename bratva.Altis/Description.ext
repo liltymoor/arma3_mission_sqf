@@ -1,0 +1,16 @@
+enabledebugconsole = 0;
+disableAI = 0;
+
+#include "dialogs\InteractionPlayerMenu.hpp"
+#include "dialogs\VehInteraction.hpp"
+#include "dialogs\spawnmenu.hpp"
+#include "dialogs\GearStoreMenu.hpp"
+#include "dialogs\garagemenu.hpp"
+#include "dialogs\Tablet.hpp"
+#include "dialogs\GroupChat.hpp"
+#include "dialogs\LocalMessagesTablet.hpp"
+#include "dialogs\BankDialog.hpp"
+#include "dialogs\BuyArmoredVeh.hpp"
+#include "dialogs\SettingsDialog.hpp"
+#include "dialogs\StatatsDialog.hpp"
+#include "dialogs\ProfileDialog.hpp"
