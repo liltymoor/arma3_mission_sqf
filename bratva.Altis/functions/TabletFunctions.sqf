@@ -121,6 +121,8 @@ FRAME_03_Load = {
  [] spawn {
  _UID = getPlayerUID player;
 _player = player;
+[_player]remoteExecCall["PENA_PROFILE_LOAD", 2 , false];
+
 ctrlSetText [223, PlayerSponsorLVL];
 ctrlSetText [224, PlayerRank];
 
