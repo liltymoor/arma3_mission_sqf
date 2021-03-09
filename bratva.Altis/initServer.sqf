@@ -237,11 +237,11 @@ PENA_PROFILE_LOAD = {
 	_sponsorLVL = (_sponsorLVL splitString ",][");
 	_sponsorLVL deleteAt 0; 
 
-	_playerRank = "extDB3" callExtension format ["0:PenaUpal:SELECT SCORE FROM `PlayerStats` WHERE UID=""%1""", getPlayerUID _player];
-	_playerRank = (_playerRank splitString ",][");
-	_playerRank deleteAt 0; 
-
-	[_title # 0, _sponsorLVL # 0, _playerRank # 0]remoteExecCall["PENA_GET_PROFILE", _player, false];
+	_playerScore = "extDB3" callExtension format ["0:PenaUpal:SELECT SCORE FROM `PlayerStats` WHERE UID=""%1""", getPlayerUID _player];
+	_playerScore = (_playerScore splitString ",][");
+	_playerScore deleteAt 0;
+	_playerScore = parseNumber (_playerScore # 0); 
+	[_title # 0, _sponsorLVL # 0, _playerScore]remoteExecCall["PENA_GET_PROFILE", _player, false];
 };
 
 
