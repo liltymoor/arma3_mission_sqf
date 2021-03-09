@@ -12,6 +12,18 @@ diag_log "Инициализация скриптов выполнена";
 	};
 	diag_log [_result];
 
+	
+/*
+'########::'########:::'#######::'########:'####:'##:::::::'########:
+ ##.... ##: ##.... ##:'##.... ##: ##.....::. ##:: ##::::::: ##.....::
+ ##:::: ##: ##:::: ##: ##:::: ##: ##:::::::: ##:: ##::::::: ##:::::::
+ ########:: ########:: ##:::: ##: ######:::: ##:: ##::::::: ######:::
+ ##.....::: ##.. ##::: ##:::: ##: ##...::::: ##:: ##::::::: ##...::::
+ ##:::::::: ##::. ##:: ##:::: ##: ##:::::::: ##:: ##::::::: ##:::::::
+ ##:::::::: ##:::. ##:. #######:: ##:::::::'####: ########: ########:
+..:::::::::..:::::..:::.......:::..::::::::....::........::........::
+*/
+
 	PENA_LOAD_STATS = {
 	
 		_result  =  ("extDB3" callExtension format ["0:PenaUpal:SELECT NAME, KILL_STAT FROM `PlayerStats`"]);    
@@ -145,6 +157,19 @@ diag_log "Инициализация скриптов выполнена";
 	MoneyPlayer;
 	};
 
+
+	PENA_DB_SAVERATING = {
+	_player = (_this select 0);
+	_rating = (_this select 1);
+
+	_result  = "extDB3" callExtension format ["0:PenaUpal:SELECT SCORE FROM `PlayerStats` WHERE UID=""%1""", getPlayerUID _player];
+	_result = (_result splitString ",][");
+	_result deleteAt 0;
+	_result = parseNumber(_result # 0);
+	_result = _result + _rating;
+
+	"extDB3" callExtension format["0:PenaUpal:UPDATE Player SET SCORE=""%1"" WHERE UID=""%2""", _result , _UID];
+};
 
 	PENA_DB_SAVEMONEY = {
 
