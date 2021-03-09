@@ -136,11 +136,18 @@ switch (title) do {
     case "arma3fun" : {ctrlSetText [221, "images\icons\Arma3Fun.paa"]; ctrlSetText [222, "Арма фан"];}; 
 	default {  /*...code...*/ }; 
 };
- _vehArray = ["Потерпевший", "Клоун", "Хочу пиццы", "До связи", "Арма фан"];
+ _TitulsArray = ["Потерпевший", "Клоун", "Хочу пиццы", "До связи", "Арма фан"];
+
+	_availableTituls = [];
+	if (PlayerRank == "1") then {for "_i" from 0 to 0 do {_availableTituls pushBack (_TitulsArray # _i);};};
+	if (PlayerRank == "2") then {for "_i" from 0 to 1 do {_availableTituls pushBack (_TitulsArray # _i);};};
+	if (PlayerRank == "3") then {for "_i" from 0 to 2 do {_availableTituls pushBack (_TitulsArray # _i);};};
+	if (PlayerRank == "4") then {for "_i" from 0 to 3 do {_availableTituls pushBack (_TitulsArray # _i);};};
+	if (PlayerRank == "5") then {for "_i" from 0 to 4 do {_availableTituls pushBack (_TitulsArray # _i);};};
 {	
 	lbAdd [3614, _x];
 	lbSetData [3614, _forEachIndex, _x];
-} forEach  _vehArray;
+} forEach _availableTituls;
 	};
 };
 
