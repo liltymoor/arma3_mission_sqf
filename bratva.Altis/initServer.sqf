@@ -26,7 +26,7 @@ diag_log "Инициализация скриптов выполнена";
 
 	PENA_LOAD_STATS = {
 	
-		_result  =  ("extDB3" callExtension format ["0:PenaUpal:SELECT NAME, KILL_STAT FROM `PlayerStats`"]);    
+		_result  =  ("extDB3" callExtension format ["0:PenaUpal:SELECT NAME, KILL_STAT, UID, SCORE FROM `PlayerStats`"]);    
 		_result = (_result splitString ",][");    
 		_result deleteAt 0; 
 		_player = (_this # 0);  
@@ -40,7 +40,7 @@ diag_log "Инициализация скриптов выполнена";
 		   
 		for "_i" from 0 to _size do {    
 		_counter = _counter + 1;   
-		if (_counter == 2) then {   
+		if (_counter == 4) then {   
 		_sortedPl pushBack _playersArray;   
 		_playersArray = [];   
 		_counter = 0;   

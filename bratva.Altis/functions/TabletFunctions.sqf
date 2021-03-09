@@ -80,13 +80,12 @@ _player = player;
 
 
 FRAME_02_Load = {
-	
 _UID = getPlayerUID player;
 _player = player;
 
 [_player]remoteExecCall["PENA_LOAD_STATS",2 , false];
 
-_topPlayers = []; 
+topPlayers = []; 
   
 for "_j" from 0 to (count sortedPl) do {
   
@@ -100,18 +99,20 @@ for "_j" from 0 to (count sortedPl) do {
 		};  
 		sortedPl deleteAt _mvpPlace; 
 		if (parseNumber(_mvpPlayer # 1) != 0) then {
-			_topPlayers pushBack _mvpPlayer;
+			topPlayers pushBack _mvpPlayer;
 		};
 }; 
 
-[_topPlayers]remoteExec["diag_log", 2 ,false];
+[topPlayers]remoteExec["diag_log", 2 ,false];
 
 
 for "_i" from 100 to 115 do {
-_s = _i - 100;
+_playersInTable = _i - 100;
+_buttonUIDcounter = _i + 100;
 
-if (isNil{_topPlayers # _s}) exitWith {};
-((_this select 0) displayCtrl _i) ctrlSetText format ["%1", _topPlayers # _s # 0];
+if (isNil{topPlayers # _playersInTable}) exitWith {};
+((_this select 0) displayCtrl _i) ctrlSetText format ["%1", topPlayers # _playersInTable # 0];
+((_this select 0) displayCtrl _buttonUIDcounter) ctrlSetText format ["%1", topPlayers # _playersInTable # 2];
 };
 ((_this select 0) displayCtrl 116) ctrlSetText format ["Убийств: %1", localKills];
 ((_this select 0) displayCtrl 117) ctrlSetText format ["Рейтинг: %1", localRating];
@@ -150,6 +151,22 @@ switch (title) do {
 } forEach _availableTituls;
 	};
 };
+
+
+PENA_GetPlayerStats = {
+	_idc = (_this # 0);
+	_UID = ctrlText _idc;
+
+	for "_i" from 0 to count topPlayers do {
+	if (_UID == topPlayers # _i # 2) then {
+			((findDisplay 177) displayCtrl 250) ctrlSetText format ["%1", topPlayers # _i # 0];
+			((findDisplay 177) displayCtrl 251) ctrlSetText format ["Убийств: %1", topPlayers # _i # 1];
+			((findDisplay 177) displayCtrl 252) ctrlSetText format ["Рейтинг: %1", topPlayers # _i # 3];
+		};
+	};
+};
+
+
 
 Freddy_fnc_pickRole = {
   _index = lbCurSel 3614;

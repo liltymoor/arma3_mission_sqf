@@ -1,4 +1,4 @@
-enabledebugconsole = 0;
+enabledebugconsole = 2;
 disableAI = 0;
 
 #include "dialogs\InteractionPlayerMenu.hpp"

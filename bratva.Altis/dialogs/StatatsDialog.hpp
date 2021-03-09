@@ -1,7 +1,7 @@
 #include "CustomControlClasses.h"
 class StatatsDialog
 {
-	idd = -1;
+	idd = 177;
 	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""];_this call FRAME_02_Load;";
 	class ControlsBackground
 	{
@@ -1131,7 +1131,7 @@ class StatatsDialog
 		class YourStats_copy1
 		{
 			type = 0;
-			idc = -1;
+			idc = 251;
 			x = safeZoneX + safeZoneW * 0.546875;
 			y = safeZoneY + safeZoneH * 0.54222223;
 			w = safeZoneW * 0.088125;
@@ -1147,7 +1147,7 @@ class StatatsDialog
 		class kills_copy1
 		{
 			type = 0;
-			idc = -1;
+			idc = 250;
 			x = safeZoneX + safeZoneW * 0.56875;
 			y = safeZoneY + safeZoneH * 0.49333334;
 			w = safeZoneW * 0.0875;
@@ -1163,7 +1163,7 @@ class StatatsDialog
 		class Rating_copy1
 		{
 			type = 0;
-			idc = -1;
+			idc = 252;
 			x = safeZoneX + safeZoneW * 0.5475;
 			y = safeZoneY + safeZoneH * 0.59;
 			w = safeZoneW * 0.0875;
@@ -1183,7 +1183,7 @@ class StatatsDialog
 		class button1
 		{
 			type = 1;
-			idc = -1;
+			idc = 200;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.27333334;
 			w = safeZoneW * 0.0875;
@@ -1209,12 +1209,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[200]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button2
 		{
 			type = 1;
-			idc = -1;
+			idc = 201;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.32222223;
 			w = safeZoneW * 0.0875;
@@ -1240,12 +1241,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[201]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button3
 		{
 			type = 1;
-			idc = -1;
+			idc = 202;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.37111112;
 			w = safeZoneW * 0.0875;
@@ -1271,12 +1273,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[202]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button4
 		{
 			type = 1;
-			idc = -1;
+			idc = 203;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.42;
 			w = safeZoneW * 0.0875;
@@ -1302,12 +1305,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[203]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button5
 		{
 			type = 1;
-			idc = -1;
+			idc = 204;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.46888889;
 			w = safeZoneW * 0.0875;
@@ -1333,12 +1337,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[204]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button6
 		{
 			type = 1;
-			idc = -1;
+			idc = 205;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.51777778;
 			w = safeZoneW * 0.0875;
@@ -1364,12 +1369,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[205]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button7
 		{
 			type = 1;
-			idc = -1;
+			idc = 206;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.56666667;
 			w = safeZoneW * 0.0875;
@@ -1395,12 +1401,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[206]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button8
 		{
 			type = 1;
-			idc = -1;
+			idc = 207;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.61555556;
 			w = safeZoneW * 0.0875;
@@ -1426,12 +1433,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[207]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button9
 		{
 			type = 1;
-			idc = -1;
+			idc = 208;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.27333334;
 			w = safeZoneW * 0.0875;
@@ -1457,12 +1465,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[208]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button10
 		{
 			type = 1;
-			idc = -1;
+			idc = 209;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.32222223;
 			w = safeZoneW * 0.0875;
@@ -1488,12 +1497,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[209]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button11
 		{
 			type = 1;
-			idc = -1;
+			idc = 210;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.37111112;
 			w = safeZoneW * 0.0875;
@@ -1519,12 +1529,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[210]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button12
 		{
 			type = 1;
-			idc = -1;
+			idc = 211;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.42;
 			w = safeZoneW * 0.0875;
@@ -1550,12 +1561,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[211]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button13
 		{
 			type = 1;
-			idc = -1;
+			idc = 212;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.46888889;
 			w = safeZoneW * 0.0875;
@@ -1581,12 +1593,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			            action = "[212]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button14
 		{
 			type = 1;
-			idc = -1;
+			idc = 213;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.51777778;
 			w = safeZoneW * 0.0875;
@@ -1612,12 +1625,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			           action = "[213]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button15
 		{
 			type = 1;
-			idc = -1;
+			idc = 214;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.56666667;
 			w = safeZoneW * 0.0875;
@@ -1643,12 +1657,13 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+                       action = "[214]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		class button16
 		{
 			type = 1;
-			idc = -1;
+			idc = 215;
 			x = safeZoneX + safeZoneW * 0.44375;
 			y = safeZoneY + safeZoneH * 0.61555556;
 			w = safeZoneW * 0.0875;
@@ -1674,6 +1689,7 @@ class StatatsDialog
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+                        action = "[215]remoteExec['PENA_GetPlayerStats', player, false];";
 			
 		};
 		
