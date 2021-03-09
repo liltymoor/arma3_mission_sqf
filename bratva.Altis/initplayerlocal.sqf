@@ -1,7 +1,9 @@
 sortedPl = [];
 localKills = 0;
 localRating = 0;
+
 title = "";
+
 PlayerSponsorLVL = 0;
 PlayerRank = 0;
 
@@ -97,9 +99,6 @@ PENA_GET_PROFILE = {
 
 };
 
-PENA_LOAD_RatingClient = {
-  PlayerRank = (_this # 0);
-};
 
 player addRating 99999999;
 player enableFatigue false;
