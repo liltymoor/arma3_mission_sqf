@@ -86,21 +86,7 @@ PENA_MONEY_FROM_SERVER = {
 PENA_GET_PROFILE = {
   title = (_this # 0);
   PlayerSponsorLVL = (_this # 1);
-  _playerScore = (_this # 2);
-
-  switch (true) do { 
-    case (_playerScore >= 0 && _playerScore <= 100) : {PlayerRank = "2";}; 
-    case (_playerScore >= 100 && _playerScore <= 500) : {PlayerRank = "3";};
-    case (_playerScore >= 500 && _playerScore <= 1500) : {PlayerRank = "4";};
-    case (_playerScore >= 1500 && _playerScore <= 4500) : {PlayerRank = "5";};
-    case (_playerScore >= 4500 && _playerScore <= 13500) : {PlayerRank = "6";};
-    case (_playerScore >= 13500 && _playerScore <= 27000) : {PlayerRank = "7";};
-    case (_playerScore >= 27000 && _playerScore <= 54000) : {PlayerRank = "8";};
-    case (_playerScore >= 54000 && _playerScore <= 108000) : {PlayerRank = "9";};
-    case (_playerScore >= 108000 && _playerScore <= 162000) : {PlayerRank = "10";};  
-    default {PlayerRank = "1";}; 
-  };
-
+  PlayerRank = (_this # 2);
 
   switch (title) do { 
     case "Terpila" : {player setVariable ["Terpila", true, true];}; 
