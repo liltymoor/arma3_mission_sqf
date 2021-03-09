@@ -29,8 +29,8 @@ class Tablet
 		{
 			type = 1;
 			idc = -1;
-			x = safeZoneX + safeZoneW * 0.290625;
-			y = safeZoneY + safeZoneH * 0.27666667;
+			x = safeZoneX + safeZoneW * 0.295625;
+			y = safeZoneY + safeZoneH * 0.27555556;
 			w = safeZoneW * 0.035;
 			h = safeZoneH * 0.05555556;
 			style = 0;
@@ -60,8 +60,8 @@ class Tablet
 		{
 			type = 1;
 			idc = -1;
-			x = safeZoneX + safeZoneW * 0.3425;
-			y = safeZoneY + safeZoneH * 0.27555556;
+			x = safeZoneX + safeZoneW * 0.35;
+			y = safeZoneY + safeZoneH * 0.27777778;
 			w = safeZoneW * 0.04;
 			h = safeZoneH * 0.05555556;
 			style = 0;
@@ -91,8 +91,8 @@ class Tablet
 		{
 			type = 1;
 			idc = -1;
-			x = safeZoneX + safeZoneW * 0.404375;
-			y = safeZoneY + safeZoneH * 0.27222223;
+			x = safeZoneX + safeZoneW * 0.41;
+			y = safeZoneY + safeZoneH * 0.27111112;
 			w = safeZoneW * 0.03375;
 			h = safeZoneH * 0.06111112;
 			style = 0;
@@ -123,7 +123,7 @@ class Tablet
 		{
 			type = 1;
 			idc = -1;
-			x = safeZoneX + safeZoneW * 0.455;
+			x = safeZoneX + safeZoneW * 0.464375;
 			y = safeZoneY + safeZoneH * 0.27111112;
 			w = safeZoneW * 0.039375;
 			h = safeZoneH * 0.06333334;
@@ -156,8 +156,8 @@ class Tablet
 		{
 			type = 1;
 			idc = -1;
-			x = safeZoneX + safeZoneW * 0.400625;
-			y = safeZoneY + safeZoneH * 0.35444445;
+			x = safeZoneX + safeZoneW * 0.408125;
+			y = safeZoneY + safeZoneH * 0.35333334;
 			w = safeZoneW * 0.039375;
 			h = safeZoneH * 0.06222223;
 			style = 0;
@@ -189,8 +189,8 @@ class Tablet
 		{
 			type = 1;
 			idc = -1;
-			x = safeZoneX + safeZoneW * 0.450625;
-			y = safeZoneY + safeZoneH * 0.34888889;
+			x = safeZoneX + safeZoneW * 0.465;
+			y = safeZoneY + safeZoneH * 0.35;
 			w = safeZoneW * 0.04125;
 			h = safeZoneH * 0.06777778;
 			style = 0;
@@ -216,6 +216,68 @@ class Tablet
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
 			action = "closeDialog 0; createDialog ""ProfileDialog"";";
 		};	
+		class button7
+		{
+			type = 1;
+			idc = -1;
+			x = safeZoneX + safeZoneW * 0.349375;
+			y = safeZoneY + safeZoneH * 0.35111112;
+			w = safeZoneW * 0.04125;
+			h = safeZoneH * 0.06777778;
+			style = 0;
+			text = "";
+			borderSize = 0;
+			colorBackground[] = {0.4627,0.2,0.6353,0};
+			colorBackgroundActive[] = {1,0,0,0};
+			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBorder[] = {0,0,0,0};
+			colorDisabled[] = {0.2,0.2,0.2,0};
+			colorFocused[] = {0.2,0.2,0.2,0};
+			colorShadow[] = {0,0,0,0};
+			colorText[] = {0.5373,0.8,0.3647,0};
+			font = "PuristaMedium";
+			offsetPressedX = 0.01;
+			offsetPressedY = 0.01;
+			offsetX = 0.01;
+			offsetY = 0.01;
+			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
+			soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1.0};
+			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
+			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
+			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			
+		};
+		class button8
+		{
+			type = 1;
+			idc = -1;
+			x = safeZoneX + safeZoneW * 0.29125;
+			y = safeZoneY + safeZoneH * 0.35333334;
+			w = safeZoneW * 0.04125;
+			h = safeZoneH * 0.06777778;
+			style = 0;
+			text = "";
+			borderSize = 0;
+			colorBackground[] = {0.4627,0.2,0.6353,0};
+			colorBackgroundActive[] = {1,0,0,0};
+			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBorder[] = {0,0,0,0};
+			colorDisabled[] = {0.2,0.2,0.2,0};
+			colorFocused[] = {0.2,0.2,0.2,0};
+			colorShadow[] = {0,0,0,0};
+			colorText[] = {0.5373,0.8,0.3647,0};
+			font = "PuristaMedium";
+			offsetPressedX = 0.01;
+			offsetPressedY = 0.01;
+			offsetX = 0.01;
+			offsetY = 0.01;
+			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
+			soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1.0};
+			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
+			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
+			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			
+		};
 		
 	};
 	
