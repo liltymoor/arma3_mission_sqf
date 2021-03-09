@@ -29,7 +29,7 @@ FREDDY_FNC_GETRANDOM_MNYINCAP = {
 
 HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ПРОТИВНИК ВЫВЕДЕН ИЗ СТРОЯ</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
 [_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
-[_player, _randomMoney]remoteExec["PEDA_DB_SAVERATING" , 2 , false];
+[_player, _randomRating]remoteExec["PENA_DB_SAVERATING" , 2 , false];
 };
 
 FREDDY_FNC_GETRANDOM_MNY = {
@@ -60,5 +60,5 @@ FREDDY_FNC_GETRANDOM_MNY_VEH = {
   
 HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ТЕХНИКА УНИЧТОЖЕНА</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
 [_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
-[_player, _randomMoney]remoteExec["PEDA_DB_SAVERATING" , 2 , false];
+[_player, _randomRating]remoteExec["PENA_DB_SAVERATING" , 2 , false];
 };
