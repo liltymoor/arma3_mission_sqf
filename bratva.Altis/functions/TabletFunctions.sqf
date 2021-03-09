@@ -124,6 +124,22 @@ _player = player;
 [_player]remoteExecCall["PENA_PROFILE_LOAD", 2 , false];
 
 ctrlSetText [223, PlayerSponsorLVL];
+
+switch (localRating) do { 
+	case (localRating >= 0 && localRating <= 100) : {PlayerRank = 2;}; 
+	case (localRating >= 100 && localRating <= 350) : {PlayerRank = 3;};
+	case (localRating >= 350 && localRating <= 1000) : {PlayerRank = 4;};
+	case (localRating >= 1000 && localRating <= 1800) : {PlayerRank = 5;};
+	case (localRating >= 1800 && localRating <= 3000) : {PlayerRank = 6;};
+	case (localRating >= 3000 && localRating <= 5500) : {PlayerRank = 7;};
+	case (localRating >= 5500 && localRating <= 7350) : {PlayerRank = 8;};
+	case (localRating >= 7350 && localRating <= 14500) : {PlayerRank = 9;};
+	case (localRating >= 14500 && localRating <= 22000) : {PlayerRank = 10;};
+	case (localRating >= 22000 && localRating <= 30000) : {PlayerRank = 11;};
+	case (localRating >= 30000 && localRating <= 45000) : {PlayerRank = 12;}; 
+	default {PlayerRank = 1;}; 
+};
+
 ctrlSetText [224, PlayerRank];
 
 ctrlSetText [231, name _player];
