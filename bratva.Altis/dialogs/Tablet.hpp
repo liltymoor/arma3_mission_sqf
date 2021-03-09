@@ -2,7 +2,7 @@
 class Tablet
 {
 	idd = -1;
-	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""];_this call FRAME_01_Load; _this call FRAME_02_Load; _this call FRAME_03_Load;"
+	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""];_this call FRAME_01_Load; _this call FRAME_02_Load;"
 	class ControlsBackground
 	{
 		class tabletimg
