@@ -2,7 +2,7 @@
 class ProfileDialog
 {
 	idd = 15000;
-	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""]; _this call FRAME_03_Load;"
+	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""]; _this call PENA_RAID_LOBBY_CHECKER; _this call FRAME_03_Load;"
 	class ControlsBackground
 	{
 		class Background
