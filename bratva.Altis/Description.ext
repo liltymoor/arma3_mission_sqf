@@ -14,3 +14,4 @@ disableAI = 0;
 #include "dialogs\SettingsDialog.hpp"
 #include "dialogs\StatatsDialog.hpp"
 #include "dialogs\ProfileDialog.hpp"
+#include "dialogs\RaidLobby.hpp"
