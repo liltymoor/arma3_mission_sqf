@@ -8,6 +8,8 @@ PlayerSponsorLVL = 0;
 PlayerRank = 0;
 
 
+
+
 PENA_SORTED_PLAYER = {
   sortedPl = (_this select 0);
   localKills = (_this # 1);

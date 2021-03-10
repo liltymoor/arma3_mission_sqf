@@ -1,4 +1,4 @@
-diag_log "Инициализация скриптов выполнена";
+	diag_log "Инициализация скриптов выполнена";
 	protocol = "PenaUpal";
 	db_name = "PenaDB";
 	_result = "Extdb3" callExtension format["9:ADD_DATABASE:%1",db_name];
@@ -23,7 +23,7 @@ diag_log "Инициализация скриптов выполнена";
  ##:::::::: ##:::. ##:. #######:: ##:::::::'####: ########: ########:
 ..:::::::::..:::::..:::.......:::..::::::::....::........::........::
 */
-
+	
 	PENA_LOAD_STATS = {
 	
 		_result  =  ("extDB3" callExtension format ["0:PenaUpal:SELECT NAME, KILL_STAT, UID, SCORE FROM `PlayerStats`"]);    

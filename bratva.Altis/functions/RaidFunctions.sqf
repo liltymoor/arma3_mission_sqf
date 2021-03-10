@@ -1,0 +1,7 @@
+raidLobbyAt = [];
+raidLobbyDef = [];
+
+raidLobbyQueAt = [];
+raidLobbyQueDef = []; 
+
+

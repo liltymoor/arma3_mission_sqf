@@ -1,7 +1,7 @@
 #include "CustomControlClasses.h"
 class ProfileDialog
 {
-	idd = -1;
+	idd = 15000;
 	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""]; _this call FRAME_03_Load;"
 	class ControlsBackground
 	{
@@ -266,7 +266,7 @@ class ProfileDialog
 			class OnlinePlayers
 		{
 			type = 5;
-			idc = -1;
+			idc = 15666;
 			x = safeZoneX + safeZoneW * 0.59375;
 			y = safeZoneY + safeZoneH * 0.24888889;
 			w = safeZoneW * 0.0875;

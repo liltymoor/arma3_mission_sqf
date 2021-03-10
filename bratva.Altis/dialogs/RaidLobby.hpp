@@ -1,7 +1,7 @@
 #include "CustomControlClasses.h"
 class RaidLobby
 {
-	idd = -1;
+	idd = 79;
 	
 	class ControlsBackground
 	{
