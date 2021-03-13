@@ -278,6 +278,37 @@ class Tablet
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
 			
 		};
+			class button9
+		{
+			type = 1;
+			idc = -1;
+			x = safeZoneX + safeZoneW * 0.35253907;
+			y = safeZoneY + safeZoneH * 0.44965278;
+			w = safeZoneW * 0.04101563;
+			h = safeZoneH * 0.06770834;
+			style = 0;
+			text = "";
+			borderSize = 0;
+			colorBackground[] = {0.4627,0.2,0.6353,0};
+			colorBackgroundActive[] = {1,0,0,0};
+			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBorder[] = {0,0,0,0};
+			colorDisabled[] = {0.2,0.2,0.2,0};
+			colorFocused[] = {0.2,0.2,0.2,0};
+			colorShadow[] = {0,0,0,0};
+			colorText[] = {0.5373,0.8,0.3647,0};
+			font = "PuristaMedium";
+			offsetPressedX = 0.01;
+			offsetPressedY = 0.01;
+			offsetX = 0.01;
+			offsetY = 0.01;
+			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
+			soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1.0};
+			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
+			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
+			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			
+		};
 		
 	};
 	
