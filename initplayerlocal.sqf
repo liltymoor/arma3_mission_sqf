@@ -1,13 +1,19 @@
 sortedPl = [];
 localKills = 0;
 localRating = 0;
-
 title = "";
-
 PlayerSponsorLVL = 0;
 PlayerRank = 0;
+player setVariable ["groupState", false, true];
 
-
+PENA_Group_Handler = {
+  sender = (_this # 0);
+  []spawn {
+  player setVariable ["PendingInvite", true, true];
+  sleep 20;
+  player setVariable ["PendingInvite", false, true];
+};
+};
 
 
 PENA_SORTED_PLAYER = {
