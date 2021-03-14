@@ -29,7 +29,7 @@ addMissionEventHandler [
   {      
    drawIcon3D [      
     "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
-    [0,0.9,1,1],      
+    [0,0.7,1,1],      
     getPosATLVisual _x vectorAdd [0,0,1],      
     1,      
     1,      
