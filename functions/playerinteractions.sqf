@@ -83,6 +83,7 @@ _dragger setVariable ["F_Dragging", false, true];
 
 FREDDY_FNC_UNDRESS =
 {
+	[] spawn {
   _unit = cursorObject;
   _looter = player;
   _myBackpack = backpack cursorObject;
@@ -107,6 +108,9 @@ FREDDY_FNC_UNDRESS =
             {_box addItemCargoGlobal[_x,1];} forEach (vestItems _unit);
             {_box addItemCargoGlobal[_x,1];} forEach (uniformItems _unit);
             _unit setUnitLoadout (configFile >> "EmptyLoadout");
+            sleep 30;
+            deleteVehicle _box;
+        };
   };
 };
 
