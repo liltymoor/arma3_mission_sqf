@@ -2,7 +2,7 @@
 class ProfileDialog
 {
 	idd = 15000;
-	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""]; _this call FRAME_03_Load; _this call PENA_PARTY_ONLOAD;"
+	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""]; _this call FRAME_03_Load;"
 	class ControlsBackground
 	{
 		class Background
@@ -327,7 +327,7 @@ class ProfileDialog
 		class PlayersInSquad
 		{
 			type = 5;
-			idc = 15003;
+			idc = -1;
 			x = safeZoneX + safeZoneW * 0.59375;
 			y = safeZoneY + safeZoneH * 0.46888889;
 			w = safeZoneW * 0.0875;
