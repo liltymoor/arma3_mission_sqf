@@ -78,6 +78,7 @@ if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {call 
 
 //Скрипт победы защиты
 FREDDY_FNC_ENDRAIDDEF = {
+[] spawn {
 _playersArray = allUnits inAreaArray "RaidEllipse";
 hint "Победа защиты"; 
 {_x setDamage 1} forEach _playersArray;
@@ -86,10 +87,15 @@ missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа защиты";
 raidLobbyAt = [];
 raidLobbyDef = [];
+sleep 15;
+deleteMarker "RaidEllipse";
+deleteMarker "RaidText"; 
+	};
 };
 
 //Скрипт победы атаки
 FREDDY_FNC_ENDRAIDATTACK = {
+[] spawn {
 _playersArray = allUnits inAreaArray "RaidEllipse";
 hint "Победа атаки"; 
 {_x setDamage 1} forEach _playersArray;
@@ -98,6 +104,10 @@ missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
 raidLobbyAt = [];
 raidLobbyDef = [];
+sleep 15;
+deleteMarker "RaidEllipse";
+deleteMarker "RaidText"; 
+	};
 };
 
 /*
