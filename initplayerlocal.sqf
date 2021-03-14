@@ -33,7 +33,7 @@ controlNum = 0;
 HALs_updateDelay = 0.25;
 HALs_lastUpdate = diag_tickTime;
 
-//Отключение стрельбы в сейв зонах
+//Отключение стрельбы в сейв зонах _projectile inArea "RaidEllipse" && !(_shooter inArea "RaidEllipse")
 0 = [] spawn {
   while {true} do {
    sleep 2;
