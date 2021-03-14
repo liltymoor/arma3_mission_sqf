@@ -31,6 +31,7 @@ player addEventHandler ["HandleDamage",
         _unit call FREDDY_FNC_DEADCOUNTER;
         _unit call FREDDY_FNC_INCAPACIATEDSCREEN;
         showCompass false;
+        if !(isNull objectParent _unit) then {moveOut _unit};
         if (side _instigator != side group _unit && _instigator != _unit) then {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];};
 
     _unit spawn
