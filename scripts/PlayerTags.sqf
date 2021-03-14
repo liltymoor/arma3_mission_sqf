@@ -25,7 +25,7 @@ addMissionEventHandler [
 addMissionEventHandler [     
  "Draw3D",      
  {     
-  _units = (allUnits select { group _x == group player && _x distance player < 500;}) - [player];         
+  _units = (allUnits select {group _x == group player && _x distance player < 500;}) - [player];         
   {      
    drawIcon3D [      
     "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
