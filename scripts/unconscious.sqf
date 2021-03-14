@@ -27,8 +27,8 @@ player addEventHandler ["HandleDamage",
     if (_damage >= 1 && alive _unit && lifeState _unit != "INCAPACITATED") then 
     {
         _unit allowDamage false; _unit setDamage 0.95; _unit setUnconscious true; _unit switchCamera "INTERNAL";
-        [format["<t color='#ffffff' size = '.7'>Вас вывел из строя</t><t color='#ff0000' size = '.7'> %1</t><br /><t color='#ffffff' size = '.7'>Возрождение будет доступно через</t> <t color='#ff0000' size = '.7'>20 секунд</t>", _nameinstigator],-1,0.85,19,0.3,0,789] spawn BIS_fnc_dynamicText; 
-        _unit call FREDDY_FNC_DEADCOUNTER;
+        if (_unit inArea "RaidEllipse") then {[format["<t color='#ffffff' size = '.7'>Вас вывел из строя</t><t color='#ff0000' size = '.7'> %1</t><br /><t color='#ffffff' size = '.7'>Ваши товарищи могут реанимировать вас в течении</t> <t color='#ff0000' size = '.7'>2 минут</t>", _nameinstigator],-1,0.85,19,0.3,0,789] spawn BIS_fnc_dynamicText;} else {[format["<t color='#ffffff' size = '.7'>Вас вывел из строя</t><t color='#ff0000' size = '.7'> %1</t><br /><t color='#ffffff' size = '.7'>Возрождение будет доступно через</t> <t color='#ff0000' size = '.7'>20 секунд</t>", _nameinstigator],-1,0.85,19,0.3,0,789] spawn BIS_fnc_dynamicText;}; 
+        if (_unit inArea "RaidEllipse") then {_unit call FREDDY_FNC_RAIDDEADCOUNTER;} else {_unit call FREDDY_FNC_DEADCOUNTER;};
         _unit call FREDDY_FNC_INCAPACIATEDSCREEN;
         showCompass false;
         if !(isNull objectParent _unit) then {moveOut _unit};
@@ -53,6 +53,21 @@ player addEventHandler ["HandleDamage",
       };
     };
 }];
+
+FREDDY_FNC_RAIDDEADCOUNTER =
+{
+[] spawn {
+_unit = player;
+_unit setVariable ["CantDie", true, true];
+while {lifeState _unit == "INCAPACITATED" && _unit getVariable ["CantDie", true]} do {
+sleep 120;
+_unit setVariable ["CantDie", false, true];
+    };
+     if (lifeState _unit == "Incapacitated") then {
+     _unit setDamage 1;
+    } else {};
+  };
+};
 
 FREDDY_FNC_DEADCOUNTER =
 {
