@@ -1,4 +1,4 @@
-PENA_MSG_SHOW = {
+PENA_MSG_SHOW = {/'.'
  controlNum  = controlNum  + 1;
 {
 disableSerialization;
