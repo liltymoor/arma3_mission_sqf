@@ -21,15 +21,15 @@ addMissionEventHandler [
  }   
 ];
 
-//Зеленая метка на своего
+//Синяя метка на своего
 addMissionEventHandler [     
  "Draw3D",      
  {     
-  _units = (allUnits select {group _x == group player && _x distance player < 500;}) - [player];         
+ _units = (allUnits select { (side group _x) == playerSide && _x distance player < 500;}) - [player];      
   {      
    drawIcon3D [      
     "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
-    [0,1,0,1],      
+    [0,0.3,0.6,1],      
     getPosATLVisual _x vectorAdd [0,0,1],      
     1,      
     1,      
@@ -43,15 +43,15 @@ addMissionEventHandler [
  }      
 ];
 
-//Синяя метка на своего
+//Зеленая метка на своего
 addMissionEventHandler [     
  "Draw3D",      
  {     
- _units = (allUnits select { (side group _x) == playerSide && _x distance player < 500;}) - [player];      
+  _units = (allUnits select {group _x == group player && _x distance player < 500;}) - [player];         
   {      
    drawIcon3D [      
     "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
-    [0,0.3,0.6,1],      
+    [0,1,0,1],      
     getPosATLVisual _x vectorAdd [0,0,1],      
     1,      
     1,      
