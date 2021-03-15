@@ -59,7 +59,7 @@ FREDDY_FNC_RAIDDEADCOUNTER =
 [] spawn {
 _unit = player;
 _unit setVariable ["CantDie", true, true];
-while {lifeState _unit == "INCAPACITATED" && _unit getVariable ["CantDie", true]} do {
+while {lifeState _unit == "INCAPACITATED" && _unit getVariable ["CantDie", true] && _unit inArea "RaidEllipse"} do {
 sleep 120;
 _unit setVariable ["CantDie", false, true];
     };
