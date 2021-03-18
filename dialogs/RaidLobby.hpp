@@ -1,7 +1,7 @@
 #include "CustomControlClasses.h"
 class RaidLobby
 {
-	idd = 79;
+	idd = -1;
 	
 	class ControlsBackground
 	{
@@ -26,7 +26,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.294375;
-			y = safeZoneY + safeZoneH * 0.45333334;
+			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.0875;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -74,7 +74,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.444375;
-			y = safeZoneY + safeZoneH * 0.45333334;
+			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -122,7 +122,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.569375;
-			y = safeZoneY + safeZoneH * 0.45333334;
+			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.0875;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -138,7 +138,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.669375;
-			y = safeZoneY + safeZoneH * 0.45333334;
+			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.0375;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -154,7 +154,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.394375;
-			y = safeZoneY + safeZoneH * 0.45333334;
+			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.0375;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -170,7 +170,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.444375;
-			y = safeZoneY + safeZoneH * 0.50222223;
+			y = safeZoneY + safeZoneH * 0.45333334;
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -186,7 +186,7 @@ class RaidLobby
 			type = 0;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.444375;
-			y = safeZoneY + safeZoneH * 0.55111112;
+			y = safeZoneY + safeZoneH * 0.50222223;
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 2;
@@ -220,7 +220,7 @@ class RaidLobby
 			x = safeZoneX + safeZoneW * 0.444375;
 			y = safeZoneY + safeZoneH * 0.30666667;
 			w = safeZoneW * 0.1125;
-			h = safeZoneH * 0.13444445;
+			h = safeZoneH * 0.08555556;
 			style = 2;
 			text = "Тут будет время";
 			colorBackground[] = {0,0,0,0.7};
@@ -240,7 +240,7 @@ class RaidLobby
 			x = safeZoneX + safeZoneW * 0.56875;
 			y = safeZoneY + safeZoneH * 0.29777778;
 			w = safeZoneW * 0.1375;
-			h = safeZoneH * 0.15333334;
+			h = safeZoneH * 0.10444445;
 			style = 16;
 			colorBackground[] = {0,0,0,0.7059};
 			colorDisabled[] = {1,1,1,1};
@@ -267,9 +267,9 @@ class RaidLobby
 			type = 5;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.56875;
-			y = safeZoneY + safeZoneH * 0.49333334;
+			y = safeZoneY + safeZoneH * 0.44444445;
 			w = safeZoneW * 0.1375;
-			h = safeZoneH * 0.12888889;
+			h = safeZoneH * 0.10444445;
 			style = 16;
 			colorBackground[] = {0,0,0,0.7059};
 			colorDisabled[] = {1,1,1,1};
@@ -298,7 +298,7 @@ class RaidLobby
 			x = safeZoneX + safeZoneW * 0.29375;
 			y = safeZoneY + safeZoneH * 0.29777778;
 			w = safeZoneW * 0.1375;
-			h = safeZoneH * 0.15333334;
+			h = safeZoneH * 0.10444445;
 			style = 16;
 			colorBackground[] = {0,0,0,0.7059};
 			colorDisabled[] = {1,1,1,1};
@@ -325,9 +325,9 @@ class RaidLobby
 			type = 5;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.29375;
-			y = safeZoneY + safeZoneH * 0.49333334;
+			y = safeZoneY + safeZoneH * 0.44444445;
 			w = safeZoneW * 0.1375;
-			h = safeZoneH * 0.12888889;
+			h = safeZoneH * 0.10444445;
 			style = 16;
 			colorBackground[] = {0,0,0,0.7059};
 			colorDisabled[] = {1,1,1,1};
@@ -354,11 +354,42 @@ class RaidLobby
 			type = 1;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.5675;
-			y = safeZoneY + safeZoneH * 0.63222223;
+			y = safeZoneY + safeZoneH * 0.55888889;
 			w = safeZoneW * 0.1375;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Присоединиться к атаке";
+			borderSize = 0;
+			colorBackground[] = {0.4,0.502,0.902,0.7059};
+			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
+			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBorder[] = {0,0,0,0};
+			colorDisabled[] = {0.2,0.2,0.2,0};
+			colorFocused[] = {0.2,0.2,0.2,0};
+			colorShadow[] = {0,0,0,0};
+			colorText[] = {1,1,1,1};
+			font = "TahomaB";
+			offsetPressedX = 0.01;
+			offsetPressedY = 0.01;
+			offsetX = 0.01;
+			offsetY = 0.01;
+			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
+			soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1.0};
+			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
+			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
+			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			
+		};
+		class JoinRaidersSquad
+		{
+			type = 1;
+			idc = -1;
+			x = safeZoneX + safeZoneW * 0.5675;
+			y = safeZoneY + safeZoneH * 0.60777778;
+			w = safeZoneW * 0.1375;
+			h = safeZoneH * 0.03666667;
+			style = 0+2;
+			text = "Присоединиться отрядом";
 			borderSize = 0;
 			colorBackground[] = {0.4,0.502,0.902,0.7059};
 			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
@@ -385,11 +416,42 @@ class RaidLobby
 			type = 1;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.2925;
-			y = safeZoneY + safeZoneH * 0.63222223;
+			y = safeZoneY + safeZoneH * 0.55888889;
 			w = safeZoneW * 0.1375;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Присоединиться к защите";
+			borderSize = 0;
+			colorBackground[] = {0.4,0.502,0.902,0.7059};
+			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
+			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBorder[] = {0,0,0,0};
+			colorDisabled[] = {0.2,0.2,0.2,0};
+			colorFocused[] = {0.2,0.2,0.2,0};
+			colorShadow[] = {0,0,0,0};
+			colorText[] = {1,1,1,1};
+			font = "TahomaB";
+			offsetPressedX = 0.01;
+			offsetPressedY = 0.01;
+			offsetX = 0.01;
+			offsetY = 0.01;
+			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
+			soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1.0};
+			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
+			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
+			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
+			
+		};
+		class JoinDefendersSquad
+		{
+			type = 1;
+			idc = -1;
+			x = safeZoneX + safeZoneW * 0.2925;
+			y = safeZoneY + safeZoneH * 0.60777778;
+			w = safeZoneW * 0.1375;
+			h = safeZoneH * 0.03666667;
+			style = 0+2;
+			text = "Присоединиться отрядом";
 			borderSize = 0;
 			colorBackground[] = {0.4,0.502,0.902,0.7059};
 			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
@@ -416,7 +478,7 @@ class RaidLobby
 			type = 1;
 			idc = -1;
 			x = safeZoneX + safeZoneW * 0.4425;
-			y = safeZoneY + safeZoneH * 0.63222223;
+			y = safeZoneY + safeZoneH * 0.55888889;
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
