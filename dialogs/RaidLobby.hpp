@@ -1,7 +1,8 @@
 #include "CustomControlClasses.h"
 class RaidLobby
 {
-	idd = -1;
+	idd = 20999;
+	onLoad = "escKeyEH = (_this select 0) displayAddEventHandler [""KeyDown"", ""if (((_this select 1) == 21)) then {true};""]; _this call PENA_Raid_OnLoad;"
 	
 	class ControlsBackground
 	{
@@ -14,7 +15,7 @@ class RaidLobby
 			w = safeZoneW * 0.6125;
 			h = safeZoneH * 1.03666667;
 			style = 48;
-			text = "C:\Dialog creator\staff\tabletempty.png";
+			text = "images\tabletempty.paa";
 			colorBackground[] = {1,1,1,1};
 			colorText[] = {1,1,1,1};
 			font = "PuristaMedium";
@@ -53,10 +54,10 @@ class RaidLobby
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			
 		};
-		class CountDefMembers
+		class CountDefMembers //сччитает кол-во тех кто в лобби защиты
 		{
 			type = 0;
-			idc = -1;
+			idc = 20015;
 			x = safeZoneX + safeZoneW * 0.394375;
 			y = safeZoneY + safeZoneH * 0.25777778;
 			w = safeZoneW * 0.0375;
@@ -101,10 +102,10 @@ class RaidLobby
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			
 		};
-		class CountAttackMembers
+		class CountAttackMembers //считает кол-во тех кто в лобби атаки
 		{
 			type = 0;
-			idc = -1;
+			idc = 20014;
 			x = safeZoneX + safeZoneW * 0.669375;
 			y = safeZoneY + safeZoneH * 0.25777778;
 			w = safeZoneW * 0.0375;
@@ -133,10 +134,10 @@ class RaidLobby
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			
 		};
-		class CountAttackQueue
+		class CountAttackQueue // число игроков в очередни в атаку
 		{
 			type = 0;
-			idc = -1;
+			idc = 20013;
 			x = safeZoneX + safeZoneW * 0.669375;
 			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.0375;
@@ -149,10 +150,10 @@ class RaidLobby
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			
 		};
-		class CountDefQueue
+		class CountDefQueue //число игроков в очереди на деф
 		{
 			type = 0;
-			idc = -1;
+			idc = 20012;
 			x = safeZoneX + safeZoneW * 0.394375;
 			y = safeZoneY + safeZoneH * 0.40444445;
 			w = safeZoneW * 0.0375;
@@ -168,7 +169,7 @@ class RaidLobby
 		class YD
 		{
 			type = 0;
-			idc = -1;
+			idc = 20012;
 			x = safeZoneX + safeZoneW * 0.444375;
 			y = safeZoneY + safeZoneH * 0.45333334;
 			w = safeZoneW * 0.1125;
@@ -184,7 +185,7 @@ class RaidLobby
 		class YA
 		{
 			type = 0;
-			idc = -1;
+			idc = 20011;
 			x = safeZoneX + safeZoneW * 0.444375;
 			y = safeZoneY + safeZoneH * 0.50222223;
 			w = safeZoneW * 0.1125;
@@ -197,10 +198,10 @@ class RaidLobby
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			
 		};
-		class TimerTitle
+		class TimerTitle //до начала или до конца
 		{
 			type = 0;
-			idc = -1;
+			idc = 20010;
 			x = safeZoneX + safeZoneW * 0.444375;
 			y = safeZoneY + safeZoneH * 0.25777778;
 			w = safeZoneW * 0.1125;
@@ -213,10 +214,10 @@ class RaidLobby
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			
 		};
-		class Timer
+		class Timer //часы
 		{
 			type = 0;
-			idc = -1;
+			idc = 20009;
 			x = safeZoneX + safeZoneW * 0.444375;
 			y = safeZoneY + safeZoneH * 0.30666667;
 			w = safeZoneW * 0.1125;
@@ -233,10 +234,10 @@ class RaidLobby
 	};
 	class Controls
 	{
-		class RaidersListBox
+		class RaidersListBox//лобби атакующих
 		{
 			type = 5;
-			idc = -1;
+			idc = 20008;
 			x = safeZoneX + safeZoneW * 0.56875;
 			y = safeZoneY + safeZoneH * 0.29777778;
 			w = safeZoneW * 0.1375;
@@ -262,10 +263,10 @@ class RaidLobby
 			};
 			
 		};
-		class RaidersQueue
+		class RaidersQueue //очередь атаки
 		{
 			type = 5;
-			idc = -1;
+			idc = 20007;
 			x = safeZoneX + safeZoneW * 0.56875;
 			y = safeZoneY + safeZoneH * 0.44444445;
 			w = safeZoneW * 0.1375;
@@ -291,10 +292,10 @@ class RaidLobby
 			};
 			
 		};
-		class DefendersListBox
+		class DefendersListBox// лобби защиты
 		{
 			type = 5;
-			idc = -1;
+			idc = 20006;
 			x = safeZoneX + safeZoneW * 0.29375;
 			y = safeZoneY + safeZoneH * 0.29777778;
 			w = safeZoneW * 0.1375;
@@ -320,10 +321,10 @@ class RaidLobby
 			};
 			
 		};
-		class DefendersQueue
+		class DefendersQueue //очередь защиты
 		{
 			type = 5;
-			idc = -1;
+			idc = 20005;
 			x = safeZoneX + safeZoneW * 0.29375;
 			y = safeZoneY + safeZoneH * 0.44444445;
 			w = safeZoneW * 0.1375;
@@ -349,26 +350,26 @@ class RaidLobby
 			};
 			
 		};
-		class JoinRaiders
+		class JoinAttack
 		{
 			type = 1;
-			idc = -1;
-			x = safeZoneX + safeZoneW * 0.5675;
-			y = safeZoneY + safeZoneH * 0.55888889;
+			idc = 20004;
+			x = safeZoneX + safeZoneW * 0.56875;
+			y = safeZoneY + safeZoneH * 0.56666667;
 			w = safeZoneW * 0.1375;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Присоединиться к атаке";
 			borderSize = 0;
-			colorBackground[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBackground[] = {0.502,0.6,1,1};
+			colorBackgroundActive[] = {0.502,0.6,1,1};
+			colorBackgroundDisabled[] = {0.502,0.6,1,1};
 			colorBorder[] = {0,0,0,0};
-			colorDisabled[] = {0.2,0.2,0.2,0};
-			colorFocused[] = {0.2,0.2,0.2,0};
+			colorDisabled[] = {0,0,0,0};
+			colorFocused[] = {0.502,0.6,1,1};
 			colorShadow[] = {0,0,0,0};
 			colorText[] = {1,1,1,1};
-			font = "TahomaB";
+			font = "PuristaMedium";
 			offsetPressedX = 0.01;
 			offsetPressedY = 0.01;
 			offsetX = 0.01;
@@ -378,28 +379,28 @@ class RaidLobby
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			
+			action = "[20004]remoteExec['PENA_JoinToLobbyRaid', player, false];";
 		};
-		class JoinRaidersSquad
+		class JoinAttackSquad
 		{
 			type = 1;
-			idc = -1;
-			x = safeZoneX + safeZoneW * 0.5675;
-			y = safeZoneY + safeZoneH * 0.60777778;
+			idc = 20003;
+			x = safeZoneX + safeZoneW * 0.56875;
+			y = safeZoneY + safeZoneH * 0.61555556;
 			w = safeZoneW * 0.1375;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Присоединиться отрядом";
 			borderSize = 0;
-			colorBackground[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBackground[] = {0.502,0.6,1,1};
+			colorBackgroundActive[] = {0.502,0.6,1,1};
+			colorBackgroundDisabled[] = {0.502,0.6,1,1};
 			colorBorder[] = {0,0,0,0};
-			colorDisabled[] = {0.2,0.2,0.2,0};
-			colorFocused[] = {0.2,0.2,0.2,0};
+			colorDisabled[] = {0,0,0,0};
+			colorFocused[] = {0.502,0.6,1,1};
 			colorShadow[] = {0,0,0,0};
 			colorText[] = {1,1,1,1};
-			font = "TahomaB";
+			font = "PuristaMedium";
 			offsetPressedX = 0.01;
 			offsetPressedY = 0.01;
 			offsetX = 0.01;
@@ -409,28 +410,28 @@ class RaidLobby
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			
+			action = "[20003]remoteExec['PENA_JoinToLobbyRaid_Squad', player, false];";
 		};
-		class JoinDefenders
+		class JoinDef
 		{
 			type = 1;
-			idc = -1;
-			x = safeZoneX + safeZoneW * 0.2925;
-			y = safeZoneY + safeZoneH * 0.55888889;
+			idc = 20002;
+			x = safeZoneX + safeZoneW * 0.29375;
+			y = safeZoneY + safeZoneH * 0.56666667;
 			w = safeZoneW * 0.1375;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Присоединиться к защите";
 			borderSize = 0;
-			colorBackground[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBackground[] = {0.502,0.6,1,1};
+			colorBackgroundActive[] = {0.502,0.6,1,1};
+			colorBackgroundDisabled[] = {0.502,0.6,1,1};
 			colorBorder[] = {0,0,0,0};
-			colorDisabled[] = {0.2,0.2,0.2,0};
-			colorFocused[] = {0.2,0.2,0.2,0};
+			colorDisabled[] = {0,0,0,0};
+			colorFocused[] = {0.502,0.6,1,1};
 			colorShadow[] = {0,0,0,0};
 			colorText[] = {1,1,1,1};
-			font = "TahomaB";
+			font = "PuristaMedium";
 			offsetPressedX = 0.01;
 			offsetPressedY = 0.01;
 			offsetX = 0.01;
@@ -440,28 +441,29 @@ class RaidLobby
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			
+			action = "[20002]remoteExec['PENA_JoinToLobbyDef', player, false];";
 		};
-		class JoinDefendersSquad
+
+		class JoinDefSquad
 		{
 			type = 1;
-			idc = -1;
-			x = safeZoneX + safeZoneW * 0.2925;
-			y = safeZoneY + safeZoneH * 0.60777778;
+			idc = 20001;
+			x = safeZoneX + safeZoneW * 0.29375;
+			y = safeZoneY + safeZoneH * 0.61555556;
 			w = safeZoneW * 0.1375;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Присоединиться отрядом";
 			borderSize = 0;
-			colorBackground[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBackground[] = {0.502,0.6,1,1};
+			colorBackgroundActive[] = {0.502,0.6,1,1};
+			colorBackgroundDisabled[] = {0.502,0.6,1,1};
 			colorBorder[] = {0,0,0,0};
-			colorDisabled[] = {0.2,0.2,0.2,0};
-			colorFocused[] = {0.2,0.2,0.2,0};
+			colorDisabled[] = {0,0,0,0};
+			colorFocused[] = {0.502,0.6,1,1};
 			colorShadow[] = {0,0,0,0};
 			colorText[] = {1,1,1,1};
-			font = "TahomaB";
+			font = "PuristaMedium";
 			offsetPressedX = 0.01;
 			offsetPressedY = 0.01;
 			offsetX = 0.01;
@@ -471,28 +473,28 @@ class RaidLobby
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			
+			action = "[20001]remoteExec['PENA_JoinToLobbyDef_Squad', player, false];";
 		};
-		class Quit
+		class quit
 		{
 			type = 1;
-			idc = -1;
-			x = safeZoneX + safeZoneW * 0.4425;
-			y = safeZoneY + safeZoneH * 0.55888889;
+			idc = 20000;
+			x = safeZoneX + safeZoneW * 0.44375;
+			y = safeZoneY + safeZoneH * 0.56666667;
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
 			text = "Выйти из лобби";
 			borderSize = 0;
-			colorBackground[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundActive[] = {0.4,0.502,0.902,0.7059};
-			colorBackgroundDisabled[] = {0.2,0.2,0.2,0};
+			colorBackground[] = {0.502,0.6,1,1};
+			colorBackgroundActive[] = {0.502,0.6,1,1};
+			colorBackgroundDisabled[] = {0.502,0.6,1,1};
 			colorBorder[] = {0,0,0,0};
-			colorDisabled[] = {0.2,0.2,0.2,0};
-			colorFocused[] = {0.2,0.2,0.2,0};
+			colorDisabled[] = {0,0,0,0};
+			colorFocused[] = {0.502,0.6,1,1};
 			colorShadow[] = {0,0,0,0};
 			colorText[] = {1,1,1,1};
-			font = "TahomaB";
+			font = "PuristaMedium";
 			offsetPressedX = 0.01;
 			offsetPressedY = 0.01;
 			offsetX = 0.01;
@@ -502,7 +504,7 @@ class RaidLobby
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			
+			action = "[20000, player]remoteExec['PENA_QuitFromLobby_Queue', player, false];";
 		};
 		
 	};

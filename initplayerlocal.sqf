@@ -4,7 +4,18 @@ localRating = 0;
 title = "";
 PlayerSponsorLVL = 0;
 PlayerRank = 0;
+raidLocalLoc = [];
 player setVariable ["groupState", false, true];
+
+PENA_Raid_Handler = {
+  raidLobbyDef = (_this # 0);
+  raidLobbyAt = (_this # 1);
+  raidLobbyQueDef = (_this # 2);
+  raidLobbyQueAt = (_this # 3);
+  "Пришли новые данные по рейд лобби" remoteExec ["diag_log", 2 ,false];
+  [raidLobbyDef]remoteExec["diag_log", 2 , false];
+  [raidLobbyAt]remoteExec["diag_log", 2 , false];
+};
 
 PENA_Group_Handler = {
   sender = (_this # 0);

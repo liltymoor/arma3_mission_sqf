@@ -1,3 +1,5 @@
+groupIndex = [];
+
 
 PENA_RAID_LOBBY_CHECKER = {
 [] spawn  
@@ -49,11 +51,15 @@ if ((player getVariable ["groupState", false]) == false) then {
 PENA_PARTY_LEAVE = { 
 []spawn { 
   if ((player getVariable ["groupState", false]) == true) then { 
+      if (!isNull findDisplay 16000 && count groupIndex != 0) then {
+      lbClear 16003;
+      [groupIndex, player]remoteExec["PENA_LEAVE_HELPER_GRP", units group player, false];
       [player] joinSilent grpNull; 
       player setVariable ["groupState", false, true]; 
+      } else {
       closeDialog 0;
- createDialog "SquadDialog";
-hint "Вы вышли из группы";
+      createDialog "SquadDialog";
+    };
 } else { 
   hint "Вы не в группе"; 
 }; 
@@ -77,11 +83,12 @@ _playerData = [];
          {     
           _index = lbAdd [16003, name _x];     
           _data = lbSetData [16003, _index, _uid];     
-          lbSetTooltip [16003, _index, name _x];     
+          lbSetTooltip [16003, _index, name _x];
+          if (_x == player) then {groupIndex = [16003, _index]};   
           _playerData pushBack _uid;    
         };     
     }forEach units group player;   
-   sleep 2;    
+   sleep 1;    
   };     
   _playerData = [];   
 }; 
@@ -101,11 +108,11 @@ if (side(allPlayers # _i) == playerSide) then {_sidePlayers pushBack allPlayers 
          {     
           _index = lbAdd [16666, name _x];     
           _data = lbSetData [16666, _index, _uid];     
-          lbSetTooltip [16666, _index, name _x];     
+          lbSetTooltip [16666, _index, name _x];
           _playerData pushBack _uid;    
         };     
     }forEach _sidePlayers;  
-   sleep 2;    
+   sleep 1;    
   };  
   _playerData = []; 
 };  
@@ -145,4 +152,24 @@ PENA_CREATE_PARTY = {
 };
 };
 
+};
+
+
+PENA_LEAVE_HELPER_GRP = {
+ if ((_this # 0 # 0) == 16003) then {hint parseText format ["Игрок [ <t size='1' color='#80ff80'>%1</t> ] вышел из группы", name (_this # 1)];};
+   if (!isNull findDisplay 16000) then {
+     if ((_this # 0 # 0) == 16003) then {
+        closeDialog 0;
+        createDialog "SquadDialog";
+      } else {
+      lbDelete [(_this # 0 # 0), (_this # 0 # 1)];
+      };
+    };
+};
+
+PENA_SOMEONE_LEAVES = {
+  if (!isNull findDisplay 16000) then {
+    closeDialog 0;
+    createDialog "SquadDialog";
+  };
 };

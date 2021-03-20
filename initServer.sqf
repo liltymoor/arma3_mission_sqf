@@ -1,3 +1,10 @@
+	raidLobbyAt = [];
+	raidLobbyDef = [];
+
+	raidLobbyQueAt = [];
+	raidLobbyQueDef = []; 
+
+
 	diag_log "Инициализация скриптов выполнена";
 	protocol = "PenaUpal";
 	db_name = "PenaDB";
@@ -23,6 +30,8 @@
  ##:::::::: ##:::. ##:. #######:: ##:::::::'####: ########: ########:
 ..:::::::::..:::::..:::.......:::..::::::::....::........::........::
 */
+
+
 	
 	PENA_LOAD_STATS = {
 	
@@ -487,11 +496,28 @@ addMissionEventHandler ["EntityKilled", {
       };
 }];
 
+
+
 //Удаление трупов при выходе с сервера
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit", "_id", "_uid", "_name"];
 	deleteVehicle _unit;
+	[]remoteExec["PENA_SOMEONE_LEAVES", -2, false];
 }];
 
 call compile preprocessFileLineNumbers "scripts\BattleZone.sqf";
+
+PENA_ARRAY_RAID_HANDLER = {
+	raidLobbyDef = (_this # 0);	
+	raidLobbyAt = (_this # 1);
+	raidLobbyQueDef = (_this # 2);
+	raidLobbyQueAt = (_this # 3);
+	call PENA_RAID_LOAD;
+};
+
+PENA_RAID_LOAD = {
+	[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExecCall["PENA_Raid_Handler", -2, false];
+	[]remoteExec["PENA_Raid_OnLoad", -2, false];
+};
+
 call compile preprocessFileLineNumbers "scripts\CleanUp.sqf";

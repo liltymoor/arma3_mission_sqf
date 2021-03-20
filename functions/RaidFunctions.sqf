@@ -1,8 +1,6 @@
-raidLobbyAt = [];
-raidLobbyDef = [];
+//Максимум 12 Защ. 16 Ат.
+//Минимум 6 Защ. 8 Ат.
 
-raidLobbyQueAt = [];
-raidLobbyQueDef = []; 
 
 FREDDY_FNC_CREATERAID = {
 [] spawn {
@@ -107,6 +105,109 @@ raidLobbyDef = [];
 sleep 15;
 deleteMarker "RaidEllipse";
 deleteMarker "RaidText"; 
+	};
+};
+
+PENA_ARRAY_ONLOAD = {
+	
+};
+
+PENA_Raid_OnLoad = {
+[]spawn{
+
+ _playerData = [];    
+   while {!isNull findDisplay 20999} do   
+  {     
+    {   
+     _uid = getPlayerUID _x;     
+         if (isPlayer _x && _playerData find _uid == -1) then     
+         {    
+          _index = lbAdd [20006, name _x];     
+          _data = lbSetData [20006, _index, _uid];     
+          lbSetTooltip [20006, _index, name _x]; 
+          if (_x == player) then {raidLocalLoc = [20006, _index]};     
+          _playerData pushBack _uid;    
+        };     
+    }forEach raidLobbyDef;  
+		sleep 2;   
+  };  
+  _playerData = []; 
+};  
+};
+
+PENA_JoinToLobbyRaid = {
+	_idc = (_this # 0);
+
+};
+
+PENA_JoinToLobbyDef = {
+	_idc = (_this # 0);
+	if (count raidLobbyDef < 12 && raidLobbyDef find player == -1) then {
+		raidLobbyDef pushBack player;
+		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
+	} else {
+		if (raidLobbyDef find player == -1 && raidLobbyQueDef find player == -1) then {
+		raidLobbyQueDef pushBack player;
+		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
+	} else { hint "Вы уже зашли в лобби"};
+	};
+
+};
+
+PENA_JoinToLobbyRaid_Squad = {
+	
+
+};
+
+
+
+PENA_JoinToLobbyDef_Squad = {
+	
+
+};
+
+PENA_QuitFromLobby_Queue = {
+    _sender = (_this # 1);
+    
+    switch (true) do { 
+        case (raidLobbyDef find player != -1) : { raidLobbyDef deleteAt (raidLobbyDef find player);
+        [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
+        if (!isNull findDisplay 20999) then {
+        lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
+    };
+    [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
+    }; 
+        case (raidLobbyAt find player != -1) : {raidLobbyAt deleteAt (raidLobbyAt find player);
+        [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
+        if (!isNull findDisplay 20999) then {
+        lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
+    };
+    [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
+    };
+        case (raidLobbyQueDef find player != -1) : {raidLobbyAt deleteAt (raidLobbyAt find player);
+        [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
+        if (!isNull findDisplay 20999) then {
+        lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
+    };
+    [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
+    }; 
+        case (raidLobbyQueAt find player != -1) : {raidLobbyAt deleteAt (raidLobbyAt find player);
+        [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
+        if (!isNull findDisplay 20999) then {
+        lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
+    };
+    [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
+    }; 
+        default { hint "Вы не находитесь в лобби" }; 
+    };
+    closeDialog 0;
+    createDialog "RaidLobby";
+};
+
+PENA_QuitFromLobby_Helper = {
+	_sender = (_this # 0);
+	if (!isNull findDisplay 20999) then {
+		lbDelete [(_this # 1), (_this # 2)];
 	};
 };
 

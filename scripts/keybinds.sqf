@@ -16,7 +16,30 @@ KeyPressScr = {
 		player setVariable ["groupState", true, true];
 		player setVariable ["PendingInvite", false, true];
 		hint parseText format ["Вы вошли в группу [ <t size='1' color='#80ff80'>%1</t> ]!", str (group player)];
+		call {
+		[]spawn {
 
+
+if ((player getVariable ["groupState", false]) == true) then { 
+_playerData = [];  
+ while {!isNull findDisplay 16000} do   //ГРУППА 
+  {     
+    {   
+     _uid = getPlayerUID _x;     
+         if (isPlayer _x && _playerData find _uid == -1) then     
+         {     
+          _index = lbAdd [16003, name _x];     
+          _data = lbSetData [16003, _index, _uid];     
+          lbSetTooltip [16003, _index, name _x];
+          if (_x == player) then {_groupIndex = [16003, _index]};   
+          _playerData pushBack _uid;    
+        };     
+    }forEach units group player;   
+   sleep 1;    
+  };     
+  _playerData = [];   
+}; 
+}; };
 		sender = nil;
 	};
 	}; //U	

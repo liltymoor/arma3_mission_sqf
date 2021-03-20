@@ -1,4 +1,11 @@
+raidLobbyAt = [];
+raidLobbyDef = [];
+
+raidLobbyQueAt = [];
+raidLobbyQueDef = []; 
+
 //Отношения между фракциями
+
 east setFriend [west, 1];
 east setFriend [resistance, 1];
 east setFriend [civilian, 1];
@@ -19,6 +26,8 @@ civilian setFriend [resistance, 1];
 3 enableChannel [false, false];
 4 enableChannel [false, false];
 5 enableChannel [false, false];
+
+call compile preprocessFileLineNumbers "functions\RaidFunctions.sqf";
 
 MISSION_ROOT = call {
     private "_arr";
@@ -51,3 +60,4 @@ diag_log "Отключение эскейпа работает";
     _h
   }]
 };
+

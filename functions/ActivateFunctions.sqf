@@ -9,4 +9,3 @@ call compile preprocessFileLineNumbers "Functions\invItemsFunctions.sqf";
 call compile preprocessFileLineNumbers "Functions\RewardMsg.sqf";
 call compile preprocessFileLineNumbers "functions\RaidFunctions.sqf";
 call compile preprocessFileLineNumbers "functions\SquadFunctions.sqf";
-call compile preprocessFileLineNumbers "functions\RaidFunctions.sqf";
