@@ -1,4 +1,4 @@
-		raidLobbyAt = [];
+	raidLobbyAt = [];
 	raidLobbyDef = [];
 
 	raidLobbyQueAt = [];
