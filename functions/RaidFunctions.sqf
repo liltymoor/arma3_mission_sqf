@@ -18,8 +18,8 @@ createMarker ["RaidText",BaseFlag];
 "RaidText" setMarkerColor "ColorWhite";
 
 //Тут у нас игроки переносятся на стартовые позиции и получают переменные
-//{_x setVariable ["Defender", true, true];} forEach raidLobbyDef
-//{_x setVariable ["Attacker", true, true];} forEach raidLobbyAt
+{_x setVariable ["Defender", true, true];} forEach raidLobbyDef;
+{_x setVariable ["Attacker", true, true];} forEach raidLobbyAt;
 //{_x setPos base} forEach raidLobbyDef
 //{_x setPos base} forEach raidLobbyAt
 //{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef
@@ -96,6 +96,8 @@ hint "Победа защиты";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа защиты";
+if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
+if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
 raidLobbyAt = [];
 raidLobbyDef = [];
 sleep 15;
@@ -113,6 +115,8 @@ hint "Победа атаки";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
+if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
+if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
 raidLobbyAt = [];
 raidLobbyDef = [];
 sleep 15;
