@@ -59,8 +59,7 @@ ctrlSetText [20009, _t1];
 	};
 sleep 1; 
 };
-//if (count raidLobbyDef > 1) then {call FREDDY_FNC_ENDRAIDDEF;} else {FREDDY_FNC_ENDRAIDDEF};
-call FREDDY_FNC_ENDRAIDDEF;
+if (count raidLobbyDef > 0) then {call FREDDY_FNC_ENDRAIDDEF;} else {call FREDDY_FNC_ENDRAIDATTACK;};
 	};
 };
 
