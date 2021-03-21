@@ -45,7 +45,7 @@ sleep 1;
 //Тут отчет обратный до конца рейда
 missionNamespace setVariable ["Raid",true, true];
 _time = 15; 
-while {_time > 0 && missionNamespace getVariable ["Raid", false]} do { 
+while {_time > 0 && missionNamespace getVariable ["Raid", false] && count raidLobbyDef > 0 && count raidLobbyAt > 0} do { 
 _time = _time - 1;   
 _s = format["Рейд закончится через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
