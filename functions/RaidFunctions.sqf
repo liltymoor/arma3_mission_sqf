@@ -114,6 +114,7 @@ PENA_ARRAY_ONLOAD = {
 
 PENA_Raid_OnLoad = {  
 lbClear 20006;
+lbClear 20008;
 []spawn {
 if (!isNull findDisplay 20999) then {
  waitUntil {!isNull findDisplay 20999};
@@ -131,15 +132,46 @@ if (!isNull findDisplay 20999) then {
     }forEach raidLobbyDef;  
 };
 };
+
+[]spawn {
+if (!isNull findDisplay 20999) then {
+ waitUntil {!isNull findDisplay 20999};
+ 	_playerData = [];
+    {   
+     _uid = getPlayerUID _x;     
+         if (isPlayer _x && _playerData find _x == -1) then     
+         {    
+          _index = lbAdd [20008, name _x];     
+          _data = lbSetData [20008, _index, _uid];     
+          lbSetTooltip [20008, _index, name _x]; 
+          if (_x == player) then {raidLocalLoc = [20008, _index]};
+          _playerData pushBack _x;        
+        };     
+    }forEach raidLobbyAt;  
+};
+};
 };
 
 PENA_JoinToLobbyRaid = {
-	_idc = (_this # 0);
-
+_idc = (_this # 0);
+	if (raidLobbyDef find player == -1) then {
+	if (count raidLobbyAt < 12 && raidLobbyAt find player == -1) then {
+		raidLobbyAt pushBack player;
+		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
+	} else {
+		if (raidLobbyAt find player == -1 && raidLobbyQueAt find player == -1) then {
+		raidLobbyQueAt pushBack player;
+		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
+	} else { hint "Вы уже зашли в лобби"};
+	};
+} else {
+	hint "Вы уже числитесь в другой команде"
+};
 };
 
 PENA_JoinToLobbyDef = {
 	_idc = (_this # 0);
+	if (raidLobbyAt find player == -1) then {
 	if (count raidLobbyDef < 12 && raidLobbyDef find player == -1) then {
 		raidLobbyDef pushBack player;
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
@@ -149,7 +181,9 @@ PENA_JoinToLobbyDef = {
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else { hint "Вы уже зашли в лобби"};
 	};
-
+} else {
+	hint "Вы уже числитесь в другой команде";
+};
 };
 
 PENA_JoinToLobbyRaid_Squad = {
