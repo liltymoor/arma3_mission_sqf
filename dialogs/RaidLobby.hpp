@@ -207,7 +207,7 @@ class RaidLobby
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 2;
-			text = "До начала";
+			text = "Ожидание";
 			colorBackground[] = {0,0,0,0.7};
 			colorText[] = {1,1,1,1};
 			font = "PuristaMedium";
@@ -223,7 +223,7 @@ class RaidLobby
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.08555556;
 			style = 2;
-			text = "Тут будет время";
+			text = "";
 			colorBackground[] = {0,0,0,0.7};
 			colorText[] = {1,1,1,1};
 			font = "PuristaMedium";
