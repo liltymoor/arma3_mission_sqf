@@ -112,27 +112,25 @@ PENA_ARRAY_ONLOAD = {
 	
 };
 
-PENA_Raid_OnLoad = {
-[]spawn{
-
- _playerData = [];    
-   while {!isNull findDisplay 20999} do   
-  {     
+PENA_Raid_OnLoad = {  
+lbClear 20006;
+[]spawn {
+if (!isNull findDisplay 20999) then {
+ waitUntil {!isNull findDisplay 20999};
+ 	_playerData = [];
     {   
      _uid = getPlayerUID _x;     
-         if (isPlayer _x && _playerData find _uid == -1) then     
+         if (isPlayer _x && _playerData find _x == -1) then     
          {    
           _index = lbAdd [20006, name _x];     
           _data = lbSetData [20006, _index, _uid];     
           lbSetTooltip [20006, _index, name _x]; 
-          if (_x == player) then {raidLocalLoc = [20006, _index]};     
-          _playerData pushBack _uid;    
+          if (_x == player) then {raidLocalLoc = [20006, _index]};
+          _playerData pushBack _x;        
         };     
     }forEach raidLobbyDef;  
-		sleep 2;   
-  };  
-  _playerData = []; 
-};  
+};
+};
 };
 
 PENA_JoinToLobbyRaid = {
@@ -200,8 +198,6 @@ PENA_QuitFromLobby_Queue = {
     }; 
         default { hint "Вы не находитесь в лобби" }; 
     };
-    closeDialog 0;
-    createDialog "RaidLobby";
 };
 
 PENA_QuitFromLobby_Helper = {

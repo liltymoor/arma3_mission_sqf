@@ -517,7 +517,7 @@ PENA_ARRAY_RAID_HANDLER = {
 
 PENA_RAID_LOAD = {
 	[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExecCall["PENA_Raid_Handler", -2, false];
-	[]remoteExec["PENA_Raid_OnLoad", -2, false];
+	[]remoteExec["PENA_Raid_OnLoad", -2 , false];
 };
 
 call compile preprocessFileLineNumbers "scripts\CleanUp.sqf";
