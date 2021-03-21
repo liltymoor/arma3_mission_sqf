@@ -31,7 +31,14 @@ while {_time > 0} do {
 _time = _time - 1;   
 _s = format["Рейд начнется через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
-"RaidText" setMarkerText _t;  
+"RaidText" setMarkerText _t;
+
+if (!isNull findDisplay 20999) then {
+_s1 = format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+_t1 = str(_s1);
+ctrlSetText [20010, "До начала"]; 
+ctrlSetText [20009, _t1];     
+	};
 sleep 1; 
 };
 
@@ -42,7 +49,14 @@ while {_time > 0 && missionNamespace getVariable ["Raid", false]} do {
 _time = _time - 1;   
 _s = format["Рейд закончится через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
-"RaidText" setMarkerText _t;  
+"RaidText" setMarkerText _t;
+
+if (!isNull findDisplay 20999) then {
+_s1 = format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+_t1 = str(_s1);
+ctrlSetText [20010, "До конца"]; 
+ctrlSetText [20009, _t1];   
+	};
 sleep 1; 
 };
 //if (count raidLobbyDef > 1) then {call FREDDY_FNC_ENDRAIDDEF;} else {FREDDY_FNC_ENDRAIDDEF};
