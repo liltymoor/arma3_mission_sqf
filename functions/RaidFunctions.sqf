@@ -26,7 +26,7 @@ createMarker ["RaidText",BaseFlag];
 //{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt
 
 //Тут отчет обратный до начала рейда
-_time = 10; 
+_time = 500; 
 while {_time > 0} do { 
 _time = _time - 1;   
 _s = format["Рейд начнется через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
@@ -284,6 +284,25 @@ this addAction
 	{
 		params ["_target", "_caller", "_actionId", "_arguments"];
 		call FREDDY_FNC_CREATERAID;
+	},
+	nil,		
+	1.5,		
+	true,		
+	true,		
+	"",			
+	"true", 	
+	10,			
+	false,		
+	"",			
+	""			
+];
+
+this addAction
+[
+	"Включить",
+	{
+		params ["_target", "_caller", "_actionId", "_arguments"];
+		[] remoteExec ["FREDDY_FNC_CREATERAID", 2, true];
 	},
 	nil,		
 	1.5,		
