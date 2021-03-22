@@ -26,19 +26,14 @@ createMarker ["RaidText",BaseFlag];
 //{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt
 
 //Тут отчет обратный до начала рейда
-_time = 500; 
+_time = 120; 
 while {_time > 0} do { 
 _time = _time - 1;   
 _s = format["Рейд начнется через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
 "RaidText" setMarkerText _t;
 
-if (!isNull findDisplay 20999) then {
-_s1 = format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
-_t1 = str(_s1);
-ctrlSetText [20010, "До начала"]; 
-ctrlSetText [20009, _t1];     
-	};
+[_time] remoteExec ["Freddy_Fnc_UpdateTabletUntilStart", -2, false];
 sleep 1; 
 };
 
@@ -50,16 +45,30 @@ _time = _time - 1;
 _s = format["Рейд закончится через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
 "RaidText" setMarkerText _t;
+[_time] remoteExec ["Freddy_Fnc_UpdateTabletUntilEnd", -2, false];
+sleep 1; 
+};
+if (count raidLobbyDef > 0) then {call FREDDY_FNC_ENDRAIDDEF;} else {call FREDDY_FNC_ENDRAIDATTACK;};
+	};
+};
 
+Freddy_Fnc_UpdateTabletUntilStart = {
+_time = (_this select 0);
+if (!isNull findDisplay 20999) then {
+_s1 = format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+_t1 = str(_s1);
+ctrlSetText [20010, "До начала"]; 
+ctrlSetText [20009, _t1];   
+	};
+};
+
+Freddy_Fnc_UpdateTabletUntilEnd = {
+_time = (_this select 0);
 if (!isNull findDisplay 20999) then {
 _s1 = format["%1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t1 = str(_s1);
 ctrlSetText [20010, "До конца"]; 
 ctrlSetText [20009, _t1];   
-	};
-sleep 1; 
-};
-if (count raidLobbyDef > 0) then {call FREDDY_FNC_ENDRAIDDEF;} else {call FREDDY_FNC_ENDRAIDATTACK;};
 	};
 };
 
