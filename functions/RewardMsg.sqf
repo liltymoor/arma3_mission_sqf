@@ -62,3 +62,15 @@ HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center'
 [_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
 [_player, _randomRating]remoteExec["PENA_DB_SAVERATING" , 2 , false];
 };
+
+FREDDY_FNC_GETRANDOM_MNYRAIDWIN = {
+  _UID = getPlayerUID player;
+  _player = player;
+  _killer = (_this select 0);
+  _randomMoney = [random[30000, 30000, 30000], 0] call BIS_fnc_cutDecimals;
+  _randomRating = [random[150, 150, 150], 0] call BIS_fnc_cutDecimals;
+
+HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ПОБЕДА В РЕЙДЕ</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
+[_randomMoney, _UID, _player]remoteExec["PENA_DB_SAVEMONEY", 2, false];
+[_player, _randomRating]remoteExec["PENA_DB_SAVERATING" , 2 , false];
+};

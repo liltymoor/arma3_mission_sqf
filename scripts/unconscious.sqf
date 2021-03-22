@@ -64,8 +64,8 @@ sleep 120;
 _unit setVariable ["CantDie", false, true];
     };
      if (lifeState _unit == "Incapacitated") then {
-      if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
-      if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+      if ((player getVariable ["Defender", false])==true) then {player setVariable ["Defender", nil, true];};
+      if ((player getVariable ["Attacker", false])==true) then {player setVariable ["Attacker", nil, true];};
      _unit setDamage 1;
     } else {};
   };

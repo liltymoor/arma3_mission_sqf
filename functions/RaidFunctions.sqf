@@ -22,8 +22,8 @@ createMarker ["RaidText",BaseFlag];
 {_x setVariable ["Attacker", true, true];} forEach raidLobbyAt;
 //{_x setPos base} forEach raidLobbyDef
 //{_x setPos base} forEach raidLobbyAt
-//{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef
-//{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt
+//{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
+//{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
 //Тут отчет обратный до начала рейда
 _time = 30; 
@@ -48,6 +48,7 @@ _t = str(_s);
 [_time] remoteExec ["Freddy_Fnc_UpdateTabletUntilEnd", -2, false];
 sleep 1; 
 };
+
 switch (true) do {
 	case (count raidLobbyAt > 0 && (missionNamespace getVariable ["Raid", false]) == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
 	case (count raidLobbyDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
@@ -105,17 +106,18 @@ if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missi
 //Скрипт победы защиты
 FREDDY_FNC_ENDRAIDDEF = {
 [] spawn {
-_playersArray = allUnits inAreaArray "RaidEllipse";
-hint "Победа защиты"; 
-{_x setDamage 1} forEach _playersArray;
+_playersArray = allUnits inAreaArray "RaidEllipse"; 
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа защиты";
 if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
-raidLobbyAt = [];
-raidLobbyDef = [];
+{["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyDef;
+{["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyAt;
+{[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", _x, false];}forEach raidLobbyDef;
 sleep 15;
+{_x setDamage 1} forEach _playersArray;
+call FREDDY_FNC_NullArrayServer;
 deleteMarker "RaidEllipse";
 deleteMarker "RaidText"; 
 	};
@@ -125,28 +127,35 @@ deleteMarker "RaidText";
 FREDDY_FNC_ENDRAIDATTACK = {
 [] spawn {
 _playersArray = allUnits inAreaArray "RaidEllipse";
-hint "Победа атаки"; 
-{_x setDamage 1} forEach _playersArray;
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
 if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
-raidLobbyAt = [];
-raidLobbyDef = [];
+{["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyDef;
+{["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyAt;
+{[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", _x, false];}forEach raidLobbyAt;
 sleep 15;
+{_x setDamage 1} forEach _playersArray;
+call FREDDY_FNC_NullArrayServer;
 deleteMarker "RaidEllipse";
 deleteMarker "RaidText"; 
 	};
+};
+
+FREDDY_FNC_NullArrayServer = {
+raidLobbyAt = [];
+raidLobbyDef = [];
+[raidLobbyAt, raidLobbyDef] remoteExec ["PENA_ARRAY_RAID_HANDLER", 2];
 };
 
 PENA_ARRAY_ONLOAD = {
 	
 };
 
-PENA_Raid_OnLoad = {  
-lbClear 20006;
-lbClear 20008;
+PENA_Raid_OnLoad = {
+ lbClear 20006;
+ lbClear 20008;  
 []spawn {
 if (!isNull findDisplay 20999) then {
  waitUntil {!isNull findDisplay 20999};
@@ -279,7 +288,7 @@ this addAction
 	"Захватить",
 	{
 		params ["_target", "_caller", "_actionId", "_arguments"];
-		if (!(missionNamespace getVariable ["CaptureInProgress", false]) && missionNamespace getVariable ["Raid", false]) then {call FREDDY_FNC_CAPTUREFLAG;};
+		if ((missionNamespace getVariable ["CaptureInProgress", false]) == false && (missionNamespace getVariable ["Raid", false]) == true && (player getVariable ["Attacker", false])==true) then {call FREDDY_FNC_CAPTUREFLAG;};
 	},
 	nil,		
 	1.5,		

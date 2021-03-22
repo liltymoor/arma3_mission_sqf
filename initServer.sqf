@@ -2,7 +2,9 @@
 	raidLobbyDef = [];
 
 	raidLobbyQueAt = [];
-	raidLobbyQueDef = []; 
+	raidLobbyQueDef = [];
+
+	waitingForRewardArray = []; 
 
 
 	diag_log "Инициализация скриптов выполнена";
@@ -512,7 +514,6 @@ PENA_ARRAY_RAID_HANDLER = {
 	raidLobbyAt = (_this # 1);
 	raidLobbyQueDef = (_this # 2);
 	raidLobbyQueAt = (_this # 3);
-
 	call PENA_RAID_LOAD;
 };
 
