@@ -311,8 +311,8 @@ PENA_SHOP_TRANSACTION = { //Покупка техники -бабки + спав
 	_nearestTrg = [_trg, _player] call BIS_fnc_nearestPosition;
 	_entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
 
-	if ((_player getVariable "CouldntBuy") != true) exitWith {"Подождите немного" remoteExec ["hint", _player, false];};
-	[_player,["CouldntBuy", false, false]] remoteExec ["setVariable", _player, false];
+	if ((_player getVariable ["CouldntBuy", false]) != true) exitWith {"Подождите немного" remoteExec ["hint", _player, false];};
+	_player setVariable ["CouldntBuy", nil, true];
 	if (count (_entitiesArray)!=0) exitWith {"Место занято" remoteExec ["hint", _player, false];}; 
 
 	_CurrentMoney = [_UID, _player]call PENA_DB_LOADMONEY;
@@ -455,8 +455,8 @@ _UID = (_this select 2);
 _zaloopa1 = (_this select 3);
 _player = (_this select 4);
 _text = parsetext format ["Вы поставили <t size='1' color='#80ff80'>%1</t> в гараж", _vehName];
-if (_player getVariable ["CouldntStore", true]) then {
-	[_player,["CouldntStore", false, false]] remoteExec ["setVariable", _player, false];
+if ((_player getVariable ["CouldntStore", false]) != false) then {
+	_player setVariable ["CouldntStore", nil, true];
   switch (true) do {
   case (_zaloopa1 isKindOf "I_MBT_03_cannon_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Кума
   case (_zaloopa1 isKindOf "O_MBT_04_command_F") : {deleteVehicle _entitiesArray;[[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Ангара

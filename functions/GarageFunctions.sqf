@@ -203,8 +203,8 @@ Freddy_fnc_checkArmoredveh = {
   _player = player; 
   _UID = getPlayerUID player; 
   _transaction = globalCost; 
-  if ((_player getVariable "CouldntBuy") != false) exitWith {hint "Подождите немного";};
-  _player setVariable ["CouldntBuy", true, false];
+  if ((_player getVariable ["CouldntBuy", false]) != false) exitWith {hint "Подождите немного";};
+  _player setVariable ["CouldntBuy", true, true];
   [_player, _UID, _transaction, _index, _vehicle]remoteExec["PENA_SHOP_TRANSACTION", 2 ,false];
 };
 
@@ -219,17 +219,17 @@ _UID = getPlayerUID player;
 _zaloopa1 = typeof _entitiesArray;
 _vehName = getText (configFile >> "CfgVehicles" >> _zaloopa1 >> "displayname");
 _veh = _entitiesArray getVariable ["keys", 50];
-if (_player getVariable ["StoreCooldown", false]) exitWith {hint "Подождите немного";};
+if ((_player getVariable ["StoreCooldown", false]) != false) exitWith {hint "Подождите немного";};
 	call Freddy_fnc_StoreCooldown;
 if (count crew _entitiesArray > 0) exitWith {hint "В технике кто-то есть";};
-if (_player getVariable ["CouldntStore", false]) then {hint "Подождите немного";} else {
+if ((_player getVariable ["CouldntStore", false]) != false) then {hint "Подождите немного";} else {
   if (typeOf _entitiesArray in _vehicle && _UID == _veh && typeOf _entitiesArray != "") then {
-	_player setVariable ["CouldntStore", true, false];
+	_player setVariable ["CouldntStore", true, true];
   {moveOut _x} forEach crew _entitiesArray;
 	[_entitiesArray, _vehName, _UID, _zaloopa1, _player] remoteExec ["Freddy_fnc_delvehServer", 2, false];
 } else {
     "Рядом нет техники, которую можно поставить" remoteExec ["hint", player , false];
-    _player setVariable ["CouldntStore", false, false];
+    _player setVariable ["CouldntStore", nil, true];
     };
   };
 };
@@ -237,8 +237,8 @@ if (_player getVariable ["CouldntStore", false]) then {hint "Подождите 
 Freddy_fnc_StoreCooldown = {
 [] spawn {
 _unit = player;
-_unit setVariable ["StoreCooldown", true, false];
+_unit setVariable ["StoreCooldown", true, true];
 sleep 10;
-_unit setVariable ["StoreCooldown", false, false];
+_unit setVariable ["StoreCooldown", nil, true];
 	};
 };
