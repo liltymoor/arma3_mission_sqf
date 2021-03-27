@@ -158,15 +158,7 @@ PENA_ARRAY_ONLOAD = {
 	
 };
 
-PENA_Raid_OnLoad = {
-  "Пришли новые данные по рейд лобби" remoteExec ["diag_log", 2 ,false];
-  "================================" remoteExec ["diag_log", 2 ,false];
-  [raidLobbyDef]remoteExec["diag_log", 2 , false];
-  [raidLobbyAt]remoteExec["diag_log", 2 , false];
-  [raidLobbyQueDef] remoteExec ["diag_log", 2 ,false];
-  [raidLobbyQueAt] remoteExec ["diag_log", 2 ,false];
-  "================================" remoteExec ["diag_log", 2 ,false];
-  
+PENA_Raid_OnLoad = {  
  lbClear 20006;
  lbClear 20008;
  lbClear 20005;
@@ -341,18 +333,22 @@ PENA_PLAYER_LOGISTIC = {
 []spawn { 
 while {true} do { 
   _buffer = count raidLobbyAt; 
-  waitUntil { _buffer != count raidLobbyAt }; 
+  waitUntil { _buffer != count raidLobbyAt };
+  for "_i" from 0 to  (_buffer - count raidLobbyAt) do {
      raidLobbyAt pushBack raidLobbyQueAt # 0; 
      raidLobbyQueAt deleteAt 0; 
+ 	 };
     }; 
    };
 
 []spawn { 
 while {true} do { 
   _buffer = count raidLobbyDef; 
-  waitUntil { _buffer != count raidLobbyDef }; 
+  waitUntil { _buffer != count raidLobbyDef };
+  for "_i" from 0 to (_buffer - count raidLobbyAt) do {
      raidLobbyDef pushBack raidLobbyQueDef # 0; 
      raidLobbyQueDef deleteAt 0; 
+ 	 };
     }; 
    };
 };
