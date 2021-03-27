@@ -20,6 +20,8 @@ createMarker ["RaidText",BaseFlag];
 //Тут у нас игроки переносятся на стартовые позиции и получают переменные
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyDef;
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
+_countDef = count (allPlayers select {_x getVariable ["Defender", false]});
+_countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
 //{_x setPos base} forEach raidLobbyDef
 //{_x setPos base} forEach raidLobbyAt
 //{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
@@ -41,7 +43,9 @@ sleep 1;
 missionNamespace setVariable ["Raid",true, true];
 _time = 300;
 
-while {_time > 0 && (missionNamespace getVariable ["Raid", false]) == true && {(_x getVariable ["Defender", false]) != false} forEach allPlayers && {(_x getVariable ["Attacker", false]) != false} forEach allPlayers} do { 
+while {_time > 0 && (missionNamespace getVariable ["Raid", false]) == true && _countDef > 0 && _countAt > 0} do {
+_countDef = count (allPlayers select {_x getVariable ["Defender", false]});
+_countAt = count (allPlayers select {_x getVariable ["Attacker", false]}); 
 _time = _time - 1;   
 _s = format["Рейд закончится через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
@@ -51,10 +55,10 @@ sleep 1;
 };
 
 switch (true) do {
-	case ({(_x getVariable ["Attacker", false]) != false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
-	case ({(_x getVariable ["Defender", false]) != false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
-	case ({(_x getVariable ["Attacker", false]) != false} forEach allPlayers && {(_x getVariable ["Defender", false]) == false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что убиты все защитники
-	case ({(_x getVariable ["Attacker", false]) == false} forEach allPlayers && {(_x getVariable ["Defender", false]) != false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что убиты все атакующие
+	case (_countAt > 0 && (missionNamespace getVariable ["Raid", false]) == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
+	case (_countDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
+	case (_countAt > 0 && _countDef == 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что убиты все защитники
+	case (_countAt == 0 && _countDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что убиты все атакующие
 	default {}; 
 };
 	};
@@ -147,7 +151,7 @@ deleteMarker "RaidText";
 FREDDY_FNC_NullArrayServer = {
 raidLobbyAt = [];
 raidLobbyDef = [];
-[raidLobbyAt, raidLobbyDef] remoteExec ["PENA_ARRAY_RAID_HANDLER", 2];
+[raidLobbyAt, raidLobbyDef, raidLobbyQueDef, raidLobbyQueAt] remoteExec ["PENA_ARRAY_RAID_HANDLER", 2];
 };
 
 PENA_ARRAY_ONLOAD = {
