@@ -7,14 +7,20 @@ PlayerRank = 0;
 raidLocalLoc = [];
 player setVariable ["groupState", false, true];
 
+[]remoteExec["PENA_RAID_LOAD", 2, false];
+
 PENA_Raid_Handler = {
   raidLobbyDef = (_this # 0);
   raidLobbyAt = (_this # 1);
   raidLobbyQueDef = (_this # 2);
   raidLobbyQueAt = (_this # 3);
   "Пришли новые данные по рейд лобби" remoteExec ["diag_log", 2 ,false];
+  "================================" remoteExec ["diag_log", 2 ,false];
   [raidLobbyDef]remoteExec["diag_log", 2 , false];
   [raidLobbyAt]remoteExec["diag_log", 2 , false];
+  [raidLobbyQueDef] remoteExec ["diag_log", 2 ,false];
+  [raidLobbyQueAt] remoteExec ["diag_log", 2 ,false];
+  "================================" remoteExec ["diag_log", 2 ,false];
 };
 
 PENA_Group_Handler = {
@@ -132,6 +138,7 @@ PENA_GET_PROFILE = {
 
 };
 
+call PENA_PLAYER_LOGISTIC;
 
 player addRating 99999999;
 player enableFatigue false;

@@ -6,7 +6,6 @@
 
 	waitingForRewardArray = []; 
 
-
 	diag_log "Инициализация скриптов выполнена";
 	protocol = "PenaUpal";
 	db_name = "PenaDB";
@@ -500,10 +499,18 @@ addMissionEventHandler ["EntityKilled", {
 
 
 
+
 //Удаление трупов при выходе с сервера
 addMissionEventHandler ["HandleDisconnect", {
 	params ["_unit", "_id", "_uid", "_name"];
 	deleteVehicle _unit;
+	switch (true) do { 
+		case (raidLobbyDef find _uid != -1) : { raidLobbyDef deleteAt (raidLobbyDef find _uid); call PENA_RAID_LOAD;}; 
+		case (raidLobbyAt find _uid != -1) : {  raidLobbyAt deleteAt (raidLobbyAt find _uid); call PENA_RAID_LOAD;};
+		case (raidLobbyQueDef find _uid != -1) : {  raidLobbyQueDef deleteAt (raidLobbyQueDef find _uid); call PENA_RAID_LOAD;};
+		case (raidLobbyQueAt find _uid != -1) : {  raidLobbyQueAt deleteAt (raidLobbyQueAt find _uid); call PENA_RAID_LOAD; };
+		default {}; 
+	};
 	[]remoteExec["PENA_SOMEONE_LEAVES", -2, false];
 }];
 

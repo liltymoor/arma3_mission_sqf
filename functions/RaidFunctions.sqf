@@ -18,8 +18,8 @@ createMarker ["RaidText",BaseFlag];
 "RaidText" setMarkerColor "ColorWhite";
 
 //Тут у нас игроки переносятся на стартовые позиции и получают переменные
-{_x setVariable ["Defender", true, true];} forEach raidLobbyDef;
-{_x setVariable ["Attacker", true, true];} forEach raidLobbyAt;
+{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyDef;
+{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
 //{_x setPos base} forEach raidLobbyDef
 //{_x setPos base} forEach raidLobbyAt
 //{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
@@ -39,8 +39,9 @@ sleep 1;
 
 //Тут отчет обратный до конца рейда
 missionNamespace setVariable ["Raid",true, true];
-_time = 300; 
-while {_time > 0 && (missionNamespace getVariable ["Raid", false]) == true && count raidLobbyDef > 0 && count raidLobbyAt > 0} do { 
+_time = 300;
+
+while {_time > 0 && (missionNamespace getVariable ["Raid", false]) == true && {(_x getVariable ["Defender", false]) != false} forEach allPlayers && {(_x getVariable ["Attacker", false]) != false} forEach allPlayers} do { 
 _time = _time - 1;   
 _s = format["Рейд закончится через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 _t = str(_s);
@@ -50,10 +51,10 @@ sleep 1;
 };
 
 switch (true) do {
-	case (count raidLobbyAt > 0 && (missionNamespace getVariable ["Raid", false]) == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
-	case (count raidLobbyDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
-	case (count raidLobbyAt > 0 && count raidLobbyDef == 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что убиты все защитники
-	case (count raidLobbyAt == 0 && count raidLobbyDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что убиты все атакующие
+	case ({(_x getVariable ["Attacker", false]) != false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
+	case ({(_x getVariable ["Defender", false]) != false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
+	case ({(_x getVariable ["Attacker", false]) != false} forEach allPlayers && {(_x getVariable ["Defender", false]) == false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что убиты все защитники
+	case ({(_x getVariable ["Attacker", false]) == false} forEach allPlayers && {(_x getVariable ["Defender", false]) != false} forEach allPlayers && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что убиты все атакующие
 	default {}; 
 };
 	};
@@ -110,11 +111,11 @@ _playersArray = allUnits inAreaArray "RaidEllipse";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа защиты";
-if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
-if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
-{["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyDef;
-{["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyAt;
-{[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", _x, false];}forEach raidLobbyDef;
+if ((player getVariable ["Defender", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
+if ((player getVariable ["Attacker", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+{["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
+{["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+{[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyDef;
 sleep 15;
 {_x setDamage 1} forEach _playersArray;
 call FREDDY_FNC_NullArrayServer;
@@ -130,11 +131,11 @@ _playersArray = allUnits inAreaArray "RaidEllipse";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
-if ((player getVariable ["Defender", false])==true) then {{_x setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
-if ((player getVariable ["Attacker", false])==true) then {{_x setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
-{["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyDef;
-{["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", _x, false]} forEach raidLobbyAt;
-{[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", _x, false];}forEach raidLobbyAt;
+if ((player getVariable ["Defender", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
+if ((player getVariable ["Attacker", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+{["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
+{["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+{[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyAt;
 sleep 15;
 {_x setDamage 1} forEach _playersArray;
 call FREDDY_FNC_NullArrayServer;
@@ -154,21 +155,31 @@ PENA_ARRAY_ONLOAD = {
 };
 
 PENA_Raid_OnLoad = {
+  "Пришли новые данные по рейд лобби" remoteExec ["diag_log", 2 ,false];
+  "================================" remoteExec ["diag_log", 2 ,false];
+  [raidLobbyDef]remoteExec["diag_log", 2 , false];
+  [raidLobbyAt]remoteExec["diag_log", 2 , false];
+  [raidLobbyQueDef] remoteExec ["diag_log", 2 ,false];
+  [raidLobbyQueAt] remoteExec ["diag_log", 2 ,false];
+  "================================" remoteExec ["diag_log", 2 ,false];
+  
  lbClear 20006;
- lbClear 20008;  
+ lbClear 20008;
+ lbClear 20005;
+ lbClear 20007;  
 []spawn {
 if (!isNull findDisplay 20999) then {
  waitUntil {!isNull findDisplay 20999};
  	_playerData = [];
     {   
-     _uid = getPlayerUID _x;     
-         if (isPlayer _x && _playerData find _x == -1) then     
+     _uid = _x;     
+         if (isPlayer (_x call BIS_fnc_getUnitByUid) && _playerData find (_x call BIS_fnc_getUnitByUid) == -1) then     
          {    
-          _index = lbAdd [20006, name _x];     
+          _index = lbAdd [20006, name (_x call BIS_fnc_getUnitByUid)];     
           _data = lbSetData [20006, _index, _uid];     
-          lbSetTooltip [20006, _index, name _x]; 
-          if (_x == player) then {raidLocalLoc = [20006, _index]};
-          _playerData pushBack _x;        
+          lbSetTooltip [20006, _index, name (_x call BIS_fnc_getUnitByUid)]; 	
+          if ((_x call BIS_fnc_getUnitByUid) == player) then {raidLocalLoc = [20006, _index]};
+          _playerData pushBack (_x call BIS_fnc_getUnitByUid);        
         };     
     }forEach raidLobbyDef;  
 };
@@ -179,51 +190,90 @@ if (!isNull findDisplay 20999) then {
  waitUntil {!isNull findDisplay 20999};
  	_playerData = [];
     {   
-     _uid = getPlayerUID _x;     
-         if (isPlayer _x && _playerData find _x == -1) then     
+     _uid = _x;     
+         if (isPlayer (_x call BIS_fnc_getUnitByUid) && _playerData find (_x call BIS_fnc_getUnitByUid) == -1) then     
          {    
-          _index = lbAdd [20008, name _x];     
+          _index = lbAdd [20008, name (_x call BIS_fnc_getUnitByUid)];     
           _data = lbSetData [20008, _index, _uid];     
-          lbSetTooltip [20008, _index, name _x]; 
-          if (_x == player) then {raidLocalLoc = [20008, _index]};
-          _playerData pushBack _x;        
+          lbSetTooltip [20008, _index, name (_x call BIS_fnc_getUnitByUid)]; 
+          if ((_x call BIS_fnc_getUnitByUid) == player) then {raidLocalLoc = [20008, _index]};
+          _playerData pushBack (_x call BIS_fnc_getUnitByUid);        
         };     
     }forEach raidLobbyAt;  
 };
 };
+
+[]spawn {
+if (!isNull findDisplay 20999) then {
+ waitUntil {!isNull findDisplay 20999};
+ 	_playerData = [];
+    {   
+     _uid = _x;     
+         if (isPlayer (_x call BIS_fnc_getUnitByUid) && _playerData find (_x call BIS_fnc_getUnitByUid) == -1) then     
+         {    
+          _index = lbAdd [20005, name (_x call BIS_fnc_getUnitByUid)];     
+          _data = lbSetData [20005, _index, _uid];     
+          lbSetTooltip [20005, _index, name (_x call BIS_fnc_getUnitByUid)]; 
+          if ((_x call BIS_fnc_getUnitByUid) == player) then {raidLocalLoc = [20005, _index]};
+          _playerData pushBack (_x call BIS_fnc_getUnitByUid);        
+        };     
+    }forEach raidLobbyQueDef;  
+};
+};
+
+[]spawn {
+if (!isNull findDisplay 20999) then {
+ waitUntil {!isNull findDisplay 20999};
+ 	_playerData = [];
+    {   
+     _uid = _x;     
+         if (isPlayer (_x call BIS_fnc_getUnitByUid) && _playerData find (_x call BIS_fnc_getUnitByUid) == -1) then     
+         {    
+          _index = lbAdd [20007, name (_x call BIS_fnc_getUnitByUid)];     
+          _data = lbSetData [20007, _index, _uid];     
+          lbSetTooltip [20007, _index, name (_x call BIS_fnc_getUnitByUid)]; 
+          if ((_x call BIS_fnc_getUnitByUid) == player) then {raidLocalLoc = [20007, _index]};
+          _playerData pushBack (_x call BIS_fnc_getUnitByUid);        
+        };     
+    }forEach raidLobbyQueAt;  
+};
+};
+
 };
 
 PENA_JoinToLobbyRaid = {
 _idc = (_this # 0);
-	if (raidLobbyDef find player == -1) then {
-	if (count raidLobbyAt < 12 && raidLobbyAt find player == -1) then {
-		raidLobbyAt pushBack player;
+	if (raidLobbyDef find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
+	if (count raidLobbyAt < 1 && raidLobbyAt find (getPlayerUID player) == -1) then {
+		raidLobbyAt pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
-		if (raidLobbyAt find player == -1 && raidLobbyQueAt find player == -1) then {
-		raidLobbyQueAt pushBack player;
+		if (raidLobbyAt find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
+			hint "Вы были занесены в очередь из-за нехватки мест в лобби";
+		raidLobbyQueAt pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else { hint "Вы уже зашли в лобби"};
 	};
 } else {
-	hint "Вы уже числитесь в другой команде"
+	hint "Вы уже числитесь в другой команде или очереди";
 };
 };
 
 PENA_JoinToLobbyDef = {
 	_idc = (_this # 0);
-	if (raidLobbyAt find player == -1) then {
-	if (count raidLobbyDef < 12 && raidLobbyDef find player == -1) then {
-		raidLobbyDef pushBack player;
+	if (raidLobbyAt find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
+	if (count raidLobbyDef < 1 && raidLobbyDef find (getPlayerUID player) == -1) then {
+		raidLobbyDef pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
-		if (raidLobbyDef find player == -1 && raidLobbyQueDef find player == -1) then {
-		raidLobbyQueDef pushBack player;
+		if (raidLobbyDef find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1) then {
+		hint "Вы были занесены в очередь из-за нехватки мест в лобби";
+		raidLobbyQueDef pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else { hint "Вы уже зашли в лобби"};
 	};
 } else {
-	hint "Вы уже числитесь в другой команде";
+	hint "Вы уже числитесь в другой команде или очереди";
 };
 };
 
@@ -243,28 +293,28 @@ PENA_QuitFromLobby_Queue = {
     _sender = (_this # 1);
     
     switch (true) do { 
-        case (raidLobbyDef find player != -1) : { raidLobbyDef deleteAt (raidLobbyDef find player);
+        case (raidLobbyDef find (getPlayerUID player) != -1) : { raidLobbyDef deleteAt (raidLobbyDef find (getPlayerUID player));
         [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
         if (!isNull findDisplay 20999) then {
         lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
     };
     [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
     }; 
-        case (raidLobbyAt find player != -1) : {raidLobbyAt deleteAt (raidLobbyAt find player);
+        case (raidLobbyAt find (getPlayerUID player) != -1) : {raidLobbyAt deleteAt (raidLobbyAt find (getPlayerUID player));
         [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
         if (!isNull findDisplay 20999) then {
         lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
     };
     [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
     };
-        case (raidLobbyQueDef find player != -1) : {raidLobbyAt deleteAt (raidLobbyAt find player);
+        case (raidLobbyQueDef find (getPlayerUID player) != -1) : {raidLobbyQueDef deleteAt (raidLobbyQueDef find (getPlayerUID player));
         [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
         if (!isNull findDisplay 20999) then {
         lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
     };
     [_sender, raidLocalLoc # 0, raidLocalLoc # 1]remoteExec["PENA_QuitFromLobby_Helper", -2, false];
     }; 
-        case (raidLobbyQueAt find player != -1) : {raidLobbyAt deleteAt (raidLobbyAt find player);
+        case (raidLobbyQueAt find (getPlayerUID player) != -1) : {raidLobbyQueAt deleteAt (raidLobbyQueAt find (getPlayerUID player));
         [raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false]; 
         if (!isNull findDisplay 20999) then {
         lbDelete [raidLocalLoc # 0, raidLocalLoc # 1];
@@ -281,6 +331,29 @@ PENA_QuitFromLobby_Helper = {
 		lbDelete [(_this # 1), (_this # 2)];
 	};
 };
+
+
+PENA_PLAYER_LOGISTIC = {
+[]spawn { 
+while {true} do { 
+  _buffer = count raidLobbyAt; 
+  waitUntil { _buffer != count raidLobbyAt }; 
+     raidLobbyAt pushBack raidLobbyQueAt # 0; 
+     raidLobbyQueAt deleteAt 0; 
+    }; 
+   };
+
+[]spawn { 
+while {true} do { 
+  _buffer = count raidLobbyDef; 
+  waitUntil { _buffer != count raidLobbyDef }; 
+     raidLobbyDef pushBack raidLobbyQueDef # 0; 
+     raidLobbyQueDef deleteAt 0; 
+    }; 
+   };
+};
+
+
 
 /*
 this addAction
