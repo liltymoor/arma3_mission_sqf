@@ -17,7 +17,7 @@ while {!IsNull (FindDisplay 123438)} do {
 
  FREDDT_FNC_LOADCLOTHARRAY = {
  [] spawn {
- _opforArray = ["mgsdev_Beret", "mgsdev_Beret2", "mgs_new_BoonieHat", "mgsdev_cap", "mgs_Helmet", "mgs_new_Helmet", "mgsdev_revcap", "", "mgs_GhillieSuit", "mgs_new_OfficerUniform", "mgs_new_Uniform", "", "mgs_new_Vest", "mgs_ctrg2_vest", "", "mgs_Kitbag"];
+   _opforArray = ["mex_beret", "mex_booniehat", "mex_cap", "mex_heli", "mex_HelmetLight", "mex_HelmetCanvas", "mex_HelmetAssault", "mex_HelmetBallistic", "mex_Helmet", "", "mex_soldier1", "mex_soldier2", "mex_ghillie", "", "mex_platevest", "mex_platevest_2", "mex_platevest_ctrg_1", "mex_platevest_ctrg_2", "", "mex_Backpack_Fast", "mex_Viper"];
  _bluforArray = ["ru_Helmet", "ru_HelmetHBK", "ru_cap", "ru_booniehat", "ru_beret", "", "ru_soldier", "ru_ghillie", "ru_bandit_tshirt", "ru_bandit_undershirt", "ru_polo", "", "ru_platevest_ctrg_1", "ru_platevest_ctrg_2", "ru_platevest_2", "ru_platevest", "", "ru_Backpack_Fast", "ru_Messenger", "ru_Viper"];
  _independentArray = ["msf_beret", "msf_cap", "msf_booniehat", "msf_helmet", "msf_uniform_3", "msf_uniform_4", "msf_uniform_5", "msf_uniform_1", "msf_uniform_2", "msf_vest_2", "msf_vest", "msf_backpack_fast"];
  _finalArray = [];
