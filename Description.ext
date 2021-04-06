@@ -16,3 +16,4 @@ disableAI = 0;
 #include "dialogs\ProfileDialog.hpp"
 #include "dialogs\RaidLobby.hpp"
 #include "dialogs\SquadDialog.hpp"
+#include "dialogs\RaidGarageMenu.hpp"
