@@ -43,7 +43,7 @@ sleep 1;
 missionNamespace setVariable ["Raid",true, true];
 _time = 300;
 
-while {_time > 0 && (missionNamespace getVariable ["Raid", false]) == true && _countDef > 0 && _countAt > 0} do {
+while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && _countDef > 0 && _countAt > 0} do {
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]}); 
 _time = _time - 1;   
@@ -55,11 +55,11 @@ sleep 1;
 };
 
 switch (true) do {
-	case (_countAt > 0 && (missionNamespace getVariable ["Raid", false]) == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
-	case (_countDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
-	case (_countAt > 0 && _countDef == 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что убиты все защитники
-	case (_countAt == 0 && _countDef > 0 && (missionNamespace getVariable ["Raid", false]) == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что убиты все атакующие
-	default {}; 
+	case (_countAt > 0 && missionNamespace getVariable ["Raid", false] == false) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что флаг захвачен
+	case (_countDef > 0 && missionNamespace getVariable ["Raid", false] == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что время вышло и флаг не захвачен 
+	case (_countAt > 0 && _countDef == 0 && missionNamespace getVariable ["Raid", false] == true) : {call FREDDY_FNC_ENDRAIDATTACK;}; //Это значит что убиты все защитники
+	case (_countAt == 0 && _countDef > 0 && missionNamespace getVariable ["Raid", false] == true) : {call FREDDY_FNC_ENDRAIDDEF;}; //Это значит что убиты все атакующие
+	default {call FREDDY_FNC_ENDRAIDDEF;}; 
 };
 	};
 };
@@ -99,7 +99,7 @@ FREDDY_FNC_CAPTUREFLAG = {
 _unit = player;
 _time = 120;
 missionNamespace setVariable ["CaptureInProgress", true, true]; 
-	while {_time > 0 && (missionNamespace getVariable ["Raid", false]) == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag <= 15 && isNull objectParent player} do { 
+	while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag <= 15 && isNull objectParent player} do { 
 	_time = _time - 1;   
 	hintSilent format["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 	sleep 1; 
@@ -115,8 +115,8 @@ _playersArray = allUnits inAreaArray "RaidEllipse";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа защиты";
-if ((player getVariable ["Defender", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
-if ((player getVariable ["Attacker", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
+if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
 {["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
 {["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyDef;
@@ -135,8 +135,8 @@ _playersArray = allUnits inAreaArray "RaidEllipse";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
-if ((player getVariable ["Defender", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
-if ((player getVariable ["Attacker", false])==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
+if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
 {["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
 {["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyAt;

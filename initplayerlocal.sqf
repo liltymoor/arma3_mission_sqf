@@ -50,6 +50,24 @@ controlNum = 0;
 HALs_updateDelay = 0.25;
 HALs_lastUpdate = diag_tickTime;
 
+player addEventHandler ["FiredMan", {
+  params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
+
+      call {
+            if (_projectile inArea "RaidEllipse" && _unit getVariable ["Defender", false]==false && _unit getVariable ["Attacker", false]==false) exitWith {deleteVehicle _projectile; if (isPlayer _unit) then {};};
+
+              [_unit,_projectile] spawn {
+              params ["_unit","_projectile"];
+              waitUntil {_projectile inArea "RaidEllipse" or isnull _projectile};
+              if (!isNull _projectile && _unit getVariable ["Defender", false]==false && _unit getVariable ["Attacker", false]==false) then {
+                deleteVehicle _projectile;
+                if (isPlayer _unit) then {
+                }
+              };
+            };
+        };
+}];
+
 //Отключение стрельбы в сейв зонах _projectile inArea "RaidEllipse" && !(_shooter inArea "RaidEllipse")
 0 = [] spawn {
   while {true} do {
