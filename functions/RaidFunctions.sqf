@@ -34,8 +34,8 @@ _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
 _posAt = getMarkerPos "CreateVehRaid";
 _posDef = getMarkerPos "CreateVehRaidDef";
-{_x setPos _posDef} forEach raidLobbyDef
-{_x setPos _posAt} forEach raidLobbyAt
+{_x setPos _posDef} forEach raidLobbyDef;
+{_x setPos _posAt} forEach raidLobbyAt;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 

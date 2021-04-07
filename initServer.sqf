@@ -609,4 +609,21 @@ PENA_RAID_LIFES_LOAD = {
 	[_this # 0]remoteExec["PENA_CALLBACK_RAIDLIFES_FNC", -2, false];
 };
 
+vehiclesInSafeZone = [];
+
+[] spawn {
+while {true} do {
+ 
+BluforSafe = vehicles inAreaArray "BluforS";
+OpforSafe = vehicles inAreaArray "OpforS";
+IndepSafe = vehicles inAreaArray "IndepS";
+vehiclesInSafeZone = BluforSafe + OpforSafe + IndepSafe;
+vehiclesNotInSafeZone = vehicles - vehiclesInSafeZone;
+allVehWithVariable = vehiclesInSafeZone select {_x getVariable "FiredInSafeZone"};
+allVehWithoutVariable = vehiclesInSafeZone select {_x getVariable ["FiredInSafeZone", false]==false;};
+[BluforSafe, OpforSafe, IndepSafe, vehiclesInSafeZone, vehiclesNotInSafeZone, allVehWithVariable, allVehWithoutVariable] remoteExec ["Freddy_fnc_DamageInSafeZones", -2, true];
+sleep 1;
+	};
+};
+
 call compile preprocessFileLineNumbers "scripts\CleanUp.sqf";

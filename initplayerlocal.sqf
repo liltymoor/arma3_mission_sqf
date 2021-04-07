@@ -68,50 +68,18 @@ player addEventHandler ["FiredMan", {
         };
 }];
 
-//Отключение стрельбы в сейв зонах _projectile inArea "RaidEllipse" && !(_shooter inArea "RaidEllipse")
-0 = [] spawn {
-  while {true} do {
-   sleep 2;
-   {
-     if !(_x getVariable ["MGIttd",false]) then {
-       _x setVariable ["MGIttd",true];
-       _x addEventHandler ["firedman", 
-        { 
-          _shooter = _this select 0; 
-          _projectile = _this select 6;
-          _target = if (isplayer _shooter) then [{cursorTarget},{ assignedTarget _shooter}];
-          call {
-            if (_projectile inArea NoFireTrgGuer or _projectile inArea NoFireTrgOpfor or _projectile inArea NoFireTrgBlufor) exitWith {
-              deleteVehicle _projectile;
-              if (isPlayer _shooter) then {
-              }
-            };
+Freddy_fnc_DamageInSafeZones = {
+BluforSafe = (_this # 0);
+OpforSafe = (_this # 1);
+IndepSafe = (_this # 2);
+vehiclesInSafeZone = (_this # 3);
+vehiclesNotInSafeZone = (_this # 4);
+allVehWithVariable = (_this # 5);
+allVehWithoutVariable = (_this # 6);
 
-            if (_shooter inArea RedzoneBlufor or _shooter inArea RedzoneGuer or _shooter inArea RedzoneOpfor) exitWith {
-              deleteVehicle _projectile;
-              if (isPlayer _shooter) then {
-              }
-            };
-
-            if (_target inArea NoFireTrgGuer or _target inArea NoFireTrgOpfor or _target inArea NoFireTrgBlufor) exitWith {
-              deleteVehicle _projectile;
-              if (isPlayer _shooter) then {
-              }
-            };
-            [_shooter,_projectile] spawn {
-              params ["_shooter","_projectile"];
-              waitUntil {_projectile inArea NoFireTrgGuer or _projectile inarea NoFireTrgOpfor or _projectile inArea NoFireTrgBlufor or isnull _projectile};
-              if (!isNull _projectile) then {
-                deleteVehicle _projectile;
-                if (isPlayer _shooter) then {
-                }
-              };
-            };
-          };  
-       }]
-      }
-    } forEach allUnits;
-  }
+{_x allowDamage true;} forEach allVehWithVariable;
+{_x allowDamage false;} forEach allVehWithoutVariable;
+{_x setDamage 1} forEach vehiclesNotInSafeZone; 
 };
 
 _UID = getPlayerUID player;
@@ -157,6 +125,44 @@ PENA_GET_PROFILE = {
 };
 
 call PENA_PLAYER_LOGISTIC;
+
+timeToGetSafe = 30;
+
+player addEventHandler ["FiredMan", {
+  params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
+  _unit setVariable ["FiredInSafeZone", true, true];
+  timeToGetSafe = 30;
+}];
+
+[timeToGetSafe] spawn {
+while {true} do {
+_unit = player;
+
+waitUntil {player getVariable ["FiredInSafeZone", false]==true};
+for [{ _i = 1, timeToGetSafe = (_this # 0)}, { timeToGetSafe > 0 }, { timeToGetSafe = timeToGetSafe - _i}] do {if (alive _unit) then {sleep 1; _unit setVariable ["SafeZoneTimer", timeToGetSafe, true];} else {timeToGetSafe = 0; _unit setVariable ["SafeZoneTimer", nil, true];};};
+_unit setVariable ["SafeZoneTimer", nil, true];
+_unit setVariable ["FiredInSafeZone", nil, true];
+  };
+};
+
+
+
+// для игроков
+[] spawn {
+while {true} do {
+_player = player;
+
+if ((player inArea "BluforS" || player inArea "OpforS" || player inArea "IndepS") && player getVariable ["FiredInSafeZone", false]==false) then {
+player allowDamage false;
+systemChat str "Ты в сейве";
+waitUntil {((!(player inArea "BluforS")) &&  (!(player inArea "OpforS")) && (!(player inArea "IndepS"))) || player getVariable ["FiredInSafeZone", false]==true};
+  } else {
+player allowDamage true;
+systemChat str "Ты не в сейве";
+waitUntil {((player inArea "BluforS") || (player inArea "OpforS") || (player inArea "IndepS") )&& player getVariable ["FiredInSafeZone", false]==false};  
+};
+  };
+};
 
 player addRating 99999999;
 player enableFatigue false;

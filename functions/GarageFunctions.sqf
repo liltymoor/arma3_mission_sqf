@@ -132,6 +132,45 @@ if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
   clearBackpackCargoGlobal _govno;
   _govno setVariable ["keys", _UID, true];
   _veh = _govno getVariable ["keys", 50];
+
+  _govno addEventHandler ["Fired", { 
+    params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"]; 
+    _unit setVariable ["FiredInSafeZone", true, true]; 
+    [_unit] spawn { 
+    _unit = (_this # 0); 
+while {(_unit getVariable ["FiredInSafeZone",false]) == true} do { 
+waitUntil {(_unit getVariable ["FiredInSafeZone", false])==true}; 
+for [{ _i = 1, _time = 30}, { _time > 0 }, { _time = _time - _i}] do {if (alive _unit) then {systemChat str _time; systemChat str "техника"; sleep 1;} else {_time = 0;};}; 
+ 
+_unit setVariable ["FiredInSafeZone", nil, true]; 
+}; 
+     }; 
+}];
+
+_govno addEventHandler ["GetIn", { 
+ params ["_vehicle", "_role", "_unit", "_turret"]; 
+ _state = (_unit getVariable ["SafeZoneTimer", 100]); 
+ if (_state != 100) then { 
+   _vehicle setVariable ["FiredInSafeZone", true, true]; 
+     _vehicle setVariable ["TimerFiredState", _state, true]; 
+     [_vehicle, _state] spawn { 
+     _vehicle = (_this # 0); 
+     scopeName "main"; 
+ while {(_vehicle getVariable ["FiredInSafeZone",false]) == true} do { 
+ for [{_time = (_this # 1)}, { _time > 0 }, { _time = _time - 1}] do {if (alive _vehicle) then { 
+  _globalTime = _vehicle getVariable ["TimerFiredState", false]; 
+  systemChat str _time; 
+  systemChat str "техника"; 
+  if (_globalTime != _time) exitWith {_vehicle setVariable ["FiredInSafeZone", nil, true]; breakTo "main"}; 
+  _vehicle setVariable["TimerFiredState" , _globalTime - 1, true]; 
+  sleep 1; 
+  } else {_time = 0; breakTo "main"}; 
+  }; 
+ _vehicle setVariable ["FiredInSafeZone", nil, true]; 
+ }; 
+}; 
+}; 
+}];
 };
 
 FREDDT_FNC_LOADARMOREDLANDVEH = {
