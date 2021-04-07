@@ -1,7 +1,7 @@
 #include "CustomControlClasses.h"
 class RaidGarageMenu
 {
-	idd = 123438999;
+	idd = 60100;
 	
 	class ControlsBackground
 	{
@@ -87,13 +87,13 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "call Freddy_fnc_createveh; closeDialog 0;";
+			action = "call PENA_RAID_CREATEVEH_CHECKER; closeDialog 0;";
 			
 		};
 		class Control12420663
 		{
 			type = 5;
-			idc = 3614;
+			idc = 60000;
 			x = safeZoneX + safeZoneW * 0.31875;
 			y = safeZoneY + safeZoneH * 0.29777778;
 			w = safeZoneW * 0.1875;
@@ -123,7 +123,7 @@ class RaidGarageMenu
 		class Control23319650
 		{
 			type = 1;
-			idc = 14141;
+			idc = 60010;
 			x = safeZoneX + safeZoneW * 0.54375;
 			y = safeZoneY + safeZoneH * 0.32222223;
 			w = safeZoneW * 0.1125;
@@ -149,7 +149,7 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call freddy_fnc_LoadLightVehRaidArray; ctrlEnable [14141, false]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
+			action = "lbClear 60000; call freddy_fnc_LoadLightVehRaidArray; ctrlEnable [14141, false]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
 		};
 		class Control14349787
 		{
@@ -247,7 +247,7 @@ class RaidGarageMenu
 			class LifesCount
 		{
 			type = 13;
-			idc = 131214;
+			idc = 60002;
 			x = safeZoneX + safeZoneW * 0.5825;
 			y = safeZoneY + safeZoneH * 0.69777778;
 			w = safeZoneW * 0.0625;

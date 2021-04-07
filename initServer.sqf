@@ -4,6 +4,10 @@
 	raidLobbyQueAt = [];
 	raidLobbyQueDef = [];
 
+	OnGoingRadeData = [];
+
+
+
 	waitingForRewardArray = []; 
 
 	diag_log "Инициализация скриптов выполнена";
@@ -516,6 +520,10 @@ addMissionEventHandler ["HandleDisconnect", {
 
 call compile preprocessFileLineNumbers "scripts\BattleZone.sqf";
 
+
+//RAID
+
+
 PENA_ARRAY_RAID_HANDLER = {
 	raidLobbyDef = (_this # 0);	
 	raidLobbyAt = (_this # 1);
@@ -527,6 +535,78 @@ PENA_ARRAY_RAID_HANDLER = {
 PENA_RAID_LOAD = {
 	[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExecCall["PENA_Raid_Handler", -2 , false];
 	[]remoteExec["PENA_Raid_OnLoad", -2 , false];
+};
+
+PENA_RAID_SETTINGS = {
+	//Жизни на команду легковые машины
+	_RaidLightLifesDef = 10;
+	_RaidLightLifesAt = 10;
+
+	_RaidLight = [];
+	_RaidLight pushBack _RaidLightLifesDef;
+	_RaidLight pushBack _RaidLightLifesAt;
+	//Жизни на команду хомяки
+	_RaidHummingBirdDef = 3;
+	_RaidHummingBirdAt = 3;
+
+	_RaidHummingBird = [];
+	_RaidHummingBird pushBack _RaidHummingBirdDef;
+	_RaidHummingBird pushBack _RaidHummingBirdAt;
+	//Жизни на команду грузовая техника
+	_RaidHeavyDef = 5;
+	_RaidHeavyAt = 5;
+
+	_RaidHeavy = [];
+	_RaidHeavy pushBack _RaidHeavyDef;
+	_RaidHeavy pushBack _RaidHeavyAt;
+	//Жизни на команду специальная техника
+	_RaidSpecialTechniqueDef = 2;
+	_RaidSpecialTechniqueAt = 2;
+
+	_RaidSpecial = [];
+	_RaidSpecial pushBack _RaidSpecialTechniqueDef;
+	_RaidSpecial pushBack _RaidSpecialTechniqueAt;
+
+	//Итоговые жизни на игру
+	_totalLifes = [];
+	_totalLifes pushBack _RaidLight;
+	_totalLifes pushBack _RaidHummingBird;
+	_totalLifes pushBack _RaidHeavy;
+	_totalLifes pushBack _RaidSpecial;
+	_totalLifes;
+};
+
+PENA_CREATEVEH = {
+	_lightVehArr = ["ver_vaz_2114_uck", "ver_vaz_2114_OPER"]; // AddVehToRaid - сюда легковая техника
+	_player = (_this # 0);
+	_vehicle = (_this # 1);
+	diag_log ["Создаем технику на рейде ", _vehicle];
+
+	if (_player getVariable ["Defender", false] == true) then {
+		//Defender
+		switch (true) do { 
+			case ((_lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false]; _buffer = OnGoingRadeData # 0; _buffer set [0, (_buffer # 0) - 1]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+			default {   }; 
+		};
+	} else {
+		//Attacker
+		switch (true) do { 
+			case ((_lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false]; _buffer = OnGoingRadeData # 0; _buffer set [1, (_buffer # 1) - 1]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+			default {   }; 
+		};
+	};
+};
+
+
+PENA_RAID_LIFES = {
+	OnGoingRadeData = call PENA_RAID_SETTINGS;
+	diag_log "Создаем жизни в рейде по заданным настройкам";
+	[OnGoingRadeData] call PENA_RAID_LIFES_LOAD;
+};
+
+PENA_RAID_LIFES_LOAD = {
+	diag_log (_this # 0);
+	[_this # 0]remoteExec["PENA_CALLBACK_RAIDLIFES_FNC", -2, false];
 };
 
 call compile preprocessFileLineNumbers "scripts\CleanUp.sqf";

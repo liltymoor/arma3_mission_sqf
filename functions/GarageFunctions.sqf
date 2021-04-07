@@ -1,8 +1,12 @@
 globalCost = 0;
-
+OnGoingData = [];
 PENA_CALLBACK_LIFES_FNC = {
   diag_log "Лайфы загружены на клиент";
   Lifes = (_this select 0);
+};
+
+PENA_CALLBACK_RAIDLIFES_FNC = {
+  OnGoingData = (_this # 0);
 };
 
 
@@ -244,38 +248,84 @@ _unit setVariable ["StoreCooldown", nil, true];
 };
 
 //Рейдовые функции гаража
-freddy_fnc_LoadLightVehRaidArray = {
- [] spawn {
- _vehArray = ["ver_vaz_2114_uck", "ver_vaz_2114_OPER"];
-{
-  _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
-  lbAdd [3614, _vehName];
-  lbSetData [3614, _forEachIndex, _x];
-} forEach  _vehArray;
 
+//Вычитание общих жизней РЕЙД
+PENA_RAID_CREATEVEH_CHECKER = {
+  _index = lbCurSel 60000; 
+  _vehicle = lbData [60000, _index]; 
+  [player, _vehicle]remoteExec["PENA_CREATEVEH", 2 , false];
+};
 
-while {!IsNull (FindDisplay 123438999)} do {
-  _index = lbCurSel 3614;
-  _vehicle = lbData [3614, _index];
-    _loadedLifes = Lifes;
+PENA_CREATING_VEH = {
+  _trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos", "CreateVehRaid"];
+  _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
+  _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
+  if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
 
-    switch (true) do {
-  case (_vehicle isKindOf "I_MBT_03_cannon_F") : {_lifes = (_loadedLifes select 0);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Кума
-  case (_vehicle isKindOf "O_MBT_04_command_F") : {_lifes = (_loadedLifes select 1);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Ангара
-  case (_vehicle isKindOf "O_MBT_02_cannon_F") : {_lifes = (_loadedLifes select 2);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Варсук
-  case (_vehicle isKindOf "B_MBT_01_cannon_F") : {_lifes = (_loadedLifes select 3);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Сламмер
-  case (_vehicle isKindOf "I_APC_Wheeled_03_cannon_F") : {_lifes = (_loadedLifes select 4);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Горгона
-  case (_vehicle isKindOf "O_APC_Tracked_02_AA_F") : {_lifes = (_loadedLifes select 5);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Тигрис
-  case (_vehicle isKindOf "B_APC_Tracked_01_AA_F") : {_lifes = (_loadedLifes select 6);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Читаха
-  case (_vehicle isKindOf "O_Heli_Light_02_F") : {_lifes = (_loadedLifes select 7);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//орка
-  case (_vehicle isKindOf "O_Heli_Attack_02_F") : {_lifes = (_loadedLifes select 8);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//кайман
-  case (_vehicle isKindOf "B_Heli_Attack_01_F") : {_lifes = (_loadedLifes select 9);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//бф
-  default {_lifes = " ";((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};
-  };
-  sleep 0.1;
-      };
+  _player = player;
+  _UID = getPlayerUID _player;
+  _vehicle = (_this # 0);
+  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla", "CreateVehRaid"];
+  _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
+  _pos = getMarkerPos _nearestMarker;
+  _azimuth = markerDir _nearestMarker;
+  _govno = _vehicle createVehicle _pos;//тут ты получаешь из класснейма объект
+  _govno setDir _azimuth;
+  _govno disableTIEquipment true;      
+  clearWeaponCargoGlobal _govno;      
+  clearMagazineCargoGlobal _govno;      
+  clearItemCargoGlobal _govno;      
+  clearBackpackCargoGlobal _govno;
+  _govno setVariable ["keys", _UID, true];
+  _veh = _govno getVariable ["keys", 50];
+};
+
+  freddy_fnc_LoadLightVehRaidArray = { 
+   [] spawn { 
+   _unitSide = 0; 
+  if (player getVariable ["Defender", false] == true) then {_unitSide = "Defender"; hint "def";} else {_unitSide = "Attacker"; hint "at"}; 
+   _vehArray = ["ver_vaz_2114_uck", "ver_vaz_2114_OPER"]; // AddVehToRaid - сюда легковая техника
+   
+  { 
+    _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");   
+    lbAdd [60000, _vehName]; 
+    lbSetData [60000, _forEachIndex, _x]; 
+  } forEach  _vehArray; 
+   
+   
+  while {!IsNull (FindDisplay 60100)} do { 
+    _index = lbCurSel 60000; 
+    _vehicle = lbData [60000, _index]; 
+    _loadedLifes = Lifes; 
+   
+   
+      switch (true) do { 
+      //ЛЕГКОВАЯ ТЕХНИКА 
+    case ((_vehArray find _vehicle) != -1 ) : { 
+    if (_unitSide == "Defender") then { 
+      ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 0 # 0)];
+  } else {
+      ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 0 # 1)];
+  }; 
+   
+  }; 
+      //БРОНИРОВАННАЯ ТЕХНИКА 
+    case (_vehicle isKindOf "I_MBT_03_cannon_F") : {_lifes = (_loadedLifes select 0);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Кума 
+    case (_vehicle isKindOf "O_MBT_04_command_F") : {_lifes = (_loadedLifes select 1);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Ангара 
+    case (_vehicle isKindOf "O_MBT_02_cannon_F") : {_lifes = (_loadedLifes select 2);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Варсук 
+    case (_vehicle isKindOf "B_MBT_01_cannon_F") : {_lifes = (_loadedLifes select 3);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Сламмер 
+    case (_vehicle isKindOf "I_APC_Wheeled_03_cannon_F") : {_lifes = (_loadedLifes select 4);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Горгона 
+    case (_vehicle isKindOf "O_APC_Tracked_02_AA_F") : {_lifes = (_loadedLifes select 5);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Тигрис 
+    case (_vehicle isKindOf "B_APC_Tracked_01_AA_F") : {_lifes = (_loadedLifes select 6);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Читаха 
+    case (_vehicle isKindOf "O_Heli_Light_02_F") : {_lifes = (_loadedLifes select 7);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//орка 
+    case (_vehicle isKindOf "O_Heli_Attack_02_F") : {_lifes = (_loadedLifes select 8);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//кайман 
+    case (_vehicle isKindOf "B_Heli_Attack_01_F") : {_lifes = (_loadedLifes select 9);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//бф 
+    default {_lifes = " ";((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];}; 
+    }; 
+    sleep 0.1; 
+        }; 
+      }; 
     };
-  };
 
   freddy_fnc_LoadTruckVehRaidArray = {
  [] spawn {
