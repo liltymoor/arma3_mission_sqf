@@ -1,6 +1,13 @@
 //Максимум 12 Защ. 16 Ат.
 //Минимум 6 Защ. 8 Ат.
 
+[] spawn {
+while {true} do {
+waitUntil {_countDef = count (allPlayers select {_x getVariable "Defender"}); _countAt = count (allPlayers select {_x getVariable "Attacker"}); _countDef > 6 && _countAt > 8};
+sleep 5;
+[] remoteExec ["FREDDY_FNC_CREATERAID", 2, true];
+	};
+};
 
 FREDDY_FNC_CREATERAID = {
 [] spawn {
@@ -22,10 +29,12 @@ createMarker ["RaidText",BaseFlag];
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
-//{_x setPos base} forEach raidLobbyDef
-//{_x setPos base} forEach raidLobbyAt
-//{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
-//{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
+_posAt = getMarkerPos "CreateVehRaid";
+_posDef = getMarkerPos "CreateVehRaidDef";
+{_x setPos _posDef} forEach raidLobbyDef
+{_x setPos _posAt} forEach raidLobbyAt
+{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
+{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
 //Тут отчет обратный до начала рейда
 _time = 30; 
