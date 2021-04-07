@@ -12,6 +12,9 @@ sleep 5;
 FREDDY_FNC_CREATERAID = {
 [] spawn {
 //Тут создаются маркеры
+
+call PENA_RAID_LIFES;
+
 createMarker ["RaidEllipse",BaseFlag];  
 "RaidEllipse" setMarkerShape "ELLIPSE";  
 "RaidEllipse" setMarkerType "ellipse";  
