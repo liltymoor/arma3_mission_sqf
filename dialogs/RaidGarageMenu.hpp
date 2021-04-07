@@ -108,7 +108,7 @@ class RaidGarageMenu
 			rowHeight = 0;
 			sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1);
 			soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1.0};
-			onLoad = call FREDDT_FNC_LOADLIGHTVEHARRAY;
+			onLoad = call freddy_fnc_LoadLightVehRaidArray;
 			class ListScrollBar
 			{
 				color[] = {1,1,1,1};
@@ -149,7 +149,7 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call FREDDT_FNC_LOADLIGHTVEHARRAY; ctrlEnable [14141, false]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
+			action = "lbClear 3614; call freddy_fnc_LoadLightVehRaidArray; ctrlEnable [14141, false]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
 		};
 		class Control14349787
 		{
@@ -180,7 +180,7 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call FREDDT_FNC_TRUCKVEHARRAY; ctrlEnable [14141, true]; ctrlEnable [14142, false]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
+			action = "lbClear 3614; call freddy_fnc_LoadTruckVehRaidArray; ctrlEnable [14141, true]; ctrlEnable [14142, false]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
 		};
 		class Control757064
 		{
@@ -242,7 +242,7 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call PENA_FNC_PREHELIARRAY; ctrlEnable [14141, true]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, false];"
+			action = "lbClear 3614; call pena_fnc_PreHeliArrayRaid; ctrlEnable [14141, true]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, false];"
 		};
 			class LifesCount
 		{

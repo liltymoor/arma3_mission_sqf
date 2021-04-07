@@ -105,7 +105,7 @@ _Lifes = (_this select 0);
 
 
 Freddy_fnc_createveh = {
-_trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos"];
+_trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos", "CreateVehRaid"];
 _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
 _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
 if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
@@ -115,7 +115,7 @@ if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
   _index = lbCurSel 3614;
   _vehicle = lbData [3614, _index];
    [_player, _UID, _vehicle] remoteExec ["PENA_DB_PAYLIFE_FNC",2,false];
-  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla"];
+  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla", "CreateVehRaid"];
   _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
   _pos = getMarkerPos _nearestMarker;
   _azimuth = markerDir _nearestMarker;
@@ -241,4 +241,56 @@ _unit setVariable ["StoreCooldown", true, true];
 sleep 10;
 _unit setVariable ["StoreCooldown", nil, true];
 	};
+};
+
+//Рейдовые функции гаража
+freddy_fnc_LoadLightVehRaidArray = {
+ [] spawn {
+ _vehArray = ["ver_vaz_2114_uck", "ver_vaz_2114_OPER"];
+{
+  _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
+  lbAdd [3614, _vehName];
+  lbSetData [3614, _forEachIndex, _x];
+} forEach  _vehArray;
+
+
+while {!IsNull (FindDisplay 123438999)} do {
+  _index = lbCurSel 3614;
+  _vehicle = lbData [3614, _index];
+    _loadedLifes = Lifes;
+
+    switch (true) do {
+  case (_vehicle isKindOf "I_MBT_03_cannon_F") : {_lifes = (_loadedLifes select 0);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Кума
+  case (_vehicle isKindOf "O_MBT_04_command_F") : {_lifes = (_loadedLifes select 1);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Ангара
+  case (_vehicle isKindOf "O_MBT_02_cannon_F") : {_lifes = (_loadedLifes select 2);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Варсук
+  case (_vehicle isKindOf "B_MBT_01_cannon_F") : {_lifes = (_loadedLifes select 3);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Сламмер
+  case (_vehicle isKindOf "I_APC_Wheeled_03_cannon_F") : {_lifes = (_loadedLifes select 4);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Горгона
+  case (_vehicle isKindOf "O_APC_Tracked_02_AA_F") : {_lifes = (_loadedLifes select 5);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Тигрис
+  case (_vehicle isKindOf "B_APC_Tracked_01_AA_F") : {_lifes = (_loadedLifes select 6);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Читаха
+  case (_vehicle isKindOf "O_Heli_Light_02_F") : {_lifes = (_loadedLifes select 7);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//орка
+  case (_vehicle isKindOf "O_Heli_Attack_02_F") : {_lifes = (_loadedLifes select 8);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//кайман
+  case (_vehicle isKindOf "B_Heli_Attack_01_F") : {_lifes = (_loadedLifes select 9);((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//бф
+  default {_lifes = " ";((Finddisplay 123438999) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};
+  };
+  sleep 0.1;
+      };
+    };
+  };
+
+  freddy_fnc_LoadTruckVehRaidArray = {
+ [] spawn {
+ _vehArray = [];
+{
+  _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
+  lbAdd [3614, _vehName];
+  lbSetData [3614, _forEachIndex, _x];
+} forEach  _vehArray;
+  };
+};
+
+  pena_fnc_PreHeliArrayRaid = {
+  _player = player;
+  _UID = getPlayerUID player;
+
+  [_player, _UID] remoteExec ["PENA_DB_LOAD_HELI", 2 ,false];
 };
