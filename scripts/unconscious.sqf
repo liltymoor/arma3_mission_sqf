@@ -16,7 +16,7 @@ player addEventHandler ["HandleDamage",
           
             };
 
-            case (lifeState _unit == "INCAPACITATED" && (_instigator distance _unit) <= 3 && side _instigator == side group _unit && _instigator != _unit) : {
+            case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true) && lifeState _unit == "INCAPACITATED" && (_instigator distance _unit) <= 3 && side _instigator == side group _unit && _instigator != _unit) : {
             _unit setDamage 1;
             _unit setVariable ["CantDie", false, true];
             _unit setVariable ["CouldDie", false, true];
@@ -32,7 +32,11 @@ player addEventHandler ["HandleDamage",
         _unit call FREDDY_FNC_INCAPACIATEDSCREEN;
         showCompass false;
         if !(isNull objectParent _unit) then {moveOut _unit};
-        if (side _instigator != side group _unit && _instigator != _unit) then {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];};
+        switch (true) do { 
+          case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true)) : {}; 
+          case (side _instigator != side group _unit && _instigator != _unit) : {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];}; 
+          default {}; 
+        };
 
     _unit spawn
     {
