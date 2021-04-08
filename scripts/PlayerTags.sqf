@@ -1,45 +1,126 @@
 //Ник
 addMissionEventHandler [  
  "Draw3D",   
- {  
-   _units = player nearEntities [["CAManBase"], 10];  
-  _units = _units - [player];   
-  {   
-   drawIcon3D [   
-    "",   
-    [1,1,1,1],   
-    [visiblePosition _x select 0,visiblePosition  _x select 1, (visiblePosition _x select 2) +((_x ModelToWorld (_x selectionPosition "pelvis")) select 2)+ 1.2],   
-    1,   
-    1,   
-    0,   
-    name _x,   
-    2,   
-    0.035,   
-    "PuristaSemiBold"   
-   ];   
-  } forEach (_units select { (side group _x) == playerSide;}); 
+ {
+ switch (true) do { 
+     case (player getVariable ["Defender", false] == true) : {
+            _units = player nearEntities [["CAManBase"], 10];  
+            _units = _units - [player];
+            {   
+             drawIcon3D [   
+              "",   
+              [1,1,1,1],   
+              [visiblePosition _x select 0,visiblePosition  _x select 1, (visiblePosition _x select 2) +((_x ModelToWorld (_x selectionPosition "pelvis")) select 2)+ 1.2],   
+              1,   
+              1,   
+              0,   
+              name _x,   
+              2,   
+              0.035,   
+              "PuristaSemiBold"   
+             ];   
+            } forEach (_units select {_x getVariable ["Defender", false] == true});
+            }; 
+     case (player getVariable ["Attacker", false] == true) : {
+            _units = player nearEntities [["CAManBase"], 10];  
+            _units = _units - [player];
+            {   
+             drawIcon3D [   
+              "",   
+              [1,1,1,1],   
+              [visiblePosition _x select 0,visiblePosition  _x select 1, (visiblePosition _x select 2) +((_x ModelToWorld (_x selectionPosition "pelvis")) select 2)+ 1.2],   
+              1,   
+              1,   
+              0,   
+              name _x,   
+              2,   
+              0.035,   
+              "PuristaSemiBold"   
+             ];   
+            } forEach (_units select {_x getVariable ["Attacker", false] == true});
+            };  
+     default {
+            _units = player nearEntities [["CAManBase"], 10];
+            _units = _units select {(side group _x) == playerSide && _x getVariable ["Attacker", false] == false && _x getVariable ["Defender", false] == false;};  
+            _units = _units - [player];
+            {   
+             drawIcon3D [   
+              "",   
+              [1,1,1,1],   
+              [visiblePosition _x select 0,visiblePosition  _x select 1, (visiblePosition _x select 2) +((_x ModelToWorld (_x selectionPosition "pelvis")) select 2)+ 1.2],   
+              1,   
+              1,   
+              0,   
+              name _x,   
+              2,   
+              0.035,   
+              "PuristaSemiBold"   
+             ];   
+            } forEach _units; 
+            };   
+   };  
  }   
 ];
 
 //Синяя метка на своего
 addMissionEventHandler [     
  "Draw3D",      
- {     
- _units = (allUnits select { (side group _x) == playerSide && _x distance player < 500;}) - [player];      
-  {      
-   drawIcon3D [      
-    "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
-    [0,0.7,1,1],      
-    getPosATLVisual _x vectorAdd [0,0,1],      
-    1,      
-    1,      
-    0,      
-    "",      
-    2,      
-    0.035,      
-    "PuristaSemiBold"      
-   ];      
-  } forEach _units;     
+ {
+ switch (true) do { 
+        case (player getVariable ["Defender", false] == true) : {
+        _units = (allUnits select {_x getVariable ["Defender", false] == true && _x distance player < 500;}) - [player];
+           {      
+            drawIcon3D [      
+            "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
+            [0,0.7,1,1],      
+            getPosATLVisual _x vectorAdd [0,0,1],      
+            1,      
+            1,      
+            0,      
+            "",      
+            2,      
+            0.035,      
+            "PuristaSemiBold"      
+           ];      
+          } forEach _units;     
+      }; 
+        case (player getVariable ["Attacker", false] == true) : {
+        _units = (allUnits select {_x getVariable ["Attacker", false] == true && _x distance player < 500;}) - [player];
+           {      
+            drawIcon3D [      
+            "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
+            [0,0.7,1,1],      
+            getPosATLVisual _x vectorAdd [0,0,1],      
+            1,      
+            1,      
+            0,      
+            "",      
+            2,      
+            0.035,      
+            "PuristaSemiBold"      
+           ];      
+          } forEach _units;     
+      }; 
+        default {
+            _units = player nearEntities [["CAManBase"], 500];
+            _units = _units select {(side group _x) == playerSide && _x getVariable ["Attacker", false] == false && _x getVariable ["Defender", false] == false;};  
+            _units = _units - [player];  
+           {      
+            drawIcon3D [      
+            "\A3\ui_f\data\Map\MapControl\bush_ca.paa",      
+            [0,0.7,1,1],      
+            getPosATLVisual _x vectorAdd [0,0,1],      
+            1,      
+            1,      
+            0,      
+            "",      
+            2,      
+            0.035,      
+            "PuristaSemiBold"      
+           ];      
+          } forEach _units;     
+      };  
+      };            
  }      
 ];
 

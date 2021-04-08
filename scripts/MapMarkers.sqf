@@ -33,6 +33,7 @@ waitUntil {!isNull (finddisplay 12)}; ((findDisplay 12) displayCtrl 51) ctrlAddE
             ]} forEach (allPlayers select {_x getVariable ["Attacker", false] == true;});};
 
             default {
+            _units = allPlayers select {(side group _x) == playerSide && _x getVariable ["Attacker", false] == false && _x getVariable ["Defender", false] == false;};  
             {
             _ctrl drawIcon [
                 getText (configFile >> "CfgVehicles" >> typeOf _x >> "icon"),
@@ -44,7 +45,8 @@ waitUntil {!isNull (finddisplay 12)}; ((findDisplay 12) displayCtrl 51) ctrlAddE
                 name _x, //Что написано в тексте
                 false, //Тень
                 0.05 //Размер текста
-            ]} forEach (allPlayers select {(side group _x) == playerSide; _x getVariable ["Attacker", false] == false; _x getVariable ["Defender", false] == false;});};
+            ]} forEach _units;
+            };
         };
     } 
 ];
