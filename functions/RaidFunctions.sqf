@@ -248,7 +248,11 @@ if (!isNull findDisplay 20999) then {
 PENA_JoinToLobbyRaid = {
 _idc = (_this # 0);
 	if (raidLobbyDef find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
+<<<<<<< Updated upstream
 	if (count raidLobbyAt < 8 && raidLobbyAt find (getPlayerUID player) == -1) then {
+=======
+	if (count raidLobbyAt < 1 && raidLobbyAt find (getPlayerUID player) == -1) then { //Ограничение лобби
+>>>>>>> Stashed changes
 		raidLobbyAt pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
@@ -266,7 +270,11 @@ _idc = (_this # 0);
 PENA_JoinToLobbyDef = {
 	_idc = (_this # 0);
 	if (raidLobbyAt find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
+<<<<<<< Updated upstream
 	if (count raidLobbyDef < 6 && raidLobbyDef find (getPlayerUID player) == -1) then {
+=======
+	if (count raidLobbyDef < 1 && raidLobbyDef find (getPlayerUID player) == -1) then { //Ограничение лобби
+>>>>>>> Stashed changes
 		raidLobbyDef pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
