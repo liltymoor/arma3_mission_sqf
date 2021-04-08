@@ -50,6 +50,7 @@ controlNum = 0;
 HALs_updateDelay = 0.25;
 HALs_lastUpdate = diag_tickTime;
 
+//Стрельба в сейв-зонах
 player addEventHandler ["FiredMan", {
   params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
 

@@ -26,8 +26,8 @@ _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
 _posAt = getMarkerPos "CreateVehRaid";
 _posDef = getMarkerPos "CreateVehRaidDef";
-{(_x call BIS_fnc_getUnitByUID) setPos _posDef} forEach raidLobbyDef;
-{(_x call BIS_fnc_getUnitByUID) setPos _posAt} forEach raidLobbyAt;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posDef; closeDialog 0;} forEach raidLobbyDef;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posAt; closeDialog 0;} forEach raidLobbyAt;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
@@ -116,8 +116,6 @@ if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missi
 FREDDY_FNC_ENDRAIDDEF = {
 [] spawn {
 _playersArray = allUnits inAreaArray "RaidEllipse"; 
-missionNamespace setVariable ["Raid",nil, true];
-missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа защиты";
 if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
@@ -128,7 +126,9 @@ sleep 15;
 {_x setDamage 1} forEach _playersArray;
 call FREDDY_FNC_NullArrayServer;
 deleteMarker "RaidEllipse";
-deleteMarker "RaidText"; 
+deleteMarker "RaidText";
+missionNamespace setVariable ["Raid",nil, true];
+missionNamespace setVariable ["CaptureInProgress", nil, true]; 
 	};
 };
 
