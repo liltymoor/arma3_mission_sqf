@@ -24,7 +24,7 @@ createMarker ["RaidText",BaseFlag];
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
-_posAt = getMarkerPos "CreateVehRaid";
+_posAt = getMarkerPos "CreateVehRaidAt";
 _posDef = getMarkerPos "CreateVehRaidDef";
 {waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posDef; closeDialog 0;} forEach raidLobbyDef;
 {waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posAt; closeDialog 0;} forEach raidLobbyAt;
@@ -115,7 +115,8 @@ if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missi
 //Скрипт победы защиты
 FREDDY_FNC_ENDRAIDDEF = {
 [] spawn {
-_playersArray = allUnits inAreaArray "RaidEllipse"; 
+_playersArray = allUnits inAreaArray "RaidEllipse";
+_vehiclesArray = (vehicles inAreaArray "RaidEllipse"); 
 "RaidText" setMarkerText "Победа защиты";
 if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
@@ -123,7 +124,8 @@ if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUni
 {["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyDef;
 sleep 15;
-{_x setDamage 1} forEach _playersArray;
+{_x setDamage 1;} forEach _playersArray;
+{if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 call FREDDY_FNC_NullArrayServer;
 deleteMarker "RaidEllipse";
 deleteMarker "RaidText";
@@ -136,6 +138,7 @@ missionNamespace setVariable ["CaptureInProgress", nil, true];
 FREDDY_FNC_ENDRAIDATTACK = {
 [] spawn {
 _playersArray = allUnits inAreaArray "RaidEllipse";
+_vehiclesArray = (vehicles inAreaArray "RaidEllipse"); 
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
@@ -145,7 +148,8 @@ if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUni
 {["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyAt;
 sleep 15;
-{_x setDamage 1} forEach _playersArray;
+{_x setDamage 1;} forEach _playersArray;
+{if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 call FREDDY_FNC_NullArrayServer;
 deleteMarker "RaidEllipse";
 deleteMarker "RaidText"; 

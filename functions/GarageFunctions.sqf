@@ -109,7 +109,7 @@ _Lifes = (_this select 0);
 
 
 Freddy_fnc_createveh = {
-_trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos", "CreateVehRaid"];
+_trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos"];
 _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
 _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
 if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
@@ -119,7 +119,7 @@ if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
   _index = lbCurSel 3614;
   _vehicle = lbData [3614, _index];
    [_player, _UID, _vehicle] remoteExec ["PENA_DB_PAYLIFE_FNC",2,false];
-  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla", "CreateVehRaid"];
+  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla"];
   _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
   _pos = getMarkerPos _nearestMarker;
   _azimuth = markerDir _nearestMarker;
@@ -296,7 +296,7 @@ PENA_RAID_CREATEVEH_CHECKER = {
 };
 
 PENA_CREATING_VEH = {
-  _trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos", "CreateVehRaid"];
+  _trg = ["CreateVehRaidAt", "CreateVehRaidDef"];
   _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
   _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
   if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
@@ -304,7 +304,7 @@ PENA_CREATING_VEH = {
   _player = player;
   _UID = getPlayerUID _player;
   _vehicle = (_this # 0);
-  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla", "CreateVehRaid"];
+  _markArray = ["CreateVehRaidAt" , "CreateVehRaidDef"];
   _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
   _pos = getMarkerPos _nearestMarker;
   _azimuth = markerDir _nearestMarker;

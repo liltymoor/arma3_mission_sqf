@@ -80,7 +80,7 @@ allVehWithoutVariable = (_this # 6);
 
 {_x allowDamage true;} forEach allVehWithVariable;
 {_x allowDamage false;} forEach allVehWithoutVariable;
-{_x setDamage 1} forEach vehiclesNotInSafeZone; 
+{_x allowDamage true;} forEach vehiclesNotInSafeZone; 
 };
 
 _UID = getPlayerUID player;
