@@ -522,7 +522,14 @@ call compile preprocessFileLineNumbers "scripts\BattleZone.sqf";
 
 
 //RAID
-
+//Старт рейда
+[] spawn {
+while {true} do {
+waitUntil {count raidLobbyDef > 0 && count raidLobbyAt > 0 && missionNamespace getVariable ["Raid", false] == false};
+[] remoteExec ["FREDDY_FNC_CREATERAID", 2, false];
+sleep 35;
+	};
+};
 
 PENA_ARRAY_RAID_HANDLER = {
 	raidLobbyDef = (_this # 0);	
@@ -609,6 +616,7 @@ PENA_RAID_LIFES_LOAD = {
 	[_this # 0]remoteExec["PENA_CALLBACK_RAIDLIFES_FNC", -2, false];
 };
 
+//Сейв зоны
 vehiclesInSafeZone = [];
 
 [] spawn {
