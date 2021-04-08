@@ -7,19 +7,18 @@ player addEventHandler ["HandleDamage",
         _nameinstigator = name _instigator;
 
         if (lifeState _unit == "INCAPACITATED" && (_instigator distance _unit) <= 3 && animationState _unit == "unconsciousrevivedefault") then {
-          switch (true) do { 
+          switch (true) do {
+            case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true) && lifeState _unit == "INCAPACITATED" && (_instigator distance _unit) <= 3 && side _instigator == side group _unit && _instigator != _unit) : {
+            _unit setDamage 1;
+            _unit setVariable ["CantDie", false, true];
+            _unit setVariable ["CouldDie", false, true];
+            }; 
             case (lifeState _unit == "INCAPACITATED" && (_instigator distance _unit) <= 3 && side _instigator != side group _unit && _instigator != _unit) : { 
             _unit setDamage 1;
              _unit setVariable ["CantDie", false, true];
               _unit setVariable ["CouldDie", false, true];
             []remoteExec ["FREDDY_FNC_GETRANDOM_MNY", _instigator, false];
           
-            };
-
-            case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true) && lifeState _unit == "INCAPACITATED" && (_instigator distance _unit) <= 3 && side _instigator == side group _unit && _instigator != _unit) : {
-            _unit setDamage 1;
-            _unit setVariable ["CantDie", false, true];
-            _unit setVariable ["CouldDie", false, true];
             };
           };
         };
