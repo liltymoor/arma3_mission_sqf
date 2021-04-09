@@ -19,14 +19,18 @@ while {!IsNull (FindDisplay 123438)} do {
  [] spawn {
  _opforArray = ["mex_beret", "mex_booniehat", "mex_cap", "mex_heli", "mex_HelmetLight", "mex_HelmetCanvas", "mex_HelmetAssault", "mex_HelmetBallistic", "mex_Helmet", "", "mex_soldier1", "mex_soldier2", "mex_ghillie", "", "mex_platevest", "mex_platevest_2", "mex_platevest_ctrg_1", "mex_platevest_ctrg_2", "", "mex_Backpack_Fast", "mex_Viper"];
  //_bluforArray = ["ru_Helmet", "ru_HelmetHBK", "ru_cap", "ru_booniehat", "ru_beret", "", "ru_soldier", "ru_ghillie", "ru_bandit_tshirt", "ru_bandit_undershirt", "ru_polo", "", "ru_platevest_ctrg_1", "ru_platevest_ctrg_2", "ru_platevest_2", "ru_platevest", "", "ru_Backpack_Fast", "ru_Messenger", "ru_Viper"];
- _bluforArray = ["jp_beret", "jp_booniehat", "jp_cap", "jp_heli", "jp_HelmetLight", "jp_HelmetCanvas", "jp_HelmetAssault", "jp_HelmetBallistic", "jp_Helmet", "", "jp_soldier1", "jp_soldier2", "jp_ghillie", "", "jp_platevest", "jp_platevest_2", "jp_platevest_ctrg_1", "jp_platevest_ctrg_2", "", "jp_Backpack_Fast", "jp_Messenger", "jp_Viper"];
+ _bluforArray = ["jp_beret", "jp_booniehat", "jp_cap", "jp_heli", "jp_HelmetLight", "jp_HelmetCanvas", "jp_HelmetAssault", "jp_HelmetBallistic", "jp_Helmet", "", "jp_soldier1", "jp_soldier2", "jp_ghillie", "", "jp_platevest", "jp_platevest_2", "jp_platevest_ctrg_1", "jp_platevest_ctrg_2", "", "jp_Backpack_Fast", "jp_Viper"];
  //_independentArray = ["msf_beret", "msf_cap", "msf_booniehat", "msf_helmet", "msf_uniform_3", "msf_uniform_4", "msf_uniform_5", "msf_uniform_1", "msf_uniform_2", "msf_vest_2", "msf_vest", "msf_backpack_fast"];
- _independentArray = ["fr_beret", "fr_booniehat", "fr_cap", "fr_heli", "fr_HelmetLight", "fr_HelmetCanvas", "fr_HelmetAssault", "fr_HelmetBallistic", "fr_Helmet", "", "fr_soldier1", "fr_soldier2", "fr_ghillie", "", "fr_platevest", "fr_platevest_2", "fr_platevest_ctrg_1", "fr_platevest_ctrg_2", "", "fr_Backpack_Fast", "fr_Messenger", "fr_Viper"];
+ _independentArray = ["fr_beret", "fr_booniehat", "fr_cap", "fr_heli", "fr_HelmetLight", "fr_HelmetCanvas", "fr_HelmetAssault", "fr_HelmetBallistic", "fr_Helmet", "", "fr_soldier1", "fr_soldier2", "fr_ghillie", "", "fr_platevest", "fr_platevest_2", "fr_platevest_ctrg_1", "fr_platevest_ctrg_2", "", "fr_Backpack_Fast", "fr_Viper"];
+ _defArray = ["kitty_beret", "kitty_booniehat", "kitty_cap", "kitty_heli", "kitty_HelmetLight", "kitty_HelmetCanvas", "kitty_HelmetAssault", "kitty_HelmetBallistic", "kitty_Helmet", "", "kitty_soldier1", "kitty_soldier2", "kitty_ghillie", "", "kitty_platevest", "kitty_platevest_2", "kitty_platevest_ctrg_1", "kitty_platevest_ctrg_2", "", "kitty_Backpack_Fast", "kitty_Viper"];
+ _atArray = ["def_beret", "def_booniehat", "def_cap", "def_heli", "def_HelmetLight", "def_HelmetCanvas", "def_HelmetAssault", "def_HelmetBallistic", "def_Helmet", "", "def_soldier1", "def_soldier2", "def_ghillie", "", "def_platevest", "def_platevest_2", "def_platevest_ctrg_1", "def_platevest_ctrg_2", "", "def_Backpack_Fast", "def_Viper"];
  _finalArray = [];
- switch (side player) do {
- 	case east: {_finalArray = + _opforArray;};
-    case west: {_finalArray = + _bluforArray;};
-    case independent: {_finalArray = + _independentArray;};
+ switch (true) do {
+  case (player getVariable ["Defender", false] == true): {_finalArray = + _defArray;};
+  case (player getVariable ["Attacker", false] == true): {_finalArray = + _atArray;};
+ 	case (side group player == east): {_finalArray = + _opforArray;};
+    case (side group player == west): {_finalArray = + _bluforArray;};
+    case (side group player == independent): {_finalArray = + _independentArray;};
 };
 
 {
