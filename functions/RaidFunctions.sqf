@@ -250,7 +250,7 @@ if (!isNull findDisplay 20999) then {
 PENA_JoinToLobbyRaid = {
 _idc = (_this # 0);
 	if (raidLobbyDef find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
-	if (count raidLobbyAt < 1 && raidLobbyAt find (getPlayerUID player) == -1) then { //Ограничение лобби
+	if (count raidLobbyAt < 1 && raidLobbyAt find (getPlayerUID player) == -1 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup", false] == false) then { //Ограничение лобби
 		raidLobbyAt pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
@@ -268,7 +268,7 @@ _idc = (_this # 0);
 PENA_JoinToLobbyDef = {
 	_idc = (_this # 0);
 	if (raidLobbyAt find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
-	if (count raidLobbyDef < 6 && raidLobbyDef find (getPlayerUID player) == -1) then {//Ограничение лобби
+	if (count raidLobbyDef < 6 && raidLobbyDef find (getPlayerUID player) == -1 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup", false] == false) then {//Ограничение лобби
 		raidLobbyDef pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
