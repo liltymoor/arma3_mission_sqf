@@ -24,10 +24,10 @@ createMarker ["RaidText",BaseFlag];
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
-_posAt = getMarkerPos "CreateVehRaidAt";
-_posDef = getMarkerPos "CreateVehRaidDef";
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posDef; closeDialog 0;} forEach raidLobbyDef;
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posAt; closeDialog 0;} forEach raidLobbyAt;
+_posAt = getMarkerPos "BaseAt";
+_posDef = getMarkerPos "BaseDef";
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posDef; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); closeDialog 0;} forEach raidLobbyDef;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; (_x call BIS_fnc_getUnitByUID) setPos _posAt; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); closeDialog 0;} forEach raidLobbyAt;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
