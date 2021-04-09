@@ -361,7 +361,31 @@ while {true} do {
    };
 };
 
+//Авто килл если участник выходит за пределы круга
+[] spawn {
+while {true} do {
+_countDefBuff = count (allPlayers select {(_x getVariable ["Defender", false] == true); _x inArea "RaidEllipse";});
+_countAtBuff = count (allPlayers select {(_x getVariable ["Attacker", false] == true); _x inArea "RaidEllipse";});
+	waitUntil {
+_countDef = count (allPlayers select {(_x getVariable ["Defender", false] == true); _x inArea "RaidEllipse";});
+_countAt = count (allPlayers select {(_x getVariable ["Attacker", false] == true); _x inArea "RaidEllipse";});
+_countDef != _countDefBuff or _countAt != _countAtBuff;
+};
+{_x setDamage 1;} forEach (allPlayers select {((_x getVariable ["Attacker", false] == true) or (_x getVariable ["Defender", false] == true)) && !(_x inArea "RaidEllipse")});
+	};	
+};
 
+//Авто килл если не участник входит в пределы круга
+[] spawn {
+while {true} do {
+_countPlBuff = count (allPlayers select {(_x getVariable ["Defender", false] == false); (_x getVariable ["Attacker", false] == false); _x inArea "RaidEllipse";});
+	waitUntil {
+_countPl = count (allPlayers select {(_x getVariable ["Defender", false] == false); (_x getVariable ["Attacker", false] == false); _x inArea "RaidEllipse";});
+_countPl != _countPlBuff;
+};
+{_x setDamage 1;} forEach (allPlayers select {(_x getVariable ["Attacker", false] == false) && (_x getVariable ["Defender", false] == false) && _x inArea "RaidEllipse"});
+	};	
+};
 
 /*
 this addAction
