@@ -30,7 +30,7 @@ while {!IsNull (FindDisplay 1234389)} do {
   case (_vehicle isKindOf "O_MBT_04_command_F") : {_lifes = (_loadedLifes select 1);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Ангара
   case (_vehicle isKindOf "O_MBT_02_cannon_F") : {_lifes = (_loadedLifes select 2);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Варсук
   case (_vehicle isKindOf "B_MBT_01_cannon_F") : {_lifes = (_loadedLifes select 3);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Сламмер
-  case (_vehicle isKindOf "I_APC_Wheeled_03_cannon_F") : {_lifes = (_loadedLifes select 4);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Горгона
+  case (_vehicle isKindOf "I_APC_Wheeled_03_cannon_F") : {_lifes = (_loadedLifes select 4 );((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Горгона
   case (_vehicle isKindOf "O_APC_Tracked_02_AA_F") : {_lifes = (_loadedLifes select 5);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Тигрис
   case (_vehicle isKindOf "B_APC_Tracked_01_AA_F") : {_lifes = (_loadedLifes select 6);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//Читаха
   case (_vehicle isKindOf "O_Heli_Light_02_F") : {_lifes = (_loadedLifes select 7);((Finddisplay 1234389) displayCtrl 131214) ctrlSetText format ["%1", _lifes];};//орка
@@ -55,33 +55,34 @@ while {!IsNull (FindDisplay 1234389)} do {
 };
 
  FREDDT_FNC_HEAVYVEHARRAY = {
- _Lifes = (_this select 0); 
- _opforArray = ["mgs_ifrit"];
- _bluforArray = ["swat_ifrit_1"];
- _independentArray = ["msf_ifrit"];
+ _Lifes = (_this select 0);
+ _idc = (_this # 1); 
+ _opforArray = ["O_MRAP_02_F"];
+ _bluforArray = ["O_MRAP_02_F"];
+ _independentArray = ["O_MRAP_02_F"];
  _finalArray = [];
  _finalArray = _finalArray;
  switch (side player) do {
-  case east: {_finalArray = + _opforArray + _Lifes};
+    case east: {_finalArray = + _opforArray + _Lifes};
     case west: {_finalArray = + _bluforArray + _Lifes};
     case independent: {_finalArray = + _independentArray + _Lifes};
   };
 {
   _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
-  lbAdd [3614, _vehName];
-  lbSetData [3614, _forEachIndex, _x];
+  lbAdd [_idc, _vehName];
+  lbSetData [_idc, _forEachIndex, _x];
 } forEach  _finalArray;
 
   _player = player;
   _UID = getPlayerUID _player;
  [_player,_UID] remoteExec ["PENA_DB_LOADLIFES_FNC", 2 , false];
 
-    };
+};
  
   PENA_FNC_PREVEHARRAY = {
 	_player = player;
 	_UID = getPlayerUID player;
-	[_player, _UID] remoteExec ["PENA_DB_LOAD_ARMORED_VEH", 2 , false];
+	[_player, _UID, (_this # 0)] remoteExec ["PENA_DB_LOAD_ARMORED_VEH", 2 , false];
 };
 
 
@@ -300,7 +301,7 @@ PENA_CREATING_VEH = {
   _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
   _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
   if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
-
+    
   _player = player;
   _UID = getPlayerUID _player;
   _vehicle = (_this # 0);
@@ -315,6 +316,7 @@ PENA_CREATING_VEH = {
   clearMagazineCargoGlobal _govno;      
   clearItemCargoGlobal _govno;      
   clearBackpackCargoGlobal _govno;
+  [_player, _vehicle, 1]remoteExec["PENA_DECREASE_RAID_LIFE", 2 , false];
   _govno setVariable ["keys", _UID, true];
   _veh = _govno getVariable ["keys", 50];
 };
@@ -323,7 +325,7 @@ PENA_CREATING_VEH = {
    [] spawn { 
    _unitSide = 0; 
   if (player getVariable ["Defender", false] == true) then {_unitSide = "Defender"; hint "def";} else {_unitSide = "Attacker"; hint "at"}; 
-   _vehArray = ["ver_vaz_2114_uck", "ver_vaz_2114_OPER"]; // AddVehToRaid - сюда легковая техника
+   _vehArray = ["ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
    
   { 
     _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");   

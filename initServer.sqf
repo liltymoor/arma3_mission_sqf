@@ -371,7 +371,8 @@ PENA_SHOP_TRANSACTION = { //Покупка техники -бабки + спав
 
 	_player = (_this select 0);
 	_UID = (_this select 1);
-
+	_idc = (_this # 2);
+	diag_log _idc;
 	_Lifes = [];
 	//Земля
 	_dbLifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
@@ -394,7 +395,7 @@ PENA_SHOP_TRANSACTION = { //Покупка техники -бабки + спав
 	};
 
 
-	[_Lifes] remoteExec ["FREDDT_FNC_HEAVYVEHARRAY", _player, false];
+	[_Lifes, _idc] remoteExec ["FREDDT_FNC_HEAVYVEHARRAY", _player, false];
 	diag_log "Я наземный транспорт и я... вроде... работаю";
 	diag_log _Lifes;
 };
@@ -583,22 +584,48 @@ PENA_RAID_SETTINGS = {
 	_totalLifes;
 };
 
+lightVehArr = ["ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
+HeavyVehArr = ["I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "O_Heli_Light_02_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F", "O_T_VTOL_02_infantry_hex_F"]; //AddHeavyVehToRaid - сюда боевая
+
+
+
 PENA_CREATEVEH = {
-	_lightVehArr = ["ver_vaz_2114_uck", "ver_vaz_2114_OPER"]; // AddVehToRaid - сюда легковая техника
 	_player = (_this # 0);
 	_vehicle = (_this # 1);
 	diag_log ["Создаем технику на рейде ", _vehicle];
 
 	if (_player getVariable ["Defender", false] == true) then {
 		//Defender
+		switch (true) do {
+			case ((HeavyVehArr find _vehicle) != -1) : { [_player, getPlayerUID _player, _vehicle] call PENA_DB_PAYLIFE_FNC;; [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
+			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };}; 
+			default {   }; 
+		};
+	} else {
+		//Attacker
+		switch (true) do {
+			case ((HeavyVehArr find _vehicle) != -1) : { [_player, getPlayerUID _player, _vehicle] call PENA_DB_PAYLIFE_FNC;; [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
+			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };}; 
+			default {   }; 
+		};
+	};
+};
+
+PENA_DECREASE_RAID_LIFE = {
+	_player = (_this # 0);
+	_vehicle = (_this # 1);
+	_decreaseNum = (_this # 2);
+
+	if (_player getVariable ["Defender", false] == true) then {
+		//Defender
 		switch (true) do { 
-			case ((_lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false]; _buffer = OnGoingRadeData # 0; _buffer set [0, (_buffer # 0) - 1]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then {_buffer = OnGoingRadeData # 0; _buffer set [0, (_buffer # 0) - _decreaseNum]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
 			default {   }; 
 		};
 	} else {
 		//Attacker
 		switch (true) do { 
-			case ((_lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false]; _buffer = OnGoingRadeData # 0; _buffer set [1, (_buffer # 1) - 1]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { _buffer = OnGoingRadeData # 0; _buffer set [1, (_buffer # 1) - _decreaseNum]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
 			default {   }; 
 		};
 	};
