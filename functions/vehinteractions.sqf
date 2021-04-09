@@ -3,11 +3,11 @@ FREDDY_FNC_REPAIRVEH =
 [] spawn {
 private _fixer = player;
 private _veh = cursorObject;
-private _delay = 10;
+private _delay = 15;
 private _zero = 0;
 if (_fixer getVariable ["Repair_inProgress", false]) then {hint "Вы уже чините транспортное средство";} else {
 //"Начался ремонт, для отмены удерживайте W" remoteExec ["hint", _fixer, true];
-[format["<t color='#ffffff' size = '.7'>Начался ремонт, для отмены удерживайте</t> <t color='#ff0000' size = '.7'>W</t>"],-1,0.85,15,0.3,0,789] spawn BIS_fnc_dynamicText;
+[format["<t color='#ffffff' size = '.7'>Начался ремонт, для отмены удерживайте</t> <t color='#ff0000' size = '.7'>W</t>"],-1,0.85,17,0.3,0,789] spawn BIS_fnc_dynamicText;
 _fixer setVariable ["Repair_inProgress", true, true];
 closeDialog 0;
 inGameUISetEventHandler ["Action","hint 'Вы чем-то заняты'; true"];
