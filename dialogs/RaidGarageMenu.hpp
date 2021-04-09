@@ -160,7 +160,7 @@ class RaidGarageMenu
 			w = safeZoneW * 0.1125;
 			h = safeZoneH * 0.03666667;
 			style = 0+2;
-			text = "Грузовая техника";
+			text = "Специальная техника";
 			borderSize = 0;
 			colorBackground[] = {0.502,0.6,1,1};
 			colorBackgroundActive[] = {0.502,0.6,1,1};
@@ -180,12 +180,12 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call freddy_fnc_LoadTruckVehRaidArray; ctrlEnable [14141, true]; ctrlEnable [14142, false]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
+			action = "lbClear 60000; call freddy_fnc_LoadTruckVehRaidArray; ctrlEnable [14141, true]; ctrlEnable [14142, false]; ctrlEnable [14143, true]; ctrlEnable [14144, true];"
 		};
 		class Control757064
 		{
 			type = 1;
-			idc = 14143;
+			idc = 60500;
 			x = safeZoneX + safeZoneW * 0.54375;
 			y = safeZoneY + safeZoneH * 0.46888889;
 			w = safeZoneW * 0.1125;
@@ -211,7 +211,7 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call PENA_FNC_PREVEHARRAY; ctrlEnable [14141, true]; ctrlEnable [14142, true]; ctrlEnable [14143, false]; ctrlEnable [14144, true];"
+			action = "lbClear 60000;[60000] call PENA_FNC_PREVEHARRAY; ctrlEnable [14141, true]; ctrlEnable [14142, true]; ctrlEnable [14143, false]; ctrlEnable [14144, true];"
 		};
 		class Control24773411
 		{
