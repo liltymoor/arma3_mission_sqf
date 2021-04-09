@@ -3,6 +3,7 @@
 
 FREDDY_FNC_CREATERAID = {
 [] spawn {
+missionNamespace setVariable ["RaidWarmup",true, true];
 //Тут создаются маркеры
 
 call PENA_RAID_LIFES;
@@ -42,6 +43,7 @@ _t = str(_s);
 [_time] remoteExec ["Freddy_Fnc_UpdateTabletUntilStart", -2, false];
 sleep 1; 
 };
+missionNamespace setVariable ["RaidWarmup",nil, true];
 
 //Тут отчет обратный до конца рейда
 missionNamespace setVariable ["Raid",true, true];
