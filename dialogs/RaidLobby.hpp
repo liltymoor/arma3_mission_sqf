@@ -504,7 +504,7 @@ class RaidLobby
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "[20000, player]remoteExec['PENA_QuitFromLobby_Queue', player, false];";
+			action = "if (((getPlayerUID player) in raidLobbyDef or (getPlayerUID player) in raidLobbyAt) && (missionNamespace getVariable ['Raid', false] == true or missionNamespace getVariable ['RaidWarmup', false] == true)) then {hint 'Вы не можете выйти во время рейда';} else {[20000, player]remoteExec['PENA_QuitFromLobby_Queue', player, false];};";
 		};
 		
 	};
