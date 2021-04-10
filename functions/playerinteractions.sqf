@@ -12,7 +12,7 @@ closeDialog 0;
 inGameUISetEventHandler ["Action","hint 'Вы чем-то заняты'; true"];
 [_reviver, "AinvPknlMstpSnonWnonDr_medic0"] remoteExec ["playMove", 0, true];
         if (alive _reviver) then {
-            while {(_delay > _zero) && lifeState _reviver != "INCAPACITATED" && (getDammage cursorObject) <= 0.99 && isNull objectParent player && inputAction "MoveForward" != 1} do {
+            while {(_delay > _zero) && lifeState _reviver != "INCAPACITATED" && (getDammage cursorObject) <= 0.99 && isNull objectParent player && alive _veh && inputAction "MoveForward" != 1} do {
                 _delay = _delay - 1; 
                 sleep 1;
             };
