@@ -132,20 +132,42 @@ if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
   clearItemCargoGlobal _govno;      
   clearBackpackCargoGlobal _govno;
   _govno setVariable ["keys", _UID, true];
+  _govno setVariable ["LoopValue", 0, true];
   _veh = _govno getVariable ["keys", 50];
 
-  _govno addEventHandler ["Fired", { 
+_govno addEventHandler ["Fired", { 
     params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"]; 
-    _unit setVariable ["FiredInSafeZone", true, true]; 
-    [_unit] spawn { 
-    _unit = (_this # 0); 
-while {(_unit getVariable ["FiredInSafeZone",false]) == true} do { 
-waitUntil {(_unit getVariable ["FiredInSafeZone", false])==true}; 
-for [{ _i = 1, _time = 30}, { _time > 0 }, { _time = _time - _i}] do {if (alive _unit) then {systemChat str _time; systemChat str "техника"; sleep 1;} else {_time = 0;};}; 
- 
-_unit setVariable ["FiredInSafeZone", nil, true]; 
-}; 
-     }; 
+    _unit setVariable ["FiredInSafeZone", true, true];
+    _unit setVariable ["TimerFired", 30, true];
+    _loops = _unit getVariable "LoopValue";
+    _unit setVariable ["LoopValue", _loops + 1, true];
+
+    if (_unit getVariable ["TimerFired", 0] != 0) then 
+    {
+
+        [_unit] spawn 
+        { 
+            _unit = (_this # 0); 
+            scopeName "loopVeh2";
+            while {(_unit getVariable ["FiredInSafeZone",false]) || _unit getVariable ["TimerFired",0] != 0} do 
+            {          
+                 scopeName "loopVeh";  
+                 _time = _unit getVariable "TimerFired";
+                 if (alive _unit && (_unit getVariable "LoopValue") < 2) then 
+                        {
+                          systemChat (str(_unit getVariable "TimerFired"));
+                          _unit setVariable ["TimerFired", _time - 1, true];
+                          sleep 1;
+                        }   else 
+                                {
+                                _currentLoops = _unit getVariable "LoopValue";
+                                _unit setVariable ["LoopValue", _currentLoops - 1, true];
+                                breakTo "loopVeh2";_unit setVariable ["TimerFired", 0, true];
+                                }; 
+                _unit setVariable ["FiredInSafeZone", nil, true]; 
+            }; 
+        }; 
+   };
 }];
 
 _govno addEventHandler ["GetIn", { 
@@ -385,3 +407,4 @@ PENA_CREATING_VEH = {
 
   [_player, _UID] remoteExec ["PENA_DB_LOAD_HELI", 2 ,false];
 };
+
