@@ -127,7 +127,28 @@ if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUni
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyDef;
 sleep 15;
 {_x setDamage 1;} forEach _playersArray;
+_vehiclesArray = vehicles select {_x getVariable ["keys", "50"] == "50" && _x inArea "RaidEllipse"};
 {if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
+
+_uidUnit = {_x} forEach raidLobbyDef + raidLobbyAt; 
+_veh = vehicles select {_x getVariable ["keys", "50"] == _uidUnit && _x inArea "RaidEllipse"};   
+for "_i" from 0 to count _veh do {  
+  _getVehClass = typeOf (_veh # _i);  
+  switch (true) do {   
+    case ((_veh # _i) isKindOf "I_MBT_03_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_MBT_04_command_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_MBT_02_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "B_MBT_01_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "I_APC_Wheeled_03_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_APC_Tracked_02_AA_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "B_APC_Tracked_01_AA_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_Heli_Light_02_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_Heli_Attack_02_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "B_Heli_Attack_01_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};   
+    default {};   
+    };  
+  }; 
+
 call FREDDY_FNC_NullArrayServer;
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true]; 
@@ -149,7 +170,28 @@ if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUni
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyAt;
 sleep 15;
 {_x setDamage 1;} forEach _playersArray;
+_vehiclesArray = vehicles select {_x getVariable ["keys", "50"] == "50" && _x inArea "RaidEllipse"};
 {if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
+
+_uidUnit = {_x} forEach raidLobbyDef + raidLobbyAt; 
+_veh = vehicles select {_x getVariable ["keys", "50"] == _uidUnit && _x inArea "RaidEllipse"};   
+for "_i" from 0 to count _veh do {  
+  _getVehClass = typeOf (_veh # _i);  
+  switch (true) do {   
+    case ((_veh # _i) isKindOf "I_MBT_03_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_MBT_04_command_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_MBT_02_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "B_MBT_01_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "I_APC_Wheeled_03_cannon_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_APC_Tracked_02_AA_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "B_APC_Tracked_01_AA_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_Heli_Light_02_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "O_Heli_Attack_02_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};  
+    case ((_veh # _i) isKindOf "B_Heli_Attack_01_F") : {[_getVehClass, _uidUnit]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false]; deletevehicle (_veh # _i);};   
+    default {};   
+    };  
+  }; 
+
 call FREDDY_FNC_NullArrayServer;
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true];
