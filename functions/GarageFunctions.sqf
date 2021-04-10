@@ -109,67 +109,72 @@ _Lifes = (_this select 0);
   };
 
 
-Freddy_fnc_createveh = {
-_trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos"];
-_nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
-_entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
-if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
+    Freddy_fnc_createveh = {
+    _trg = ["vehSpawnAtira", "vehSpawnKavalla", "vehSpawnPyrgos"];
+    _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
+    _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
+    if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
 
-  _player = player;
-  _UID = getPlayerUID _player;
-  _index = lbCurSel 3614;
-  _vehicle = lbData [3614, _index];
-   [_player, _UID, _vehicle] remoteExec ["PENA_DB_PAYLIFE_FNC",2,false];
-  _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla"];
-  _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
-  _pos = getMarkerPos _nearestMarker;
-  _azimuth = markerDir _nearestMarker;
-  _govno = _vehicle createVehicle _pos;//тут ты получаешь из класснейма объект
-  _govno setDir _azimuth;
-  _govno disableTIEquipment true;      
-  clearWeaponCargoGlobal _govno;      
-  clearMagazineCargoGlobal _govno;      
-  clearItemCargoGlobal _govno;      
-  clearBackpackCargoGlobal _govno;
-  _govno setVariable ["keys", _UID, true];
-  _govno setVariable ["LoopValue", 0, true];
-  _veh = _govno getVariable ["keys", 50];
+      _player = player;
+      _UID = getPlayerUID _player;
+      _index = lbCurSel 3614;
+      _vehicle = lbData [3614, _index];
+       [_player, _UID, _vehicle] remoteExec ["PENA_DB_PAYLIFE_FNC",2,false];
+      _markArray = ["vehSpawnAtira", "vehSpawnPyrgos", "vehSpawnKavalla"];
+      _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
+      _pos = getMarkerPos _nearestMarker;
+      _azimuth = markerDir _nearestMarker;
+      _govno = _vehicle createVehicle _pos;//тут ты получаешь из класснейма объект
+      _govno setDir _azimuth;
+      _govno disableTIEquipment true;      
+      clearWeaponCargoGlobal _govno;      
+      clearMagazineCargoGlobal _govno;      
+      clearItemCargoGlobal _govno;      
+      clearBackpackCargoGlobal _govno;
+      _govno setVariable ["keys", _UID, true];
+      _govno setVariable ["LoopValue", 0, true];
+      _veh = _govno getVariable ["keys", 50];
 
-_govno addEventHandler ["Fired", { 
-    params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"]; 
-    _unit setVariable ["FiredInSafeZone", true, true];
-    _unit setVariable ["TimerFired", 30, true];
-    _loops = _unit getVariable "LoopValue";
-    _unit setVariable ["LoopValue", _loops + 1, true];
+    _govno addEventHandler ["Fired", { 
+        params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"]; 
+        _unit setVariable ["FiredInSafeZone", true, true];
+        _unit setVariable ["TimerFired", 30, true];
+        _loops = _unit getVariable "LoopValue";
+        _unit setVariable ["LoopValue", _loops + 1, true];
 
-    if (_unit getVariable ["TimerFired", 0] != 0) then 
-    {
+        if (_unit getVariable ["TimerFired", 0] != 0) then 
+        {
 
-        [_unit] spawn 
-        { 
-            _unit = (_this # 0); 
-            scopeName "loopVeh2";
-            while {(_unit getVariable ["FiredInSafeZone",false]) || _unit getVariable ["TimerFired",0] != 0} do 
-            {          
-                 scopeName "loopVeh";  
-                 _time = _unit getVariable "TimerFired";
-                 if (alive _unit && (_unit getVariable "LoopValue") < 2) then 
-                        {
-                          systemChat (str(_unit getVariable "TimerFired"));
-                          _unit setVariable ["TimerFired", _time - 1, true];
-                          sleep 1;
-                        }   else 
-                                {
-                                _currentLoops = _unit getVariable "LoopValue";
-                                _unit setVariable ["LoopValue", _currentLoops - 1, true];
-                                breakTo "loopVeh2";_unit setVariable ["TimerFired", 0, true];
-                                }; 
-                _unit setVariable ["FiredInSafeZone", nil, true]; 
-            }; 
-        }; 
-   };
-}];
+            [_unit] spawn 
+            { 
+                _unit = (_this # 0); 
+                scopeName "loopVeh2";
+                while {(_unit getVariable ["FiredInSafeZone",false]) || _unit getVariable ["TimerFired",0] != 0} do 
+                {  
+                     scopeName "loopVeh";  
+                     _time = _unit getVariable "TimerFired";
+                     if (alive _unit && (_unit getVariable "LoopValue") < 2 && _unit getVariable "TimerFired" > 0) then 
+                            {
+                              systemChat (str(_unit getVariable "TimerFired"));
+                              systemChat "Фреди сын шлюхи";
+                              _unit setVariable ["TimerFired", _time - 1, true];
+                              sleep 1;
+                            }   else 
+                                    {
+                                    _currentLoops = _unit getVariable "LoopValue";
+                                    _unit setVariable ["LoopValue", _currentLoops - 1, true];
+                                    breakTo "loopVeh2";
+                                    };
+                if (_unit getVariable "TimerFired" == 0) then {_unit setVariable ["FiredInSafeZone", nil, true]; _unit setVariable ["TimerFired", nil, true]; _unit setVariable ["LoopValue", 0, true];}
+                };
+            };
+       };
+    }];
 
+    };
+
+
+/*
 _govno addEventHandler ["GetIn", { 
  params ["_vehicle", "_role", "_unit", "_turret"]; 
  _state = (_unit getVariable ["SafeZoneTimer", 100]); 
@@ -194,8 +199,7 @@ _govno addEventHandler ["GetIn", {
 }; 
 }; 
 }];
-};
-
+*/
 FREDDT_FNC_LOADARMOREDLANDVEH = {
  [] spawn {
  _vehArray = ["I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F"];
