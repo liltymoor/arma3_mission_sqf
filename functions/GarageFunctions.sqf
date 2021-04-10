@@ -327,7 +327,8 @@ PENA_CREATING_VEH = {
   _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
   _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
   if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
-    
+
+  [player, getPlayerUID player, (_this # 0)]remoteExec["PENA_DB_PAYLIFE_FNC", 2 , false];
   _player = player;
   _UID = getPlayerUID _player;
   _vehicle = (_this # 0);

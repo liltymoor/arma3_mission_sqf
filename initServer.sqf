@@ -6,7 +6,7 @@
 
 	OnGoingRadeData = [];
 
-
+	HeavyVehArr = ["I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "O_Heli_Light_02_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F", "O_T_VTOL_02_infantry_hex_F"]; //AddHeavyVehToRaid - сюда боевая
 
 	waitingForRewardArray = []; 
 
@@ -438,8 +438,8 @@ PENA_DB_LOAD_HELI = {
 	_UID = (_this select 1);
 	_veh = (_this select 2);
 
+	if ((HeavyVehArr find _veh) == -1) exitWith {};
 	diag_log [systemTime];
-	diag_log "Сервер PAYLIFE работает...";
 	diag_log "UID:";
 	diag_log [_UID];
 	diag_log [name _player];
@@ -604,14 +604,14 @@ PENA_CREATEVEH = {
 	if (_player getVariable ["Defender", false] == true) then {
 		//Defender
 		switch (true) do {
-			case ((HeavyVehArr find _vehicle) != -1) : { [_player, getPlayerUID _player, _vehicle] call PENA_DB_PAYLIFE_FNC;; [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
+			case ((HeavyVehArr find _vehicle) != -1) : { [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
 			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };}; 
 			default {   }; 
 		};
 	} else {
 		//Attacker
 		switch (true) do {
-			case ((HeavyVehArr find _vehicle) != -1) : { [_player, getPlayerUID _player, _vehicle] call PENA_DB_PAYLIFE_FNC;; [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
+			case ((HeavyVehArr find _vehicle) != -1) : { [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
 			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };}; 
 			default {   }; 
 		};
