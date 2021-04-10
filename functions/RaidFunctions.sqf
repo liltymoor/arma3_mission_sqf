@@ -127,8 +127,6 @@ if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUni
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyDef;
 sleep 15;
 {_x setDamage 1;} forEach _playersArray;
-_vehiclesArray = vehicles select {_x getVariable ["keys", "50"] == "50" && _x inArea "RaidEllipse"};
-{if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 
 _uidUnit = {_x} forEach raidLobbyDef + raidLobbyAt; 
 _veh = vehicles select {_x getVariable ["keys", "50"] == _uidUnit && _x inArea "RaidEllipse"};   
@@ -148,6 +146,8 @@ for "_i" from 0 to count _veh do {
     default {};   
     };  
   }; 
+_vehiclesArray = vehicles select {_x inArea "RaidEllipse"};
+{if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 
 call FREDDY_FNC_NullArrayServer;
 missionNamespace setVariable ["Raid",nil, true];
@@ -191,6 +191,8 @@ for "_i" from 0 to count _veh do {
     default {};   
     };  
   }; 
+_vehiclesArray = vehicles select {_x inArea "RaidEllipse"};
+{if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 
 call FREDDY_FNC_NullArrayServer;
 missionNamespace setVariable ["Raid",nil, true];
