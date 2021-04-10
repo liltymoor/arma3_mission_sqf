@@ -526,9 +526,12 @@ call compile preprocessFileLineNumbers "scripts\BattleZone.sqf";
 //Старт рейда
 [] spawn {
 while {true} do {
-waitUntil {count raidLobbyDef > 1 && count raidLobbyAt == 0 && missionNamespace getVariable ["Raid", false] == false};
+waitUntil {count raidLobbyDef > 1 && count raidLobbyAt == 0 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup",false] == false};
+sleep 60;
+if (count raidLobbyDef > 0 && count raidLobbyAt == 0) then {
 [] remoteExec ["FREDDY_FNC_CREATERAID", 2, false];
-sleep 35;
+waitUntil {missionNamespace getVariable ["Raid", false] == false};
+		};
 	};
 };
 
