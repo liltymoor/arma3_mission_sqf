@@ -57,9 +57,9 @@ while {!IsNull (FindDisplay 1234389)} do {
  FREDDT_FNC_HEAVYVEHARRAY = {
  _Lifes = (_this select 0);
  _idc = (_this # 1); 
- _opforArray = ["O_MRAP_02_F"];
- _bluforArray = ["O_MRAP_02_F"];
- _independentArray = ["O_MRAP_02_F"];
+ _opforArray = [];
+ _bluforArray = [];
+ _independentArray = [];
  _finalArray = [];
  _finalArray = _finalArray;
  switch (side player) do {
@@ -90,7 +90,7 @@ while {!IsNull (FindDisplay 1234389)} do {
   _player = player;
   _UID = getPlayerUID player;
 
-  [_player, _UID] remoteExec ["PENA_DB_LOAD_HELI", 2 ,false];
+  [_player, _UID, (_this # 0)] remoteExec ["PENA_DB_LOAD_HELI", 2 ,false];
 };
 
   FREDDY_FNC_HELIARRAY = {
@@ -99,8 +99,8 @@ _Lifes = (_this select 0);
  _vehArray = _vehArray + _Lifes;
 {
   _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
-  lbAdd [3614, _vehName];
-  lbSetData [3614, _forEachIndex, _x];
+  lbAdd [(_this # 1), _vehName];
+  lbSetData [(_this # 1), _forEachIndex, _x];
 } forEach  _vehArray;
 
   _player = player;
@@ -352,7 +352,9 @@ PENA_CREATING_VEH = {
    [] spawn { 
    _unitSide = 0; 
   if (player getVariable ["Defender", false] == true) then {_unitSide = "Defender"; hint "def";} else {_unitSide = "Attacker"; hint "at"}; 
-   _vehArray = ["ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
+   _vehArray = ["O_MRAP_02_F","ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
+   _specVehArray = ["O_Truck_03_ammo_F"]; //AddSpecVehToRaid - сюда специальная
+   _heliArray = ["B_Heli_Light_01_F"]; //AddHeliToRaid - сюда вертолеты
    
   { 
     _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");   
@@ -376,8 +378,25 @@ PENA_CREATING_VEH = {
       ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 0 # 1)];
   }; 
    
+  };
+       case ((_specVehArray find _vehicle) != -1 ) : { 
+    if (_unitSide == "Defender") then { 
+      ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 3 # 0)];
+  } else {
+      ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 3 # 1)];
   }; 
-      //БРОНИРОВАННАЯ ТЕХНИКА 
+   
+  };
+
+  case ((_heliArray find _vehicle) != -1 ) : { 
+    if (_unitSide == "Defender") then { 
+      ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 1 # 0)];
+  } else {
+      ((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", (OnGoingData # 1 # 1)];
+  }; 
+   
+  };
+      //БРОНИРОВАННАЯ ТЕХНИКА
     case (_vehicle isKindOf "I_MBT_03_cannon_F") : {_lifes = (_loadedLifes select 0);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Кума 
     case (_vehicle isKindOf "O_MBT_04_command_F") : {_lifes = (_loadedLifes select 1);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Ангара 
     case (_vehicle isKindOf "O_MBT_02_cannon_F") : {_lifes = (_loadedLifes select 2);((Finddisplay 60100) displayCtrl 60002) ctrlSetText format ["%1", _lifes];};//Варсук 
@@ -397,11 +416,11 @@ PENA_CREATING_VEH = {
 
   freddy_fnc_LoadTruckVehRaidArray = {
  [] spawn {
- _vehArray = [];
+ _vehArray = ["O_Truck_03_ammo_F"];
 {
   _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
-  lbAdd [3614, _vehName];
-  lbSetData [3614, _forEachIndex, _x];
+  lbAdd [60000, _vehName];
+  lbSetData [60000, _forEachIndex, _x];
 } forEach  _vehArray;
   };
 };

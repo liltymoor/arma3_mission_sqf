@@ -401,34 +401,35 @@ PENA_SHOP_TRANSACTION = { //Покупка техники -бабки + спав
 };
 
 
-PENA_DB_LOAD_HELI = {
+	PENA_DB_LOAD_HELI = {
 
 
-	_player = (_this select 0);
-	_UID = (_this select 1);
+		_player = (_this select 0);
+		_UID = (_this select 1);
+		_idc = (_this # 2);
 
-	_Lifes = [];
-	//Земля
-	_dbLifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F, O_Heli_Light_02_F, O_Heli_Attack_02_F, B_Heli_Attack_01_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
-	_dbLifes = _dbLifes # 1 # 0; 
-	for "_i" from 7 to 10 do {
-		if (_dbLifes # _i != 0) then {
-			switch (_i) do { 
-				case 7 : {  _Lifes = _Lifes + ["O_Heli_Light_02_F"] }; //Orca
-				case 8 : {  _Lifes = _Lifes + ["O_Heli_Attack_02_F"] }; //Kajman
-				case 9 : {  _Lifes = _Lifes + ["B_Heli_Attack_01_F"] }; //Bf
+		_Lifes = [];
+		//Земля
+		_dbLifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F, O_Heli_Light_02_F, O_Heli_Attack_02_F, B_Heli_Attack_01_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
+		_dbLifes = _dbLifes # 1 # 0; 
+		for "_i" from 7 to 10 do {
+			if (_dbLifes # _i != 0) then {
+				switch (_i) do { 
+					case 7 : {  _Lifes = _Lifes + ["O_Heli_Light_02_F"] }; //Orca
+					case 8 : {  _Lifes = _Lifes + ["O_Heli_Attack_02_F"] }; //Kajman
+					case 9 : {  _Lifes = _Lifes + ["B_Heli_Attack_01_F"] }; //Bf
+				};
+
 			};
+
 
 		};
 
 
+		[_Lifes, _idc] remoteExec ["FREDDY_FNC_HELIARRAY", _player, false];
+		diag_log "Я наземный воздушный и я... вроде... работаю";
+		diag_log _Lifes;
 	};
-
-
-	[_Lifes] remoteExec ["FREDDY_FNC_HELIARRAY", _player, false];
-	diag_log "Я наземный воздушный и я... вроде... работаю";
-	diag_log _Lifes;
-};
 
 
 
@@ -591,10 +592,10 @@ PENA_RAID_SETTINGS = {
 	_totalLifes;
 };
 
-lightVehArr = ["ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
+lightVehArr = ["O_MRAP_02_F","ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
 HeavyVehArr = ["I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "O_Heli_Light_02_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F", "O_T_VTOL_02_infantry_hex_F"]; //AddHeavyVehToRaid - сюда боевая
-
-
+specVehArr = ["O_Truck_03_ammo_F"]; //AddSpecVehToRaid - сюда специальная
+heliVehArr = ["B_Heli_Light_01_F"]; //AddHeliToRaid - сюда вертолеты
 
 PENA_CREATEVEH = {
 	_player = (_this # 0);
@@ -605,14 +606,18 @@ PENA_CREATEVEH = {
 		//Defender
 		switch (true) do {
 			case ((HeavyVehArr find _vehicle) != -1) : { [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
-			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };}; 
+			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };};
+			case ((specVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 3 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };};
+			case ((heliVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 1 # 0) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };};
 			default {   }; 
 		};
 	} else {
 		//Attacker
 		switch (true) do {
 			case ((HeavyVehArr find _vehicle) != -1) : { [_vehicle]remoteExec["PENA_CREATING_VEH", _player, false];};
-			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };}; 
+			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };};
+			case ((specVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 3 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };};
+			case ((heliVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 1 # 1) >= 1) then { [_vehicle]remoteExec["PENA_CREATING_VEH", _player , false];} else {  };};
 			default {   }; 
 		};
 	};
@@ -626,13 +631,17 @@ PENA_DECREASE_RAID_LIFE = {
 	if (_player getVariable ["Defender", false] == true) then {
 		//Defender
 		switch (true) do { 
-			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then {_buffer = OnGoingRadeData # 0; _buffer set [0, (_buffer # 0) - _decreaseNum]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+				case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 0) >= 1) then {_buffer = OnGoingRadeData # 0; _buffer set [0, (_buffer # 0) - _decreaseNum]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+				case ((specVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 3 # 0) >= 1) then {_buffer = OnGoingRadeData # 3; _buffer set [0, (_buffer # 0) - _decreaseNum]; OnGoingRadeData set [3, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+				case ((heliVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 1 # 0) >= 1) then {_buffer = OnGoingRadeData # 1; _buffer set [0, (_buffer # 0) - _decreaseNum]; OnGoingRadeData set [1, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
 			default {   }; 
 		};
 	} else {
 		//Attacker
 		switch (true) do { 
 			case ((lightVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 0 # 1) >= 1) then { _buffer = OnGoingRadeData # 0; _buffer set [1, (_buffer # 1) - _decreaseNum]; OnGoingRadeData set [0, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+			case ((specVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 3 # 1) >= 1) then {_buffer = OnGoingRadeData # 3; _buffer set [1, (_buffer # 1) - _decreaseNum]; OnGoingRadeData set [3, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
+			case ((heliVehArr find _vehicle) != -1) : {  if ((OnGoingRadeData # 1 # 1) >= 1) then {_buffer = OnGoingRadeData # 1; _buffer set [1, (_buffer # 1) - _decreaseNum]; OnGoingRadeData set [1, _buffer]; [OnGoingRadeData] call PENA_RAID_LIFES_LOAD;} else {  };}; 
 			default {   }; 
 		};
 	};

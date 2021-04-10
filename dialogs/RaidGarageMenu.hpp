@@ -242,7 +242,7 @@ class RaidGarageMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "lbClear 3614; call pena_fnc_PreHeliArrayRaid; ctrlEnable [14141, true]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, false];"
+			action = "lbClear 60000; [60000] call PENA_FNC_PREHELIARRAY; ctrlEnable [14141, true]; ctrlEnable [14142, true]; ctrlEnable [14143, true]; ctrlEnable [14144, false];"
 		};
 			class LifesCount
 		{
