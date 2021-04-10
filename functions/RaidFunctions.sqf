@@ -301,13 +301,15 @@ _idc = (_this # 0);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
 		if (raidLobbyAt find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
-			hint "Вы были занесены в очередь из-за нехватки мест в лобби";
+    _message = parseText format["<t size='1'>Вы были помещены в <t color='#ffb833'>очередь</t><br></br>из-за <br></br><t color='#ffb833'>нехватки мест</t> в лобби / рейд уже <t color='#ffb833'>начался</t></t>"];
+    hint _message;
 		raidLobbyQueAt pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else { hint "Вы уже зашли в лобби"};
 	};
 } else {
-	hint "Вы уже числитесь в другой команде или очереди";
+  _message = parseText format["<t size='1'>Вы уже <t color='#ffb833'>числитесь</t> в другой команде или очереди</t>"];
+  hint _message;
 };
 };
 
@@ -319,13 +321,15 @@ PENA_JoinToLobbyDef = {
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
 		if (raidLobbyDef find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1) then {
-		hint "Вы были занесены в очередь из-за нехватки мест в лобби";
+		_message = parseText format["<t size='1'>Вы были помещены в <t color='#ffb833'>очередь</t><br></br>из-за <br></br><t color='#ffb833'>нехватки мест</t> в лобби / рейд уже <t color='#ffb833'>начался</t></t>"];
+    hint _message;
 		raidLobbyQueDef pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else { hint "Вы уже зашли в лобби"};
 	};
 } else {
-	hint "Вы уже числитесь в другой команде или очереди";
+  _message = parseText format["<t size='1'>Вы уже <t color='#ffb833'>числитесь</t> в другой команде или очереди</t>"];
+  hint _message;
 };
 };
 
