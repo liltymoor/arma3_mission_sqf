@@ -99,7 +99,6 @@ player setDamage 1;
 	};
 };
 
-//[player] remoteExec ["FREDDY_FNC_CAPTUREFLAG", 2,false];
 //Скрипт захвата флага
 FREDDY_FNC_CAPTUREFLAG = {
 _unit = (_this # 0);
