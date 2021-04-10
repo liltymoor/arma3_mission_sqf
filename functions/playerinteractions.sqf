@@ -36,6 +36,47 @@ inGameUISetEventHandler ["Action","hint 'Вы чем-то заняты'; true"];
      };
 };
 
+FREDDY_FNC_REVIVEONRAID = {
+[] spawn {
+private _reviver = player;
+private _veh = cursorObject;
+private _delay = 10;
+private _zero = 0;
+if (_reviver getVariable ["Revive_inProgress", false]) then {hint "Вы уже реанимируете тело";} else {
+  _hasitem = [_reviver, "epenephrine"] call BIS_fnc_hasItem;
+  if (_hasitem == false) exitWith {hint "У вас нет адреналина";};
+_reviver removeItem "epenephrine";
+"Началась реанимация, для отмены удерживайте W" remoteExec ["hint", _reviver, true];
+_reviver setVariable ["Revive_inProgress", true, true];
+closeDialog 0;
+inGameUISetEventHandler ["Action","hint 'Вы чем-то заняты'; true"];
+[_reviver, "AinvPknlMstpSnonWnonDr_medic0"] remoteExec ["playMove", 0, true];
+        if (alive _reviver) then {
+            while {(_delay > _zero) && lifeState _reviver != "INCAPACITATED" && (getDammage cursorObject) <= 0.99 && isNull objectParent player && inputAction "MoveForward" != 1} do {
+                _delay = _delay - 1; 
+                sleep 1;
+            };
+        };
+        if ((_delay <= _zero) && lifeState _reviver != "INCAPACITATED") then {
+             [_reviver, ""] remoteExec ["switchMove", 0, true];
+             [_veh, false ] remoteExec [ "setUnconscious", _veh]; 
+              [_veh, ""] remoteExec ["switchMove", 0, true];
+              "Вас реанимировали" remoteExec ["hint", _veh, false]; 
+             "Реанимация закончена" remoteExec ["hint", _reviver, true];
+              _veh setDamage 0;
+              _reviver setVariable ["Revive_inProgress", false, true];
+              inGameUISetEventHandler ["Action","false"];
+} else { 
+              [_reviver, ""] remoteExec ["switchMove", 0, true];
+              "Реанимация прервана" remoteExec ["hint", _reviver, true];
+              _reviver addItem "epenephrine";
+              _reviver setVariable ["Revive_inProgress", false, true];
+              inGameUISetEventHandler ["Action","false"];
+            };
+         };
+     };
+};
+
 FREDDY_FNC_DRAGBODY =
 {
 	[] spawn {

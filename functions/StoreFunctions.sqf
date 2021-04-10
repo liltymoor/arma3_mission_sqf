@@ -41,7 +41,7 @@ while {!IsNull (FindDisplay 123438)} do {
 
  FREDDT_FNC_LOADACCESORIESARRAY = {
  [] spawn {
- _wepArray = ["optic_ACO_grn", "optic_Aco", "optic_ACO_grn_smg", "optic_Aco_smg", "optic_Holosight", "optic_Holosight_smg", "optic_mas_aim", "optic_Yorris", "", "acc_pointer_IR", "acc_flashlight", "", "NVGoggles", "NVGoggles_INDEP", "NVGoggles_OPFOR", "O_NVGoggles_grn_F", "", "ItemGPS", "ItemCompass", "ItemWatch", "Binocular", "Rangefinder", "", "RedBull", "Buffout"];
+ _wepArray = ["optic_ACO_grn", "optic_Aco", "optic_ACO_grn_smg", "optic_Aco_smg", "optic_Holosight", "optic_Holosight_smg", "optic_mas_aim", "optic_Yorris", "", "acc_pointer_IR", "acc_flashlight", "", "NVGoggles", "NVGoggles_INDEP", "NVGoggles_OPFOR", "O_NVGoggles_grn_F", "", "ItemGPS", "ItemCompass", "ItemWatch", "Binocular", "Rangefinder", "", "RedBull", "Buffout", "epenephrine"];
 {
 	_wepName = getText (configFile >> "CfgWeapons" >> _x >> "displayname") + getText (configFile >> "CfgMagazines" >> _x >> "displayname");
 	lbAdd [3615, _wepName];
