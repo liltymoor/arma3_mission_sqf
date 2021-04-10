@@ -129,10 +129,10 @@ sleep 15;
 {_x setDamage 1;} forEach _playersArray;
 {if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 call FREDDY_FNC_NullArrayServer;
-deleteMarker "RaidEllipse";
-deleteMarker "RaidText";
 missionNamespace setVariable ["Raid",nil, true];
 missionNamespace setVariable ["CaptureInProgress", nil, true]; 
+deleteMarker "RaidEllipse";
+deleteMarker "RaidText";
 	};
 };
 
@@ -141,8 +141,6 @@ FREDDY_FNC_ENDRAIDATTACK = {
 [] spawn {
 _playersArray = allUnits inAreaArray "RaidEllipse";
 _vehiclesArray = (vehicles inAreaArray "RaidEllipse"); 
-missionNamespace setVariable ["Raid",nil, true];
-missionNamespace setVariable ["CaptureInProgress", nil, true];
 "RaidText" setMarkerText "Победа атаки";
 if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
@@ -153,6 +151,8 @@ sleep 15;
 {_x setDamage 1;} forEach _playersArray;
 {if (_x isKindOf "Landvehicle" or _x isKindOf "Air") then {deleteVehicle _x};} forEach _vehiclesArray;
 call FREDDY_FNC_NullArrayServer;
+missionNamespace setVariable ["Raid",nil, true];
+missionNamespace setVariable ["CaptureInProgress", nil, true];
 deleteMarker "RaidEllipse";
 deleteMarker "RaidText"; 
 	};
