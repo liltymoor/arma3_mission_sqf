@@ -109,7 +109,7 @@ missionNamespace setVariable ["CaptureInProgress", true, true];
 	while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag <= 15 && isNull objectParent player} do { 
   _time = _time - 1;
   _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];   
-  [_result] remoteExec ["hintSilent", -2 , false];
+  [_result] remoteExec ["hintSilent", _unit , false];
   sleep 1; 
 };
 if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {"Захват сбит" remoteExec ["hintSilent", -2, false]; missionNamespace setVariable ["CaptureInProgress", nil, true];};
