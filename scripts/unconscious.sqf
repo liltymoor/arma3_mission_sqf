@@ -41,6 +41,7 @@ player addEventHandler ["HandleDamage",
     {
         while {lifeState _this == "INCAPACITATED"} do {
           _this switchCamera "INTERNAL";
+          if (animationState _this != "unconsciousrevivedefault") then {_this playMove "unconsciousrevivedefault";};
           closeDialog 0;
           ((findDisplay 49) displayctrl 1010) ctrlShow false;
           ((findDisplay 49) displayctrl 104) ctrlShow false;
