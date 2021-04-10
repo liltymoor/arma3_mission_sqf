@@ -27,8 +27,8 @@ _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
 _posAt = getMarkerPos "BaseAt";
 _posDef = getMarkerPos "BaseDef";
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; if !((_x call BIS_fnc_getUnitByUID) == vehicle (_x call BIS_fnc_getUnitByUID)) then {moveOut (_x call BIS_fnc_getUnitByUID);}; (_x call BIS_fnc_getUnitByUID) setPos _posDef; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyDef;
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; if !((_x call BIS_fnc_getUnitByUID) == vehicle (_x call BIS_fnc_getUnitByUID)) then {moveOut (_x call BIS_fnc_getUnitByUID);}; (_x call BIS_fnc_getUnitByUID) setPos _posAt; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyAt;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyDef;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyAt;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
@@ -389,6 +389,10 @@ _countPl != _countPlBuff;
 	};	
 };
 
+freddy_fnc_TeleportSupport = {
+_pos = (_this # 0);
+player setPos _pos;
+};
 /*
 this addAction
 [
