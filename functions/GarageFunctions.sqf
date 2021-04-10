@@ -95,7 +95,7 @@ while {!IsNull (FindDisplay 1234389)} do {
 
   FREDDY_FNC_HELIARRAY = {
 _Lifes = (_this select 0);
- _vehArray = ["B_Heli_Light_01_F"];
+ _vehArray = ["B_Heli_Light_01_F" , "B_mas_UH1Y_UNA_F"]; //AddHeliToRaid - сюда вертолеты
  _vehArray = _vehArray + _Lifes;
 {
   _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
@@ -354,7 +354,7 @@ PENA_CREATING_VEH = {
   if (player getVariable ["Defender", false] == true) then {_unitSide = "Defender"; hint "def";} else {_unitSide = "Attacker"; hint "at"}; 
    _vehArray = ["O_MRAP_02_F","ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
    _specVehArray = ["O_Truck_03_ammo_F"]; //AddSpecVehToRaid - сюда специальная
-   _heliArray = ["B_Heli_Light_01_F"]; //AddHeliToRaid - сюда вертолеты
+   _heliArray = ["B_Heli_Light_01_F", "B_mas_UH1Y_UNA_F"]; //AddHeliToRaid - сюда вертолеты
    
   { 
     _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");   

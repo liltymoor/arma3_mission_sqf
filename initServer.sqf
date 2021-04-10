@@ -595,7 +595,7 @@ PENA_RAID_SETTINGS = {
 lightVehArr = ["O_MRAP_02_F","ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
 HeavyVehArr = ["I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "O_Heli_Light_02_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F", "O_T_VTOL_02_infantry_hex_F"]; //AddHeavyVehToRaid - сюда боевая
 specVehArr = ["O_Truck_03_ammo_F"]; //AddSpecVehToRaid - сюда специальная
-heliVehArr = ["B_Heli_Light_01_F"]; //AddHeliToRaid - сюда вертолеты
+heliVehArr = ["B_Heli_Light_01_F", "B_mas_UH1Y_UNA_F"]; //AddHeliToRaid - сюда вертолеты
 
 PENA_CREATEVEH = {
 	_player = (_this # 0);
