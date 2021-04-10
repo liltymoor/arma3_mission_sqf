@@ -32,7 +32,8 @@ player addEventHandler ["HandleDamage",
         showCompass false;
         if !(isNull objectParent _unit) then {moveOut _unit};
         switch (true) do { 
-          case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true)) : {}; 
+          case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true)) : {};
+          case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == false) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == false)) : {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];};   
           case (side _instigator != side group _unit && _instigator != _unit) : {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];}; 
           default {}; 
         };
@@ -41,7 +42,7 @@ player addEventHandler ["HandleDamage",
     {
         while {lifeState _this == "INCAPACITATED"} do {
           _this switchCamera "INTERNAL";
-          if (animationState _this != "unconsciousrevivedefault") then {_this playMove "unconsciousrevivedefault";};
+          //if (animationState _this != "unconsciousrevivedefault") then {_this switchMove "unconsciousrevivedefault";};
           closeDialog 0;
           ((findDisplay 49) displayctrl 1010) ctrlShow false;
           ((findDisplay 49) displayctrl 104) ctrlShow false;
