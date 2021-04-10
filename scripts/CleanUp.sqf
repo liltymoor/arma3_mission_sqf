@@ -11,5 +11,6 @@ deleteVehicle _x;
 while {true} do {
 Sleep 300;
 call Freddy_fnc_cleanup;
+{ deleteVehicle _x } forEach (allMissionObjects "weaponHolder");
 //[] remoteExec ["Freddy_fnc_cleanup", 0, true];
 };
