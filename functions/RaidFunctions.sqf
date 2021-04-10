@@ -371,7 +371,7 @@ _countAtBuff = count (allPlayers select {(_x getVariable ["Attacker", false] == 
 	waitUntil {
 _countDef = count (allPlayers select {(_x getVariable ["Defender", false] == true); _x inArea "RaidEllipse";});
 _countAt = count (allPlayers select {(_x getVariable ["Attacker", false] == true); _x inArea "RaidEllipse";});
-_countDef != _countDefBuff or _countAt != _countAtBuff;
+missionNamespace getVariable ["Raid", false] == true && (_countDef != _countDefBuff or _countAt != _countAtBuff);
 };
 {_x setDamage 1;} forEach (allPlayers select {((_x getVariable ["Attacker", false] == true) or (_x getVariable ["Defender", false] == true)) && !(_x inArea "RaidEllipse")});
 	};	
