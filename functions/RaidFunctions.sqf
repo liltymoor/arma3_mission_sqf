@@ -99,18 +99,21 @@ player setDamage 1;
 	};
 };
 
+//[player] remoteExec ["FREDDY_FNC_CAPTUREFLAG", 2,false];
 //Скрипт захвата флага
 FREDDY_FNC_CAPTUREFLAG = {
-[] spawn {
-_unit = player;
+_unit = (_this # 0);
+[_unit] spawn {
+_unit = (_this # 0);
 _time = 120;
 missionNamespace setVariable ["CaptureInProgress", true, true]; 
 	while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag <= 15 && isNull objectParent player} do { 
-	_time = _time - 1;   
-	hintSilent format["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
-	sleep 1; 
+  _time = _time - 1;
+  _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];   
+  [_result] remoteExec ["hintSilent", -2 , false];
+  sleep 1; 
 };
-if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {hint str "Захват сбит"; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {"Захват сбит" remoteExec ["hintSilent", -2, false]; missionNamespace setVariable ["CaptureInProgress", nil, true];};
 	};
 };
 
