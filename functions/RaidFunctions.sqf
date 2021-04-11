@@ -27,13 +27,13 @@ _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
 _posAt = getMarkerPos "BaseAt";
 _posDef = getMarkerPos "BaseDef";
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyDef;
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyAt;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; if (lifeState _x == "INCAPACITATED") then {_x setDamage 0; _x setUnconscious false; _x switchMove "";}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyDef;
+{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; if (lifeState _x == "INCAPACITATED") then {_x setDamage 0; _x setUnconscious false; _x switchMove "";}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyAt;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
 //Тут отчет обратный до начала рейда
-_time = 30; 
+_time = 60; 
 while {_time > 0} do { 
 _time = _time - 1;   
 _s = format["Рейд начнется через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
@@ -47,7 +47,7 @@ missionNamespace setVariable ["RaidWarmup",nil, true];
 
 //Тут отчет обратный до конца рейда
 missionNamespace setVariable ["Raid",true, true];
-_time = 300;
+_time = 3600;
 
 while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && _countDef > 0 && _countAt > 0} do {
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
@@ -304,7 +304,7 @@ if (!isNull findDisplay 20999) then {
 PENA_JoinToLobbyRaid = {
 _idc = (_this # 0);
 	if (raidLobbyDef find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
-	if (count raidLobbyAt < 1 && raidLobbyAt find (getPlayerUID player) == -1 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup", false] == false) then { //Ограничение лобби
+	if (count raidLobbyAt < 14 && raidLobbyAt find (getPlayerUID player) == -1 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup", false] == false) then { //Ограничение лобби
 		raidLobbyAt pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {
@@ -324,7 +324,7 @@ _idc = (_this # 0);
 PENA_JoinToLobbyDef = {
 	_idc = (_this # 0);
 	if (raidLobbyAt find (getPlayerUID player) == -1 && raidLobbyQueDef find (getPlayerUID player) == -1 && raidLobbyQueAt find (getPlayerUID player) == -1) then {
-	if (count raidLobbyDef < 6 && raidLobbyDef find (getPlayerUID player) == -1 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup", false] == false) then {//Ограничение лобби
+	if (count raidLobbyDef < 10 && raidLobbyDef find (getPlayerUID player) == -1 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup", false] == false) then {//Ограничение лобби
 		raidLobbyDef pushBack (getPlayerUID player);
 		[raidLobbyDef, raidLobbyAt, raidLobbyQueDef, raidLobbyQueAt]remoteExec["PENA_ARRAY_RAID_HANDLER", 2, false];
 	} else {

@@ -159,8 +159,6 @@ _Lifes = (_this select 0);
                      _time = _unit getVariable "TimerFired";
                      if (alive _unit && (_unit getVariable "LoopValue") < 2 && _unit getVariable "TimerFired" > 0) then 
                             {
-                              systemChat (str(_unit getVariable "TimerFired"));
-                              systemChat "Фреди сын шлюхи";
                               _unit setVariable ["TimerFired", _time - 1, true];
                               sleep 1;
                             }   else 

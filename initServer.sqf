@@ -565,7 +565,7 @@ call compile preprocessFileLineNumbers "scripts\BattleZone.sqf";
 [] spawn {
 while {true} do {
 	diag_log "ожидание начала рейда";
-waitUntil {count raidLobbyDef > 0 && count raidLobbyAt > 0 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup",false] == false};
+waitUntil {count raidLobbyDef >= 6 && count raidLobbyAt >= 8 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup",false] == false};
 diag_log "начался обратный отчет до начала рейда";
 sleep 30;
 if (count raidLobbyDef > 0 && count raidLobbyAt > 0) then {
