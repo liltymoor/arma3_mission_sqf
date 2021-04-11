@@ -568,7 +568,7 @@ while {true} do {
 waitUntil {count raidLobbyDef >= 6 && count raidLobbyAt >= 8 && missionNamespace getVariable ["Raid", false] == false && missionNamespace getVariable ["RaidWarmup",false] == false};
 diag_log "начался обратный отчет до начала рейда";
 sleep 30;
-if (count raidLobbyDef > 6 && count raidLobbyAt > 8) then {
+if (count raidLobbyDef >= 6 && count raidLobbyAt >= 8) then {
 call FREDDY_FNC_CREATERAID;
 diag_log "ожидание конца рейда";
 sleep 5;
