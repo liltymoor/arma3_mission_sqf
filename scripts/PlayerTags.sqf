@@ -102,8 +102,7 @@ addMissionEventHandler [
           } forEach _units;     
       }; 
         default {
-            _units = player nearEntities [["CAManBase"], 500];
-            _units = _units select {(side group _x) == playerSide && _x getVariable ["Attacker", false] == false && _x getVariable ["Defender", false] == false;};  
+            _units = (allUnits select {(side group _x) == playerSide && _x getVariable ["Attacker", false] == false && _x getVariable ["Defender", false] == false; _x distance player < 500;});  
             _units = _units - [player];  
            {      
             drawIcon3D [      
