@@ -175,35 +175,54 @@ _Lifes = (_this select 0);
        };
     }];
 
+    _govno addEventHandler ["GetIn", { 
+ params ["_vehicle", "_role", "_unit", "_turret"]; 
+    if (_unit getVariable "FiredInSafeZone" == true ) then {
+      _timer = _unit getVariable "SafeZoneTimer";
+
+       _vehicle setVariable ["FiredInSafeZone", true, true];
+        _vehicle setVariable ["TimerFired", _timer, true];
+        _loops = _vehicle getVariable "LoopValue";
+        _vehicle setVariable ["LoopValue", _loops + 1, true];
+
+        if (_vehicle getVariable ["TimerFired", 0] != 0) then 
+        {
+
+            [_vehicle] spawn 
+            { 
+                _vehicle = (_this # 0); 
+                scopeName "loopVeh2";
+                while {(_vehicle getVariable ["FiredInSafeZone",false]) || _vehicle getVariable ["TimerFired",0] != 0} do 
+                {  
+                     scopeName "loopVeh";  
+                     _time = _vehicle getVariable "TimerFired";
+                     if (alive _vehicle && (_vehicle getVariable "LoopValue") < 2 && _vehicle getVariable "TimerFired" > 0) then 
+                            {
+                              systemChat (str(_vehicle getVariable "TimerFired"));
+                              systemChat "Фреди сын шлюхи";
+                              _vehicle setVariable ["TimerFired", _time - 1, true];
+                              sleep 1;
+                            }   else 
+                                    {
+                                    _currentLoops = _vehicle getVariable "LoopValue";
+                                    _vehicle setVariable ["LoopValue", _currentLoops - 1, true];
+                                    breakTo "loopVeh2";
+                                    };
+                if (_vehicle getVariable "TimerFired" == 0) then {_vehicle setVariable ["FiredInSafeZone", nil, true]; _vehicle setVariable ["TimerFired", nil, true]; _vehicle setVariable ["LoopValue", 0, true];}
+                };
+            };
+       };
+    };
+}];
+
     };
 
 
-/*
-_govno addEventHandler ["GetIn", { 
- params ["_vehicle", "_role", "_unit", "_turret"]; 
- _state = (_unit getVariable ["SafeZoneTimer", 100]); 
- if (_state != 100) then { 
-   _vehicle setVariable ["FiredInSafeZone", true, true]; 
-     _vehicle setVariable ["TimerFiredState", _state, true]; 
-     [_vehicle, _state] spawn { 
-     _vehicle = (_this # 0); 
-     scopeName "main"; 
- while {(_vehicle getVariable ["FiredInSafeZone",false]) == true} do { 
- for [{_time = (_this # 1)}, { _time > 0 }, { _time = _time - 1}] do {if (alive _vehicle) then { 
-  _globalTime = _vehicle getVariable ["TimerFiredState", false]; 
-  systemChat str _time; 
-  systemChat str "техника"; 
-  if (_globalTime != _time) exitWith {_vehicle setVariable ["FiredInSafeZone", nil, true]; breakTo "main"}; 
-  _vehicle setVariable["TimerFiredState" , _globalTime - 1, true]; 
-  sleep 1; 
-  } else {_time = 0; breakTo "main"}; 
-  }; 
- _vehicle setVariable ["FiredInSafeZone", nil, true]; 
- }; 
-}; 
-}; 
-}];
-*/
+
+
+
+
+
 FREDDT_FNC_LOADARMOREDLANDVEH = {
  [] spawn {
  _vehArray = ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F", "I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_LT_01_AA_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F"];
