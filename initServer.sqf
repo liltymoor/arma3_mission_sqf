@@ -478,29 +478,35 @@ if ((_player getVariable ["CouldntStore", false]) != false) then {
 	};
 };
 
+PENA_VEH_REWARD = {
+        _unit = (_this # 0);
+        _killer = (_this # 1);
+       switch (true) do {
+                  case (_unit isKindOf "I_MBT_03_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_MBT_04_command_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_MBT_02_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "B_MBT_01_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "I_APC_Wheeled_03_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_APC_Tracked_02_AA_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "B_APC_Tracked_01_AA_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_Heli_Light_02_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_Heli_Attack_02_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "B_Heli_Attack_01_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  default {};
+        };
+    };
+
 addMissionEventHandler ["EntityKilled", { 
  params ["_unit", "_killer", "_instigator", "_useEffects"];
-  	if (_killer in (crew _unit)) exitWith {};
-    	if (side group (driver _unit) == side group _killer) exitWith {};
-    	if (side group (commander _unit) == side group _killer) exitWith {};
-    	if (side group (gunner _unit) == side group _killer) exitWith {};
-    	"Я работаю" remoteExec ["diag_log", 2 ,false];
-    	[_unit] remoteExec ["diag_log", 2 ,false];
-    	[_killer] remoteExec ["diag_log", 2 ,false];
-    	[_instigator] remoteExec ["diag_log", 2 ,false];
-    switch (true) do {
-      case (_unit isKindOf "I_MBT_03_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "O_MBT_04_command_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "O_MBT_02_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "B_MBT_01_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "I_APC_Wheeled_03_cannon_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "O_APC_Tracked_02_AA_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "B_APC_Tracked_01_AA_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "O_Heli_Light_02_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "O_Heli_Attack_02_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      case (_unit isKindOf "B_Heli_Attack_01_F") : {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      default {};
-      };
+
+    switch (true) do { 
+	case (({_x getVariable "Defender"} forEach crew _unit && _instigator getVariable "Attacker")) : {[_unit, _killer] call PENA_VEH_REWARD;};
+	case (({_x getVariable "Attacker"} forEach crew _unit && _instigator getVariable "Defender")) : {[_unit, _killer] call PENA_VEH_REWARD;}; 
+	//case (_killer getVariable ["Defender", false] == true && {_x getVariable ["Attacker", false] == true} forEach crew _unit) : {[_unit, _killer] call PENA_VEH_REWARD;};
+	//case ({_x getVariable ["Defender", false] == true} forEach crew _unit && _killer getVariable ["Attacker", false] == true) : {[_unit, _killer] call PENA_VEH_REWARD;};
+	case ({side group _x} forEach crew _unit != side group _killer) : {[_unit, _killer] call PENA_VEH_REWARD;};  
+	default {}; 
+	};
 }];
 
 
