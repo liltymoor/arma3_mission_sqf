@@ -213,6 +213,14 @@ PENA_SAVE_GEAR_FNC = {
     diag_log format ['%1', _playerSide];
     _space = "[]";
 
+    if (_unit getVariable ["Attacker", false] == true) exitWith {
+    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearAttacker='%1' WHERE UID='%2'",_space, _uid];
+    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearAttacker='%1' WHERE UID='%2'",_gear, _uid];
+    };
+    if (_unit getVariable ["Defender", false] == true) exitWith {
+    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearDefender='%1' WHERE UID='%2'",_space, _uid];
+    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearDefender='%1' WHERE UID='%2'",_gear, _uid];
+	};
     switch (_playerSide) do {
         case EAST: 
         {
@@ -273,16 +281,24 @@ PENA_LOAD_GEAR_FNCS = {
 
     _result = nil; 
 
-    switch (_side) do {
-        case EAST: 
+    switch (true) do {
+        case (_unit getVariable ["Attacker", false] == true): 
+        {
+            _result  = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT GearAttacker FROM PlayerGear WHERE UID='%1'",_uid]);//OPFOR
+        };
+        case (_unit getVariable ["Defender", false] == true): 
+        {
+            _result  = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT GearDefender FROM PlayerGear WHERE UID='%1'",_uid]);//OPFOR
+        };
+        case (_side == EAST): 
         {
             _result  = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT GearOpfor FROM PlayerGear WHERE UID='%1'",_uid]);//OPFOR
         };
-        case WEST: 
+        case (_side == WEST): 
         {
            	_result  = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT GearBlufor FROM PlayerGear WHERE UID='%1'",_uid]);//BLUFOR
         };
-        case independent: 
+        case (_side == independent): 
         {
             _result  = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT GearIndependent FROM PlayerGear WHERE UID='%1'",_uid]); //INDEPENDENT
         };
