@@ -284,6 +284,80 @@ FNC_GOVNO = {
   _govno setVariable ["keys", _UID, true];
   _veh = _govno getVariable ["keys", 50];
   hintSilent parseText format ["Покупка техники <t size='1' color='#80ff80'>совершена успешно</t>!"];
+
+      _govno addEventHandler ["Fired", { 
+        params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"]; 
+        _unit setVariable ["FiredInSafeZone", true, true];
+        _unit setVariable ["TimerFired", 30, true];
+        _loops = _unit getVariable "LoopValue";
+        _unit setVariable ["LoopValue", _loops + 1, true];
+
+        if (_unit getVariable ["TimerFired", 0] != 0) then 
+        {
+
+            [_unit] spawn 
+            { 
+                _unit = (_this # 0); 
+                scopeName "loopVeh2";
+                while {(_unit getVariable ["FiredInSafeZone",false]) || _unit getVariable ["TimerFired",0] != 0} do 
+                {  
+                     scopeName "loopVeh";  
+                     _time = _unit getVariable "TimerFired";
+                     if (alive _unit && (_unit getVariable "LoopValue") < 2 && _unit getVariable "TimerFired" > 0) then 
+                            {
+                              _unit setVariable ["TimerFired", _time - 1, true];
+                              sleep 1;
+                            }   else 
+                                    {
+                                    _currentLoops = _unit getVariable "LoopValue";
+                                    _unit setVariable ["LoopValue", _currentLoops - 1, true];
+                                    breakTo "loopVeh2";
+                                    };
+                if (_unit getVariable "TimerFired" == 0) then {_unit setVariable ["FiredInSafeZone", nil, true]; _unit setVariable ["TimerFired", nil, true]; _unit setVariable ["LoopValue", 0, true];}
+                };
+            };
+       };
+    }];
+
+    _govno addEventHandler ["GetIn", { 
+ params ["_vehicle", "_role", "_unit", "_turret"]; 
+    if (_unit getVariable "FiredInSafeZone" == true ) then {
+      _timer = _unit getVariable "SafeZoneTimer";
+
+       _vehicle setVariable ["FiredInSafeZone", true, true];
+        _vehicle setVariable ["TimerFired", _timer, true];
+        _loops = _vehicle getVariable "LoopValue";
+        _vehicle setVariable ["LoopValue", _loops + 1, true];
+
+        if (_vehicle getVariable ["TimerFired", 0] != 0) then 
+        {
+
+            [_vehicle] spawn 
+            { 
+                _vehicle = (_this # 0); 
+                scopeName "loopVeh2";
+                while {(_vehicle getVariable ["FiredInSafeZone",false]) || _vehicle getVariable ["TimerFired",0] != 0} do 
+                {  
+                     scopeName "loopVeh";  
+                     _time = _vehicle getVariable "TimerFired";
+                     if (alive _vehicle && (_vehicle getVariable "LoopValue") < 2 && _vehicle getVariable "TimerFired" > 0) then 
+                            {
+                              systemChat (str(_vehicle getVariable "TimerFired"));
+                              systemChat "Фреди сын шлюхи";
+                              _vehicle setVariable ["TimerFired", _time - 1, true];
+                              sleep 1;
+                            }   else 
+                                    {
+                                    _currentLoops = _vehicle getVariable "LoopValue";
+                                    _vehicle setVariable ["LoopValue", _currentLoops - 1, true];
+                                    breakTo "loopVeh2";
+                                    };
+                if (_vehicle getVariable "TimerFired" == 0) then {_vehicle setVariable ["FiredInSafeZone", nil, true]; _vehicle setVariable ["TimerFired", nil, true]; _vehicle setVariable ["LoopValue", 0, true];}
+                };
+            };
+       };
+    };
+}];
 };
 
 
