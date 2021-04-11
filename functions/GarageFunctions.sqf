@@ -216,11 +216,6 @@ _Lifes = (_this select 0);
     };
 
 
-
-
-
-
-
 FREDDT_FNC_LOADARMOREDLANDVEH = {
  [] spawn {
  _vehArray = ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F", "I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "I_LT_01_AA_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F"];
