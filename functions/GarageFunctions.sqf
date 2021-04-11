@@ -383,7 +383,6 @@ _UID = getPlayerUID player;
 _zaloopa1 = typeof _entitiesArray;
 _vehName = getText (configFile >> "CfgVehicles" >> _zaloopa1 >> "displayname");
 _veh = _entitiesArray getVariable ["keys", 50];
-if (_player getVariable ["StoreCooldown", false] == true) exitWith {hint "Подождите немного";};
 	call Freddy_fnc_StoreCooldown;
 if (count crew _entitiesArray > 0) exitWith {hint "В технике кто-то есть";};
 if (_player getVariable ["CouldntStore", false] == false) then {hint "Подождите немного";} else {
@@ -396,15 +395,6 @@ if (_player getVariable ["CouldntStore", false] == false) then {hint "Подож
     _player setVariable ["CouldntStore", nil, true];
     };
   };
-};
-
-Freddy_fnc_StoreCooldown = {
-[] spawn {
-_unit = player;
-_unit setVariable ["StoreCooldown", true, true];
-sleep 10;
-_unit setVariable ["StoreCooldown", nil, true];
-	};
 };
 
 //Рейдовые функции гаража
