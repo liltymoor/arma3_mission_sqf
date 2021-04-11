@@ -54,8 +54,7 @@ FREDDY_FNC_GETRANDOM_MNYCAPTUREZONE = {
 FREDDY_FNC_GETRANDOM_MNY_VEH = {
   _UID = getPlayerUID player;
   _player = player;
-  _killer = (_this select 0);
-  _randomMoney = [random[2000, 3000, 3400], 0] call BIS_fnc_cutDecimals;
+  _randomMoney = (_this # 0);
   _randomRating = [random[50, 50, 50], 0] call BIS_fnc_cutDecimals;
   
 HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center' shadow='2' size = '1.2'>ТЕХНИКА УНИЧТОЖЕНА</t> <t color='#80ff80' align='center' shadow='2' size = '1.2'> +%1$</t> <t color='#ffff00' align='center' shadow='2' size = '1'> +%2R</t>", _randomMoney, _randomRating]];
@@ -66,7 +65,7 @@ HALs_ticker_killfeed pushBack format [format ["<t color='#ffffff' align='center'
 FREDDY_FNC_GETRANDOM_MNYRAIDWIN = {
   _UID = getPlayerUID player;
   _player = player;
-  _killer = (_this select 0);
+  
   _randomMoney = [random[30000, 30000, 30000], 0] call BIS_fnc_cutDecimals;
   _randomRating = [random[150, 150, 150], 0] call BIS_fnc_cutDecimals;
 
