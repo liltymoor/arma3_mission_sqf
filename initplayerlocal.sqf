@@ -155,11 +155,11 @@ _player = player;
 
 if ((player inArea "BluforS" || player inArea "OpforS" || player inArea "IndepS") && player getVariable ["FiredInSafeZone", false]==false) then {
 player allowDamage false;
-systemChat str "Ты в сейве";
+//systemChat str "Ты в сейве";
 waitUntil {((!(player inArea "BluforS")) &&  (!(player inArea "OpforS")) && (!(player inArea "IndepS"))) || player getVariable ["FiredInSafeZone", false]==true};
   } else {
 player allowDamage true;
-systemChat str "Ты не в сейве";
+//systemChat str "Ты не в сейве";
 waitUntil {((player inArea "BluforS") || (player inArea "OpforS") || (player inArea "IndepS") )&& player getVariable ["FiredInSafeZone", false]==false};  
 };
   };
