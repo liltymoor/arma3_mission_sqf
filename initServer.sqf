@@ -528,13 +528,15 @@ addMissionEventHandler ["EntityKilled", {
  params ["_unit", "_killer", "_instigator", "_useEffects"];
 
     switch (true) do { 
-	case (({_x getVariable "Defender"} forEach crew _unit && _instigator getVariable "Attacker")) : {[_unit, _killer] call PENA_VEH_REWARD;};
-	case (({_x getVariable "Attacker"} forEach crew _unit && _instigator getVariable "Defender")) : {[_unit, _killer] call PENA_VEH_REWARD;}; 
+	case (({_x getVariable "Defender"} forEach crew _unit && _instigator getVariable "Defender")) : {diag_log "сработал 1";};
+	case (({_x getVariable "Attacker"} forEach crew _unit && _instigator getVariable "Attacker")) : {diag_log "сработал 2";};
+	case (({_x getVariable "Attacker"} forEach crew _unit && _instigator getVariable "Defender")) : {[_unit, _killer] call PENA_VEH_REWARD; diag_log "сработал 3";};
+	case (({_x getVariable "Defender"} forEach crew _unit && _instigator getVariable "Attacker")) : {[_unit, _killer] call PENA_VEH_REWARD; diag_log "сработал 4";}; 
 	//case (_killer getVariable ["Defender", false] == true && {_x getVariable ["Attacker", false] == true} forEach crew _unit) : {[_unit, _killer] call PENA_VEH_REWARD;};
 	//case ({_x getVariable ["Defender", false] == true} forEach crew _unit && _killer getVariable ["Attacker", false] == true) : {[_unit, _killer] call PENA_VEH_REWARD;};
-	case ({side group _x} forEach crew _unit != side group _killer) : {[_unit, _killer] call PENA_VEH_REWARD;};
-	case ((count (crew _unit)) == 0) : {[_unit, _killer] call PENA_VEH_REWARD;};  
-	default {}; 
+	case ({side group _x} forEach crew _unit != side group _killer) : {[_unit, _killer] call PENA_VEH_REWARD; diag_log "сработал 5";};
+	case ((count (crew _unit)) == 0) : {[_unit, _killer] call PENA_VEH_REWARD; diag_log "сработал 6";};  
+	default {diag_log "сработал дефолт";}; 
 	};
 }];
 
