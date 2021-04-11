@@ -34,7 +34,7 @@ player addEventHandler ["HandleDamage",
         switch (true) do { 
           case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == true) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == true)) : {};
           case ((_unit getVariable ["Defender", false] == true && _instigator getVariable ["Defender", false] == false) or (_unit getVariable ["Attacker", false] == true && _instigator getVariable ["Attacker", false] == false)) : {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];};   
-          case (side _instigator != side group _unit && _instigator != _unit) : {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false]; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];}; 
+          case (side _instigator != side group _unit && _instigator != _unit) : {if !(isNull objectParent _instigator) then {{[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _x, false];} forEach crew vehicle _instigator;} else {[]remoteExec ["FREDDY_FNC_GETRANDOM_MNYINCAP", _instigator, false];}; [_instigator]remoteExec["PENA_DB_EnmKilled", 2 , false];}; 
           default {}; 
         };
 
