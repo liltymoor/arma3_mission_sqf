@@ -196,8 +196,6 @@ _Lifes = (_this select 0);
                      _time = _vehicle getVariable "TimerFired";
                      if (alive _vehicle && (_vehicle getVariable "LoopValue") < 2 && _vehicle getVariable "TimerFired" > 0) then 
                             {
-                              systemChat (str(_vehicle getVariable "TimerFired"));
-                              systemChat "Фреди сын шлюхи";
                               _vehicle setVariable ["TimerFired", _time - 1, true];
                               sleep 1;
                             }   else 
