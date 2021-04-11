@@ -1,4 +1,4 @@
-enabledebugconsole = 0;
+enableDebugConsole[] = { "76561198066948374", "76561198111487754", "76561198399663910" };
 disableAI = 0;
 
 #include "dialogs\InteractionPlayerMenu.hpp"
