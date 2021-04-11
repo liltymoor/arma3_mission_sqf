@@ -480,7 +480,7 @@ _UID = (_this select 2);
 _zaloopa1 = (_this select 3);
 _player = (_this select 4);
 _text = parsetext format ["Вы поставили <t size='1' color='#80ff80'>%1</t> в гараж", _vehName];
-if (_player getVariable ["CouldntStore", false] == false) then {
+if (_player getVariable ["CouldntStore", false] == true) then {
 	_player setVariable ["CouldntStore", nil, true];
   switch (true) do {
   case (_zaloopa1 isKindOf "I_MRAP_03_hmg_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Страйдер 12.7
