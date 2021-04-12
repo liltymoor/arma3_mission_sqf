@@ -137,7 +137,7 @@ FREDDY_FNC_UNDRESS =
 	if(_myBackpack == "" && _myVest == "" && _myUniform == "" && _myGoogles == "" && _myHeadgear == "" && _myPWeapon == "") then {hint "Игрок уже раздет"} else {
             private _box = "Box_NATO_Grenades_F" createVehicle position _unit;
             clearWeaponCargoGlobal _box;
-			clearMagazineCargoGlobal _box;
+            clearMagazineCargoGlobal _box;
             clearItemCargoGlobal _box;
             clearBackpackCargoGlobal _box;
             if (_myPWeapon != "") then {{_box addWeaponCargoGlobal[_x,1];} forEach (weapons _unit)};

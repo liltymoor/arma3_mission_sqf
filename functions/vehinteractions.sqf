@@ -29,7 +29,7 @@ inGameUISetEventHandler ["Action","hint 'Вы чем-то заняты'; true"];
               [_fixer, ""] remoteExec ["switchMove", 0, true];
               //"Ремонт прерван" remoteExec ["hint", _fixer, true];
               [format["<t color='#ffffff' size = '.7'>Ремонт</t> <t color='#ff0000' size = '.7'>прерван</t>"],-1,0.85,3,0.3,0,789] spawn BIS_fnc_dynamicText;
-              _fixer setVariable ["Repair_inProgress", false, true];
+              _fixer setVariable ["Repair_inProgress", nil, true];
               inGameUISetEventHandler ["Action","false"];
             };
          };
