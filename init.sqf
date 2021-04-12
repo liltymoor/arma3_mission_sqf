@@ -21,11 +21,11 @@ civilian setFriend [resistance, 1];
 
 //Отключение голосовых каналов
 0 enableChannel [false, false];
-1 enableChannel [false, false];
+1 enableChannel [true, true];
 2 enableChannel [true, true];
 3 enableChannel [false, false];
 4 enableChannel [false, false];
-5 enableChannel [false, false];
+5 enableChannel [true, true];
 setCurrentChannel 2;
 
 call compile preprocessFileLineNumbers "functions\RaidFunctions.sqf";
