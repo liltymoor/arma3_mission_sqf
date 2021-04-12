@@ -33,7 +33,7 @@ _posDef = getMarkerPos "BaseDef";
 {[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
 
 //Тут отчет обратный до начала рейда
-_time = 60; 
+_time = 120; 
 while {_time > 0} do { 
 _time = _time - 1;   
 _s = format["Рейд начнется через: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];

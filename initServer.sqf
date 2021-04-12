@@ -15,7 +15,7 @@
 	0 setRain 0.2;
 	0 setFog 0; 
 	setWind [0.5, 0.5, true];
-	setDate [1986, 2, 25, 17, 0];
+	setDate [1986, 2, 25, 14, 0];
 	forceWeatherChange;
 
 	diag_log "Инициализация скриптов выполнена";
