@@ -25,12 +25,8 @@ createMarker ["RaidText",BaseFlag];
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
-_posAt = getMarkerPos "BaseAt";
-_posDef = getMarkerPos "BaseDef";
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; if (lifeState (_x call BIS_fnc_getUnitByUID) == "INCAPACITATED") then {(_x call BIS_fnc_getUnitByUID) setDamage 0; (_x call BIS_fnc_getUnitByUID) setUnconscious false; (_x call BIS_fnc_getUnitByUID) switchMove "";}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyDef;
-{waitUntil {alive (_x call BIS_fnc_getUnitByUID)}; if (lifeState (_x call BIS_fnc_getUnitByUID) == "INCAPACITATED") then {(_x call BIS_fnc_getUnitByUID) setDamage 0; (_x call BIS_fnc_getUnitByUID) setUnconscious false; (_x call BIS_fnc_getUnitByUID) switchMove "";}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", (_x call BIS_fnc_getUnitByUID), false]; (_x call BIS_fnc_getUnitByUID) setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", (_x call BIS_fnc_getUnitByUID) , false];} forEach raidLobbyAt;
-{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyDef;
-{[] RemoteExec ["FREDDY_FNC_PLAYERINAREA", _x, false];} forEach raidLobbyAt;
+{[(_x call BIS_fnc_getUnitByUid)] remoteExec ["freddy_fnc_teleportDef", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
+{[(_x call BIS_fnc_getUnitByUid)] remoteExec ["freddy_fnc_teleportAttack", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 
 //Тут отчет обратный до начала рейда
 _time = 120; 
@@ -90,15 +86,6 @@ ctrlSetText [20009, _t1];
 	};
 };
 
-//Убийство игрока если не в зоне
-FREDDY_FNC_PLAYERINAREA = {
-[] spawn {
-if (!(player inArea "RaidEllipse")) exitWith {player setDamage 1;};
-waitUntil {!(player inArea "RaidEllipse")};
-player setDamage 1;
-	};
-};
-
 //Скрипт захвата флага
 FREDDY_FNC_CAPTUREFLAG = {
 _unit = (_this # 0);
@@ -108,11 +95,13 @@ _time = 120;
 missionNamespace setVariable ["CaptureInProgress", true, true]; 
 	while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag <= 15 && isNull objectParent player} do { 
   _time = _time - 1;
-  _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];   
+  _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+  {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+  {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;      
   [_result] remoteExec ["hintSilent", _unit , false];
   sleep 1; 
 };
-if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {"Захват сбит" remoteExec ["hintSilent", -2, false]; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
 	};
 };
 
@@ -464,6 +453,18 @@ _countPl != _countPlBuff;
 freddy_fnc_TeleportSupport = {
 _pos = (_this # 0);
 player setPos _pos;
+};
+
+freddy_fnc_teleportAttack = {
+_player = (_this # 0);
+_posAt = getMarkerPos "BaseAt";
+waitUntil {alive _player}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player, false];
+};
+
+freddy_fnc_teleportDef = {
+_player = (_this # 0);
+_posDef = getMarkerPos "BaseDef";
+waitUntil {alive _player}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player , false];  
 };
 /*
 this addAction

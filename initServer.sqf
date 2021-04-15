@@ -525,9 +525,9 @@ PENA_VEH_REWARD = {
                   case (_unit isKindOf "O_APC_Tracked_02_AA_F") : {_reward = 3750; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
                   case (_unit isKindOf "B_APC_Tracked_01_AA_F") : {_reward = 4200; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
                   case (_unit isKindOf "B_Heli_Transport_01_camo_F") : {_reward = 2500; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_Heli_Light_02_F") : {_reward = 9125; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_Heli_Attack_02_F") : {_reward = 11250; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "B_Heli_Attack_01_F") : {_reward = 12675; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_Heli_Light_02_F") : {_reward = 11000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "O_Heli_Attack_02_F") : {_reward = 20000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "B_Heli_Attack_01_F") : {_reward = 23000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
                   default {};
         };
     };
