@@ -21,8 +21,8 @@ civilian setFriend [resistance, 1];
 
 //Отключение голосовых каналов
 0 enableChannel [false, false];
-1 enableChannel [true, true];
-2 enableChannel [true, true];
+1 enableChannel [true, false];
+2 enableChannel [false, false];
 3 enableChannel [false, false];
 4 enableChannel [false, false];
 5 enableChannel [true, true];
