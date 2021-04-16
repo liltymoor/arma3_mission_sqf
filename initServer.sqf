@@ -207,42 +207,36 @@
 	};
 
 PENA_SAVE_GEAR_FNC = {
+	_unit = (_this # 0);
+	_uid = (_this # 1);
+	_gear = (_this # 2);
+	_playerSide = (_this # 3);
+
     diag_log "Сохранение снаряжения (2/2 - Сервер)";
-
-    params [
-        ['_netId', '', ['']]
-    ];
-
-    private _unit           =     objectFromNetId _netId;
-    private _uid            =     getPlayerUID _unit;
-    private _gear           =     getUnitLoadout _unit;
-    private _playerSide     =     side _unit;
-
     diag_log format ['%1', _playerSide];
-    _space = "[]";
 
     if (_unit getVariable ["Attacker", false] == true) exitWith {
-    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearAttacker='%1' WHERE UID='%2'",_space, _uid];
+    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearAttacker='[]' WHERE UID='%1'",_uid];
     "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearAttacker='%1' WHERE UID='%2'",_gear, _uid];
     };
     if (_unit getVariable ["Defender", false] == true) exitWith {
-    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearDefender='%1' WHERE UID='%2'",_space, _uid];
+    "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearDefender='[]' WHERE UID='%1'",_uid];
     "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearDefender='%1' WHERE UID='%2'",_gear, _uid];
 	};
     switch (_playerSide) do {
         case EAST: 
         {
-            "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearOpfor='%1' WHERE UID='%2'",_space, _uid];
-            "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearOpfor='%1' WHERE UID='%2'",_gear, _uid];
+            "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearOpfor='[]' WHERE UID='%1'", _uid];
+            "extDB3" callExtension format ["0:PenaUpal:UPDATE PlayerGear SET GearOpfor='%1' WHERE UID='%2'", _gear, _uid];
         };
         case WEST: 
         {
-            "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerGear SET GearBlufor='%1' WHERE UID='%2'", _space, _uid];
+            "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerGear SET GearBlufor='[]' WHERE UID='%1'", _uid];
             "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerGear SET GearBlufor='%1' WHERE UID='%2'", _gear, _uid];
         };
         case independent: 
         {
-            "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerGear SET GearIndependent='%1' WHERE UID='%2'", _space, _uid];
+            "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerGear SET GearIndependent='[]' WHERE UID='%1'", _uid];
             "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerGear SET GearIndependent='%1' WHERE UID='%2'", _gear, _uid];
         };
     };

@@ -259,7 +259,7 @@ class GearStoreMenu
 			soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1.0};
 			soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1.0};
 			soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1.0};
-			action = "[netId player] remoteExec ['PENA_SAVE_GEAR_FNC', 2];"
+			action = "[player, getPlayerUID player, getUnitLoadout player, side player] remoteExec ['PENA_SAVE_GEAR_FNC', 2];"
 		};
 		
 	};
