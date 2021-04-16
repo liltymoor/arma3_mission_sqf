@@ -7,11 +7,17 @@ _messagedisplay = parsetext format ["<t size='2' align ='center' color='#ffcc00'
 <t size='1' align ='left' color='#00cc00'>От:</t> <t align ='left'> %1</t><br></br><br></br>
 <t size='1' align ='left' color='#00cc00'>Сообщение:</t><br></br>
 <t size='1' align ='left'>%2</t>", name player, _message];
-[[_messagedisplay], "hint",side(_caller),false,true] call BIS_fnc_MP;
-ctrlSetText [155, ""];
-[[_messagedisplay], "hint",side(_caller),false,true] call BIS_fnc_MP;
-lbAdd [1532, name _caller] call BIS_fnc_MP;
-lbAdd [1532, _message] call BIS_fnc_MP;
+switch (true) do { 
+	case (_caller getVariable ["Defender", false] == true) : {
+	{[_messagedisplay] remoteExec ["hint", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
+	ctrlSetText [155, ""];
+}; 
+	case (_caller getVariable ["Attacker", false] == true) : {
+	{[_messagedisplay] remoteExec ["hint", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+	ctrlSetText [155, ""];
+}; 
+	default {[_messagedisplay] remoteExec ["hint", side(_caller), false]; ctrlSetText [155, ""]; lbAdd [1532, name _caller] call BIS_fnc_MP; lbAdd [1532, _message] call BIS_fnc_MP;}; 
+	};
 };
 
 TABLET_FNC_GETPLAYERSARRAY =
