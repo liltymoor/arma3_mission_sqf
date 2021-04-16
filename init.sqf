@@ -20,11 +20,11 @@ civilian setFriend [east, 1];
 civilian setFriend [resistance, 1];
 
 //Отключение голосовых каналов
-0 enableChannel [false, false];
-1 enableChannel [true, false];
+0 enableChannel [true, false];
+1 enableChannel [false, false];
 2 enableChannel [false, false];
 3 enableChannel [false, false];
-4 enableChannel [false, false];
+4 enableChannel [false, true];
 5 enableChannel [true, true];
 setCurrentChannel 2;
 
