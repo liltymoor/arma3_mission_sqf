@@ -457,14 +457,20 @@ player setPos _pos;
 
 freddy_fnc_teleportAttack = {
 _player = (_this # 0);
+[_player] spawn {
+_player = (_this # 0);
 _posAt = getMarkerPos "BaseAt";
 waitUntil {alive _player}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player, false];
+  };
 };
 
 freddy_fnc_teleportDef = {
 _player = (_this # 0);
+[_player] spawn {
+_player = (_this # 0);
 _posDef = getMarkerPos "BaseDef";
 waitUntil {alive _player}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player , false];  
+  };
 };
 /*
 this addAction
