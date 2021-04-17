@@ -1,21 +1,34 @@
 //Максимум 12 Защ. 16 Ат.
 //Минимум 6 Защ. 8 Ат.
+prevBase = "Base1";
 
 FREDDY_FNC_CREATERAID = {
 [] spawn {
+_baseArray = ["Base1","Base2","Base3"];
+_baseArray deleteAt (_baseArray find prevBase);
+_baseSelected = _baseArray call BIS_fnc_selectRandom;
+prevBase = _baseSelected;
+
+switch (true) do { 
+  case (_baseSelected == "Base1") : {missionNamespace setVariable ["Base1Selected", true, true]; mrkPos = getPos BaseFlag1; posDef = getMarkerPos "DefSpawnBase1"; posAt = getMarkerPos "AtSpawnBase1";}; 
+  case (_baseSelected == "Base2") : {missionNamespace setVariable ["Base2Selected", true, true]; mrkPos = getPos BaseFlag2; posDef = getMarkerPos "DefSpawnBase2"; posAt = getMarkerPos "AtSpawnBase2";};
+  case (_baseSelected == "Base3") : {missionNamespace setVariable ["Base3Selected", true, true]; mrkPos = getPos BaseFlag3; posDef = getMarkerPos "DefSpawnBase3"; posAt = getMarkerPos "AtSpawnBase3";}; 
+  default {}; 
+  };
+
 missionNamespace setVariable ["RaidWarmup",true, true];
 //Тут создаются маркеры
 
 call PENA_RAID_LIFES;
 
-createMarker ["RaidEllipse",BaseFlag];  
+createMarker ["RaidEllipse", mrkPos];  
 "RaidEllipse" setMarkerShape "ELLIPSE";  
 "RaidEllipse" setMarkerType "ellipse";  
 "RaidEllipse" setMarkerBrush "SolidBorder";  
 "RaidEllipse" setMarkerSize [4000,4000];  
 "RaidEllipse" setMarkerColor "ColorOrange"; 
  
-createMarker ["RaidText",BaseFlag];   
+createMarker ["RaidText", mrkPos];   
 "RaidText" setMarkerType "hd_warning"; 
 "RaidText" setMarkerText "Рейд"; 
 "RaidText" setMarkerColor "ColorWhite";
@@ -25,8 +38,8 @@ createMarker ["RaidText",BaseFlag];
 {(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", true, true]; diag_log name (_x call BIS_fnc_getUnitByUid)} forEach raidLobbyAt;
 _countDef = count (allPlayers select {_x getVariable ["Defender", false]});
 _countAt = count (allPlayers select {_x getVariable ["Attacker", false]});
-{[(_x call BIS_fnc_getUnitByUid)] remoteExec ["freddy_fnc_teleportDef", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
-{[(_x call BIS_fnc_getUnitByUid)] remoteExec ["freddy_fnc_teleportAttack", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+{[(_x call BIS_fnc_getUnitByUid), posDef] remoteExec ["freddy_fnc_teleportDef", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
+{[(_x call BIS_fnc_getUnitByUid), posAt] remoteExec ["freddy_fnc_teleportAttack", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 
 //Тут отчет обратный до начала рейда
 _time = 120; 
@@ -113,6 +126,9 @@ _vehiclesArray = (vehicles inAreaArray "RaidEllipse");
 "RaidText" setMarkerText "Победа защиты";
 if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+if (missionNamespace getVariable ["Base1Selected", false] == true) then {missionNamespace setVariable ["Base1Selected", nil, true];};
+if (missionNamespace getVariable ["Base2Selected", false] == true) then {missionNamespace setVariable ["Base2Selected", nil, true];};
+if (missionNamespace getVariable ["Base3Selected", false] == true) then {missionNamespace setVariable ["Base3Selected", nil, true];};
 {["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
 {["introLayer", ["<t size='2'>Победа защиты</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyDef;
@@ -168,6 +184,9 @@ _vehiclesArray = (vehicles inAreaArray "RaidEllipse");
 "RaidText" setMarkerText "Победа атаки";
 if (player getVariable ["Defender", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Defender", nil, true];} forEach raidLobbyDef;};
 if (player getVariable ["Attacker", false]==true) then {{(_x call BIS_fnc_getUnitByUid) setVariable ["Attacker", nil, true];} forEach raidLobbyAt;};
+if (missionNamespace getVariable ["Base1Selected", false] == true) then {missionNamespace setVariable ["Base1Selected", nil, true];};
+if (missionNamespace getVariable ["Base2Selected", false] == true) then {missionNamespace setVariable ["Base2Selected", nil, true];};
+if (missionNamespace getVariable ["Base3Selected", false] == true) then {missionNamespace setVariable ["Base3Selected", nil, true];};
 {["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef;
 {["introLayer", ["<t size='2'>Победа атаки</t>", "PLAIN", 2, false, true]] remoteExec ["cutText", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
 {[] remoteExec ["FREDDY_FNC_GETRANDOM_MNYRAIDWIN", (_x call BIS_fnc_getUnitByUid), false];}forEach raidLobbyAt;
@@ -457,20 +476,14 @@ player setPos _pos;
 
 freddy_fnc_teleportAttack = {
 _player = (_this # 0);
-[_player] spawn {
-_player = (_this # 0);
-_posAt = getMarkerPos "BaseAt";
-waitUntil {alive _player}; [_posAt] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player, false];
-  };
+_posAt = (_this # 1);
+[_posAt] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player, false];
 };
 
 freddy_fnc_teleportDef = {
 _player = (_this # 0);
-[_player] spawn {
-_player = (_this # 0);
-_posDef = getMarkerPos "BaseDef";
-waitUntil {alive _player}; [_posDef] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player , false];  
-  };
+_posDef = (_this # 1);
+[_posDef] remoteExec ["freddy_fnc_TeleportSupport", _player, false]; if (lifeState _player == "INCAPACITATED") then {_player setDammage 0; _player setUnconscious false; _player switchMove "";}; _player setUnitLoadout (configFile >> "EmptyLoadout"); [0] remoteExec ["closeDialog", _player , false];  
 };
 /*
 this addAction
