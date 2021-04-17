@@ -404,7 +404,7 @@ PENA_RAID_CREATEVEH_CHECKER = {
 };
 
 PENA_CREATING_VEH = {
-  _trg = ["CreateVehRaidAt", "CreateVehRaidDef"];
+  _trg = ["CreateVehRaidAt", "CreateVehRaidDef", "CreateVehRaidAt2", "CreateVehRaidDef2", "CreateVehRaidAt3", "CreateVehRaidDef3"];
   _nearestTrg = [_trg, player] call BIS_fnc_nearestPosition;
   _entitiesArray = (getMarkerPos _nearestTrg) nearEntities [["Landvehicle", "Air"], 10];
   if (count (_entitiesArray)!=0) exitWith {hint "Место занято"};
@@ -413,7 +413,7 @@ PENA_CREATING_VEH = {
   _player = player;
   _UID = getPlayerUID _player;
   _vehicle = (_this # 0);
-  _markArray = ["CreateVehRaidAt" , "CreateVehRaidDef"];
+  _markArray = ["CreateVehRaidAt", "CreateVehRaidDef", "CreateVehRaidAt2", "CreateVehRaidDef2", "CreateVehRaidAt3", "CreateVehRaidDef3"];
   _nearestMarker = [_markArray, player] call BIS_fnc_nearestPosition;
   _pos = getMarkerPos _nearestMarker;
   _azimuth = markerDir _nearestMarker;
