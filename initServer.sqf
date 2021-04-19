@@ -6,7 +6,7 @@
 
 	OnGoingRadeData = [];
 
-	HeavyVehArr = ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F", "I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "B_APC_Wheeled_01_cannon_F", "I_APC_tracked_03_cannon_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_cannon_F", "I_LT_01_AA_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "B_Heli_Transport_01_camo_F", "O_Heli_Light_02_F", "I_Heli_light_03_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F"]; //AddHeavyVehToRaid - сюда боевая
+	HeavyVehArr = ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F", "B_AFV_Wheeled_01_up_cannon_F", "I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "B_APC_Wheeled_01_cannon_F", "I_APC_tracked_03_cannon_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_cannon_F", "I_LT_01_AA_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "B_Heli_Transport_01_camo_F", "O_Heli_Light_02_F", "I_Heli_light_03_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F"]; //AddHeavyVehToRaid - сюда боевая
 
 	waitingForRewardArray = []; 
 
@@ -390,7 +390,7 @@ PENA_SHOP_TRANSACTION = { //Покупка техники -бабки + спав
 
 
 
-    _lifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MRAP_03_hmg_F, I_MRAP_03_gmg_F, I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, B_APC_Wheeled_01_cannon_F, I_APC_tracked_03_cannon_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_cannon_F, I_LT_01_AA_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F, B_Heli_Transport_01_camo_F, O_Heli_Light_02_F, I_Heli_light_03_F, O_Heli_Attack_02_F, B_Heli_Attack_01_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
+    _lifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MRAP_03_hmg_F, I_MRAP_03_gmg_F, B_AFV_Wheeled_01_up_cannon_F, I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, B_APC_Wheeled_01_cannon_F, I_APC_tracked_03_cannon_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_cannon_F, I_LT_01_AA_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F, B_Heli_Transport_01_camo_F, O_Heli_Light_02_F, I_Heli_light_03_F, O_Heli_Attack_02_F, B_Heli_Attack_01_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
     _lifes = _lifes # 1 # 0; 
 
 	diag_log [_lifes];
@@ -409,24 +409,25 @@ PENA_SHOP_TRANSACTION = { //Покупка техники -бабки + спав
 	diag_log _idc;
 	_Lifes = [];
 	//Земля
-	_dbLifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MRAP_03_hmg_F, I_MRAP_03_gmg_F, I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, B_APC_Wheeled_01_cannon_F, I_APC_tracked_03_cannon_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_cannon_F, I_LT_01_AA_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
+	_dbLifes = parseSimpleArray ("extDB3" callExtension format ["0:PenaUpal:SELECT I_MRAP_03_hmg_F, I_MRAP_03_gmg_F, B_AFV_Wheeled_01_up_cannon_F, I_MBT_03_cannon_F, O_MBT_04_command_F, O_MBT_02_cannon_F, B_MBT_01_TUSK_F, B_APC_Wheeled_01_cannon_F, I_APC_tracked_03_cannon_F, I_APC_Wheeled_03_cannon_F, O_APC_Tracked_02_cannon_F, I_LT_01_AA_F, O_APC_Tracked_02_AA_F, B_APC_Tracked_01_AA_F FROM PlayerGarage WHERE UID='%1'",_uid]); 
 	_dbLifes = _dbLifes # 1 # 0; 
 	for "_i" from 0 to count _dbLifes do {
 		if (_dbLifes # _i != 0) then {
 			switch (_i) do { 
 				case 0 : {  _Lifes = _Lifes + ["I_MRAP_03_hmg_F"] }; //Страйдер 12.7
 				case 1 : {  _Lifes = _Lifes + ["I_MRAP_03_gmg_F"] }; //Страйдер ГП
-				case 2 : { _Lifes = _Lifes + ["I_MBT_03_cannon_F"]}; //Кума
-				case 3 : {  _Lifes = _Lifes + ["O_MBT_04_command_F"] }; //Angara
-				case 4 : { _Lifes = _Lifes + ["O_MBT_02_cannon_F"] }; //Varsuk
-				case 5 : {  _Lifes = _Lifes + ["B_MBT_01_TUSK_F"] }; //Slammer
-				case 6 : {  _Lifes = _Lifes + ["B_APC_Wheeled_01_cannon_F"] }; //Маршалл
-				case 7 : {  _Lifes = _Lifes + ["I_APC_tracked_03_cannon_F"] }; //Мора
-				case 8 : { _Lifes = _Lifes + ["I_APC_Wheeled_03_cannon_F"] }; //Gorgone
-				case 9 : { _Lifes = _Lifes + ["O_APC_Tracked_02_cannon_F"] }; //Камыш
-				case 10 : { _Lifes = _Lifes + ["I_LT_01_AA_F"] }; //Нюкс ПВ
-				case 11 : { _Lifes = _Lifes + ["O_APC_Tracked_02_AA_F"] }; //Tigris
-				case 12 : {  _Lifes = _Lifes + ["B_APC_Tracked_01_AA_F"] }; //Cheetah
+				case 2 : { _Lifes = _Lifes + ["B_AFV_Wheeled_01_up_cannon_F"]}; //Рино
+				case 3 : { _Lifes = _Lifes + ["I_MBT_03_cannon_F"]}; //Кума
+				case 4 : {  _Lifes = _Lifes + ["O_MBT_04_command_F"] }; //Angara
+				case 5 : { _Lifes = _Lifes + ["O_MBT_02_cannon_F"] }; //Varsuk
+				case 6 : {  _Lifes = _Lifes + ["B_MBT_01_TUSK_F"] }; //Slammer
+				case 7 : {  _Lifes = _Lifes + ["B_APC_Wheeled_01_cannon_F"] }; //Маршалл
+				case 8 : {  _Lifes = _Lifes + ["I_APC_tracked_03_cannon_F"] }; //Мора
+				case 9 : { _Lifes = _Lifes + ["I_APC_Wheeled_03_cannon_F"] }; //Gorgone
+				case 10 : { _Lifes = _Lifes + ["O_APC_Tracked_02_cannon_F"] }; //Камыш
+				case 11 : { _Lifes = _Lifes + ["I_LT_01_AA_F"] }; //Нюкс ПВ
+				case 12 : { _Lifes = _Lifes + ["O_APC_Tracked_02_AA_F"] }; //Tigris
+				case 13 : {  _Lifes = _Lifes + ["B_APC_Tracked_01_AA_F"] }; //Cheetah
 			};
 
 		};
@@ -507,6 +508,7 @@ if (_player getVariable ["CouldntStore", false] == true) then {
   switch (true) do {
   case (_zaloopa1 isKindOf "I_MRAP_03_hmg_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Страйдер 12.7
   case (_zaloopa1 isKindOf "I_MRAP_03_gmg_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Страйдер ГП
+  case (_zaloopa1 isKindOf "B_AFV_Wheeled_01_up_cannon_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Рино
   case (_zaloopa1 isKindOf "I_MBT_03_cannon_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Кума
   case (_zaloopa1 isKindOf "O_MBT_04_command_F") : {deleteVehicle _entitiesArray;[[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Ангара
   case (_zaloopa1 isKindOf "O_MBT_02_cannon_F") : {deleteVehicle _entitiesArray; [[_text], "hint",_player,false,true] call BIS_fnc_MP;[_zaloopa1, _UID]remoteExec["PENA_DB_BUY_ARMORED_VEH", 2 , false];};//Варсук
@@ -534,6 +536,7 @@ PENA_VEH_REWARD = {
        switch (true) do {
       			 case (_unit isKindOf "I_MRAP_03_hmg_F") : {_reward = 1150; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
       			 case (_unit isKindOf "I_MRAP_03_gmg_F") : {_reward = 1650; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+                  case (_unit isKindOf "B_AFV_Wheeled_01_up_cannon_F") : {_reward = 2725; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
                   case (_unit isKindOf "I_MBT_03_cannon_F") : {_reward = 2725; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
                   case (_unit isKindOf "O_MBT_04_command_F") : {_reward = 3950; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
                   case (_unit isKindOf "O_MBT_02_cannon_F") : {_reward = 3425; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
@@ -658,7 +661,7 @@ PENA_RAID_SETTINGS = {
 };
 
 lightVehArr = ["O_MRAP_02_F","ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
-HeavyVehArr = ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F", "I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "B_APC_Wheeled_01_cannon_F", "I_APC_tracked_03_cannon_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_cannon_F", "I_LT_01_AA_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "B_Heli_Transport_01_camo_F", "O_Heli_Light_02_F", "I_Heli_light_03_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F"]; //AddHeavyVehToRaid - сюда боевая
+HeavyVehArr = ["I_MRAP_03_hmg_F", "I_MRAP_03_gmg_F", "B_AFV_Wheeled_01_up_cannon_F", "I_MBT_03_cannon_F", "O_MBT_04_command_F", "O_MBT_02_cannon_F", "B_MBT_01_TUSK_F", "B_APC_Wheeled_01_cannon_F", "I_APC_tracked_03_cannon_F", "I_APC_Wheeled_03_cannon_F", "O_APC_Tracked_02_cannon_F", "I_LT_01_AA_F", "O_APC_Tracked_02_AA_F", "B_APC_Tracked_01_AA_F", "B_Heli_Transport_01_camo_F", "O_Heli_Light_02_F", "I_Heli_light_03_F", "O_Heli_Attack_02_F", "B_Heli_Attack_01_F"]; //AddHeavyVehToRaid - сюда боевая
 specVehArr = ["O_Truck_03_ammo_F"]; //AddSpecVehToRaid - сюда специальная
 heliVehArr = ["B_Heli_Light_01_F", "B_mas_UH1Y_UNA_F"]; //AddHeliToRaid - сюда вертолеты
 
