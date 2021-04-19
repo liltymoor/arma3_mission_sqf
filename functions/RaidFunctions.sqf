@@ -108,7 +108,7 @@ _time = 120;
 missionNamespace setVariable ["CaptureInProgress", true, true];
   {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
   {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; 
-	while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag <= 15 && isNull objectParent player} do { 
+	while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag1 <= 15 && isNull objectParent player} do { 
   _time = _time - 1;
   _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];      
   [_result] remoteExec ["hintSilent", _unit , false];
@@ -116,6 +116,42 @@ missionNamespace setVariable ["CaptureInProgress", true, true];
 };
 if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
 	};
+};
+
+FREDDY_FNC_CAPTUREFLAGATLAS = {
+_unit = (_this # 0);
+[_unit] spawn {
+_unit = (_this # 0);
+_time = 120;
+missionNamespace setVariable ["CaptureInProgress", true, true];
+  {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+  {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; 
+  while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag2 <= 15 && isNull objectParent player} do { 
+  _time = _time - 1;
+  _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];      
+  [_result] remoteExec ["hintSilent", _unit , false];
+  sleep 1; 
+};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+  };
+};
+
+FREDDY_FNC_CAPTUREFLAGSKOPOS = {
+_unit = (_this # 0);
+[_unit] spawn {
+_unit = (_this # 0);
+_time = 120;
+missionNamespace setVariable ["CaptureInProgress", true, true];
+  {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt;
+  {"Участник атаки начал захват флага" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; 
+  while {_time > 0 && missionNamespace getVariable ["Raid", false] == true && lifeState _unit != "INCAPACITATED" && _unit distance BaseFlag3 <= 15 && isNull objectParent player} do { 
+  _time = _time - 1;
+  _result = format ["До захвата: %1", [((_time)/60)+.01,"HH:MM"] call BIS_fnc_timetostring];      
+  [_result] remoteExec ["hintSilent", _unit , false];
+  sleep 1; 
+};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+  };
 };
 
 //Скрипт победы защиты
