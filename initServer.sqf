@@ -534,23 +534,25 @@ PENA_VEH_REWARD = {
         _unit = (_this # 0);
         _killer = (_this # 1);
        switch (true) do {
-      			 case (_unit isKindOf "I_MRAP_03_hmg_F") : {_reward = 1150; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-      			 case (_unit isKindOf "I_MRAP_03_gmg_F") : {_reward = 1650; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "B_AFV_Wheeled_01_up_cannon_F") : {_reward = 2725; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "I_MBT_03_cannon_F") : {_reward = 2725; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_MBT_04_command_F") : {_reward = 3950; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_MBT_02_cannon_F") : {_reward = 3425; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "B_MBT_01_cannon_F") : {_reward = 2450; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "I_APC_Wheeled_03_cannon_F") : {_reward = 4670; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_APC_Tracked_02_cannon_F") : {_reward = 4670; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "I_LT_01_AA_F") : {_reward = 3500; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_APC_Tracked_02_AA_F") : {_reward = 3750; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "B_APC_Tracked_01_AA_F") : {_reward = 4200; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "B_Heli_Transport_01_camo_F") : {_reward = 2500; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_Heli_Light_02_F") : {_reward = 11000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "I_Heli_light_03_F") : {_reward = 15000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "O_Heli_Attack_02_F") : {_reward = 20000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
-                  case (_unit isKindOf "B_Heli_Attack_01_F") : {_reward = 23000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};
+      			 case (_unit isKindOf "I_MRAP_03_hmg_F") : {_reward = 1150; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Страйдер 12.7
+      			 case (_unit isKindOf "I_MRAP_03_gmg_F") : {_reward = 1650; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Страйдер ГП
+                  case (_unit isKindOf "B_AFV_Wheeled_01_up_cannon_F") : {_reward = 3150; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Рино
+                  case (_unit isKindOf "I_MBT_03_cannon_F") : {_reward = 2725; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Кума
+                  case (_unit isKindOf "O_MBT_04_command_F") : {_reward = 3950; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Ангара
+                  case (_unit isKindOf "O_MBT_02_cannon_F") : {_reward = 3425; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Варсук
+                  case (_unit isKindOf "B_MBT_01_cannon_F") : {_reward = 2450; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Сламмер
+                  case (_unit isKindOf "B_APC_Wheeled_01_cannon_F") : {_reward = 1780; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Маршалл
+                  case (_unit isKindOf "I_APC_tracked_03_cannon_F") : {_reward = 1975; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Мора
+                  case (_unit isKindOf "I_APC_Wheeled_03_cannon_F") : {_reward = 4670; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Горгона
+                  case (_unit isKindOf "O_APC_Tracked_02_cannon_F") : {_reward = 5570; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Камыш
+                  case (_unit isKindOf "I_LT_01_AA_F") : {_reward = 3500; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Нюкс ПВ
+                  case (_unit isKindOf "O_APC_Tracked_02_AA_F") : {_reward = 3750; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Тигрис
+                  case (_unit isKindOf "B_APC_Tracked_01_AA_F") : {_reward = 4200; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Читаха
+                  case (_unit isKindOf "B_Heli_Transport_01_camo_F") : {_reward = 2500; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Госта
+                  case (_unit isKindOf "O_Heli_Light_02_F") : {_reward = 11000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Орка
+                  case (_unit isKindOf "I_Heli_light_03_F") : {_reward = 5785; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer};//Хелка
+                  case (_unit isKindOf "O_Heli_Attack_02_F") : {_reward = 20000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Кайман
+                  case (_unit isKindOf "B_Heli_Attack_01_F") : {_reward = 23000; {[_reward]remoteExec ["FREDDY_FNC_GETRANDOM_MNY_VEH", _x , false]} forEach crew vehicle _killer}; //Бфка
                   default {};
         };
     };
