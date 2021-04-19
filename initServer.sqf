@@ -44,7 +44,23 @@
 ..:::::::::..:::::..:::.......:::..::::::::....::........::........::
 */
 
-
+//Проверка випки
+freddy_fnc_getTimeleft = {
+_UID = getPlayerUID (_this # 0);
+_curTime = systemTime;  
+_timeUnset = "extDB3" callExtension format ["0:PenaUpal:SELECT SPONSOR_TIMELEFT FROM `PlayerStats` WHERE UID=""%1""", _UID];
+_timeUnset = (_timeUnset splitString ",][");    
+_timeUnset deleteAt 0;
+switch (true) do {
+		//case (str(_timeUnset) == "[]") : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", [], _UID];}; //пусто
+         case (_curTime # 0 > parseNumber (_timeUnset # 0)) : {diag_log "випка снята1"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //год 
+         case (_curTime # 1 > parseNumber (_timeUnset # 1)) : {diag_log "випка снята2"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //Месяц
+         case (_curTime # 2 > parseNumber (_timeUnset # 2)) : {diag_log "випка снята3"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //День
+         case ((_curTime # 2 >= parseNumber (_timeUnset # 2)) && (_curTime # 3 > parseNumber (_timeUnset # 3))) : {diag_log "випка снята4"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //Часы
+         case ((_curTime # 2 >= parseNumber (_timeUnset # 2)) && (_curTime # 4 > parseNumber (_timeUnset # 4))) : {diag_log "випка снята5"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //Минуты
+         default {diag_log "випка выдана"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_LVL='%1' WHERE UID='%2'", 5, _UID]; (_UID call BIS_fnc_getUnitByUID) setVariable ["SPONSOR", true, true];}; 
+     };     
+};
 	
 	PENA_LOAD_STATS = {
 	

@@ -8,6 +8,7 @@ raidLocalLoc = [];
 player setVariable ["groupState", false, true];
 
 []remoteExec["PENA_RAID_LOAD", 2, false];
+[player] remoteExec ["freddy_fnc_getTimeleft", 2, false];
 
 PENA_Raid_Handler = {
   raidLobbyDef = (_this # 0);
@@ -67,6 +68,12 @@ player addEventHandler ["FiredMan", {
               };
             };
         };
+}];
+
+//Оружие с випками
+player addEventHandler ["FiredMan", {
+    params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
+    if (_weapon == "mas_launch_Stinger_F" && _unit getVariable ["SPONSOR",false] == false) then {_unit removeWeapon _weapon; deleteVehicle _projectile; hint str "Вы не можете использовать это оружие"}; 
 }];
 
 Freddy_fnc_DamageInSafeZones = {
