@@ -73,7 +73,13 @@ player addEventHandler ["FiredMan", {
 //Оружие с випками
 player addEventHandler ["FiredMan", {
     params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
-    if (_weapon == "mas_launch_Stinger_F" && _unit getVariable ["SPONSOR",false] == false) then {_unit removeWeapon _weapon; deleteVehicle _projectile; hint str "Вы не можете использовать это оружие"}; 
+    switch (true) do { 
+      case (_weapon == "mas_launch_Stinger_F" && _unit getVariable ["SPONSOR",false] == false) : {_unit removeWeapon _weapon; deleteVehicle _projectile; hint str "Вы не можете использовать это оружие";}; 
+      case (_weapon == "LMG_mas_mk48_F" && _unit getVariable ["SPONSOR",false] == false) : {_unit removeWeapon _weapon; deleteVehicle _projectile; hint str "Вы не можете использовать это оружие";};
+      case (_weapon == "LMG_mas_pkm_F" && _unit getVariable ["SPONSOR",false] == false) : {_unit removeWeapon _weapon; deleteVehicle _projectile; hint str "Вы не можете использовать это оружие";}; 
+      case (_weapon == "LMG_mas_pech_F" && _unit getVariable ["SPONSOR",false] == false) : {_unit removeWeapon _weapon; deleteVehicle _projectile; hint str "Вы не можете использовать это оружие";};  
+      default {}; 
+    };
 }];
 
 Freddy_fnc_DamageInSafeZones = {
