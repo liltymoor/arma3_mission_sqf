@@ -114,7 +114,7 @@ missionNamespace setVariable ["CaptureInProgress", true, true];
   [_result] remoteExec ["hintSilent", _unit , false];
   sleep 1; 
 };
-if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {call FREDDY_FNC_ENDRAIDATTACK;} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
 	};
 };
 
@@ -132,7 +132,7 @@ missionNamespace setVariable ["CaptureInProgress", true, true];
   [_result] remoteExec ["hintSilent", _unit , false];
   sleep 1; 
 };
-if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {call FREDDY_FNC_ENDRAIDATTACK;} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
   };
 };
 
@@ -150,7 +150,7 @@ missionNamespace setVariable ["CaptureInProgress", true, true];
   [_result] remoteExec ["hintSilent", _unit , false];
   sleep 1; 
 };
-if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {missionNamespace setVariable ["Raid", nil, true]} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
+if (_time == 0 && lifeState _unit != "INCAPACITATED" && alive _unit) then {call FREDDY_FNC_ENDRAIDATTACK;} else {{"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyAt; {"Захват сбит" remoteExec ["hintSilent", (_x call BIS_fnc_getUnitByUid), false]} forEach raidLobbyDef; missionNamespace setVariable ["CaptureInProgress", nil, true];};
   };
 };
 

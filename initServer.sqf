@@ -47,19 +47,61 @@
 //Проверка випки
 freddy_fnc_getTimeleft = {
 _UID = getPlayerUID (_this # 0);
-_curTime = systemTime;  
-_timeUnset = "extDB3" callExtension format ["0:PenaUpal:SELECT SPONSOR_TIMELEFT FROM `PlayerStats` WHERE UID=""%1""", _UID];
-_timeUnset = (_timeUnset splitString ",][");    
-_timeUnset deleteAt 0;
+_dateStart    = systemTime;
+_dateEnd    = "extDB3" callExtension format ["0:PenaUpal:SELECT SPONSOR_TIMELEFT FROM `PlayerStats` WHERE UID=""%1""", _UID];
+_dateEnd = (_dateEnd splitString ",][");    
+_dateEnd deleteAt 0;
+
+_yearStart    = _dateStart select 0;
+_monthStart    = _dateStart select 1;
+_dayStart    = _dateStart select 2;
+_hourStart    = _dateStart select 3;
+_minStart    = _dateStart select 4;
+
+_yearEnd    = parsenumber (_dateEnd select 0);
+_monthEnd    = parsenumber (_dateEnd select 1);
+_dayEnd        = parsenumber (_dateEnd select 2);
+_hourEnd    = parsenumber (_dateEnd select 3);
+_minEnd        = parsenumber (_dateEnd select 4);
+
+_daysTotal    = 0;
+
+for "_i" from _yearStart to (_yearEnd - 1) do
+{
+LeapYear    = if(_i mod 4 == 0 && {_i mod 100 != 0 || _i mod 400 == 0}) then {true} else {false};
+   if(LeapYear) then
+   {
+       _daysTotal = _daysTotal + 366;
+   }
+   else
+   {
+       _daysTotal = _daysTotal + 365;
+   };
+};
+
+_isLeapYear    = if(_yearStart mod 4 == 0 && {_yearStart mod 100 != 0 || _yearStart mod 400 == 0}) then {true} else {false};
+_daysSum    = 0;
+
+_daysOfMonths    = [31, if(_isLeapYear) then {29} else {28}, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+{
+   if(_monthStart isEqualTo (_forEachIndex + 1)) exitWith {};
+   _daysSum = _daysSum - _x;
+} forEach _daysOfMonths;
+
+_isLeapYear    = if(_yearEnd mod 4 == 0 && {_yearEnd mod 100 != 0 || _yearEnd mod 400 == 0}) then {true} else {false};
+_daysOfMonths    = [31, if(_isLeapYear) then {29} else {28}, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+{
+   if(_monthEnd isEqualTo (_forEachIndex + 1)) exitWith {};
+   _daysSum = _daysSum + _x;
+} forEach _daysOfMonths;
+
+_daysTotal = _daysTotal - _dayStart + _dayEnd + _daysSum;
+diag_log _daysTotal;
 switch (true) do {
-		//case (str(_timeUnset) == "[]") : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", [], _UID];}; //пусто
-         case (_curTime # 0 > parseNumber (_timeUnset # 0)) : {diag_log "випка снята1"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //год 
-         case (_curTime # 1 > parseNumber (_timeUnset # 1)) : {diag_log "випка снята2"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //Месяц
-         case (_curTime # 2 > parseNumber (_timeUnset # 2)) : {diag_log "випка снята3"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //День
-         case ((_curTime # 2 >= parseNumber (_timeUnset # 2)) && (_curTime # 3 > parseNumber (_timeUnset # 3))) : {diag_log "випка снята4"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //Часы
-         case ((_curTime # 2 >= parseNumber (_timeUnset # 2)) && (_curTime # 4 > parseNumber (_timeUnset # 4))) : {diag_log "випка снята5"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //Минуты
+        case (str(_dateEnd) == str([""""""])) : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //пусто
+        case (_daysTotal <= 0) : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];};
          default {diag_log "випка выдана"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_LVL='%1' WHERE UID='%2'", 5, _UID]; (_UID call BIS_fnc_getUnitByUID) setVariable ["SPONSOR", true, true];}; 
-     };     
+     };      
 };
 	
 	PENA_LOAD_STATS = {

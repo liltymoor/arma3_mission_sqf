@@ -71,6 +71,7 @@ player addEventHandler ["FiredMan", {
 }];
 
 //Оружие с випками
+[player] remoteExec ["freddy_fnc_getTimeleft", 2, false];
 player addEventHandler ["FiredMan", {
     params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
     switch (true) do { 
