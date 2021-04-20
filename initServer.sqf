@@ -98,8 +98,8 @@ _daysOfMonths    = [31, if(_isLeapYear) then {29} else {28}, 31, 30, 31, 30, 31,
 _daysTotal = _daysTotal - _dayStart + _dayEnd + _daysSum;
 diag_log _daysTotal;
 switch (true) do {
-        case (str(_dateEnd) == str([""""""])) : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];}; //пусто
-        case (_daysTotal <= 0) : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID];};
+        case (str(_dateEnd) == str([""""""])) : {diag_log "випка снята0"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID]; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_LVL='%1' WHERE UID='%2'", 1, _UID];}; //пусто
+        case (_daysTotal <= 0) : {diag_log "випка снята1"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_TIMELEFT='%1' WHERE UID='%2'", "", _UID]; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_LVL='%1' WHERE UID='%2'", 1, _UID];};
          default {diag_log "випка выдана"; "extDB3" callExtension format["0:PenaUpal:UPDATE PlayerStats SET SPONSOR_LVL='%1' WHERE UID='%2'", 5, _UID]; (_UID call BIS_fnc_getUnitByUID) setVariable ["SPONSOR", true, true];}; 
      };      
 };
