@@ -392,7 +392,7 @@ _zaloopa1 = typeof _entitiesArray;
 _vehName = getText (configFile >> "CfgVehicles" >> _zaloopa1 >> "displayname");
 _veh = _entitiesArray getVariable ["keys", 50];
 if (count crew _entitiesArray > 0) exitWith {hint "В технике кто-то есть";};
-if (_player getVariable ["CouldntStore", false] == true) then {hint "Подождите немного";} else {
+if (_player getVariable ["CouldntStore", false] == true or _entitiesArray getVariable ["TimerFired",0] != 0) then {hint "Подождите немного";} else {
   if (typeOf _entitiesArray in _vehicle && _UID == _veh && typeOf _entitiesArray != "") then {
 	_player setVariable ["CouldntStore", true, true];
   {moveOut _x} forEach crew _entitiesArray;
