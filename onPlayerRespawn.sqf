@@ -6,3 +6,4 @@ player enableFatigue false;
 call compile preprocessFileLineNumbers "scripts\HALO.sqf";
 call compile preprocessFileLineNumbers "scripts\FirstPersonInTrg.sqf";
 call compile preprocessFileLineNumbers "scripts\BattleZonePayForCapture.sqf";
+call compile preprocessFileLineNumbers "scripts\FlyHeight.sqf";

@@ -6,3 +6,4 @@ call compile preprocessFileLineNumbers "scripts\PlayerTags.sqf";
 call compile preprocessFileLineNumbers "scripts\EarPlugs.sqf";
 call compile preprocessFileLineNumbers "scripts\GF_Holster.sqf";
 call compile preprocessFileLineNumbers "scripts\invClick.sqf";
+call compile preprocessFileLineNumbers "scripts\FlyHeight.sqf";
