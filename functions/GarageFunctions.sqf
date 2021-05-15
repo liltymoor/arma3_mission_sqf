@@ -441,10 +441,9 @@ PENA_CREATING_VEH = {
 
   freddy_fnc_LoadLightVehRaidArray = { 
    [] spawn { 
-   _unitSide = 0; 
-  if (player getVariable ["Defender", false] == true) then {_unitSide = "Defender"; hint "def";} else {_unitSide = "Attacker"; hint "at"}; 
+   _unitSide = 0;  
    _vehArray = ["O_MRAP_02_F","ver_vaz_2114_uck", "BPAN_priora", "ver_vaz_2114_OPER", "ivory_evox", "ivory_wrx", "ivory_supra", "ivory_r34"]; // AddVehToRaid - сюда легковая техника
-   _specVehArray = ["O_Truck_03_ammo_F"]; //AddSpecVehToRaid - сюда специальная
+   _specVehArray = []; //AddSpecVehToRaid - сюда специальная
    _heliArray = ["B_Heli_Light_01_F", "B_mas_UH1Y_UNA_F"]; //AddHeliToRaid - сюда вертолеты
    
   { 
@@ -516,7 +515,7 @@ PENA_CREATING_VEH = {
 
   freddy_fnc_LoadTruckVehRaidArray = {
  [] spawn {
- _vehArray = ["O_Truck_03_ammo_F"];
+ _vehArray = [];
 {
   _vehName = getText (configFile >> "CfgVehicles" >> _x >> "displayname");  
   lbAdd [60000, _vehName];
